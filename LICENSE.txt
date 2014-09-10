@@ -1,4 +1,4 @@
-Copyright (c) 2014 Kenichi TAKAHASHI
+Copyright (c) 2014 GMO Pepabo, Inc.
 
 MIT License
 
