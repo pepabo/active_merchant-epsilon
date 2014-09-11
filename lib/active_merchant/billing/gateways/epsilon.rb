@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class EpsilonGateway < Gateway
@@ -6,7 +8,6 @@ module ActiveMerchant #:nodoc:
 
       self.supported_countries = ['JP']
       self.default_currency = 'JPY'
-      self.money_format = :cents
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
       self.homepage_url = 'http://www.example.net/'
@@ -16,68 +17,68 @@ module ActiveMerchant #:nodoc:
         super
       end
 
-      def purchase(money, payment, options={})
-        post = {}
-        add_invoice(post, money, options)
-        add_payment(post, payment)
-        add_address(post, payment, options)
-        add_customer_data(post, options)
+      def purchase(money, credit_card, detail = {})
+        params = {
+          contract_code: detail[:contract_code],
+          user_id: detail[:user_id],
+          user_name: credit_card.name,
+          user_mail_add: detail[:user_email],
+          item_code: detail[:item_code],
+          item_name: detail[:item_name],
+          order_number: detail[:order_number],
+          st_code: '10000-0000-0000',
+          mission_code: 1,
+          item_price: money,
+          process_code: 1,
+          card_number: credit_card.number,
+          expire_y: credit_card.year,
+          expire_m: credit_card.month,
+          user_agent: 'test'
+        }
 
-        commit('sale', post)
+        commit('purchase', params)
       end
 
       def authorize(money, payment, options={})
-        post = {}
-        add_invoice(post, money, options)
-        add_payment(post, payment)
-        add_address(post, payment, options)
-        add_customer_data(post, options)
-
-        commit('authonly', post)
+        raise
       end
 
       def capture(money, authorization, options={})
-        commit('capture', post)
+        raise
       end
 
       def refund(money, authorization, options={})
-        commit('refund', post)
+        raise
       end
 
       def void(authorization, options={})
-        commit('void', post)
+        raise
       end
 
       def verify(credit_card, options={})
-        MultiResponse.run(:use_first_response) do |r|
-          r.process { authorize(100, credit_card, options) }
-          r.process(:ignore_result) { void(r.authorization, options) }
-        end
+        raise
       end
 
       private
 
-      def add_customer_data(post, options)
-      end
-
-      def add_address(post, creditcard, options)
-      end
-
-      def add_invoice(post, money, options)
-        post[:amount] = amount(money)
-        post[:currency] = (options[:currency] || currency(money))
-      end
-
-      def add_payment(post, payment)
-      end
-
       def parse(body)
-        {}
+        xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'utf-8'))
+
+        success = xml.xpath('//Epsilon_result/result[@result]/@result').to_s == '1'
+        error_code = xml.xpath('//Epsilon_result/result[@err_code]/@err_code').to_s
+        message = URI.decode(xml.xpath('//Epsilon_result/result[@err_detail][1]').to_s).encode('UTF-8', 'Shift_JIS')
+        trans_code = xml.xpath('//Epsilon_result/result[@trans_code]/@trans_code').to_s
+
+        {
+          success: success,
+          message: "#{error_code}: #{message}",
+          trans_code: trans_code
+        }
       end
 
-      def commit(action, parameters)
+      def commit(_action, parameters)
         url = (test? ? test_url : live_url)
-        response = parse(ssl_post(url, post_data(action, parameters)))
+        response = parse(ssl_post(url, post_data(parameters)))
 
         Response.new(
           success_from(response),
@@ -89,22 +90,19 @@ module ActiveMerchant #:nodoc:
       end
 
       def success_from(response)
+        response[:success]
       end
 
       def message_from(response)
+        response[:message]
       end
 
       def authorization_from(response)
+        {}
       end
 
-      def post_data(action, parameters = {})
-        parameters = %W(
-          user_agent ruby
-        ).each_slice(2).with_object({}) {|(k, v), h|
-          h[k] = v
-        }
-
-        parameters.map {|k, v| "#{k}=#{CGI.escape(v)}"}.join('&')
+      def post_data(parameters = {})
+        parameters.map {|k, v| "#{k}=#{CGI.escape(v.to_s)}"}.join('&')
       end
     end
   end
