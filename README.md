@@ -62,6 +62,33 @@ if credit_card.validate.empty?
 end
 ```
 
+### Convenience Store Payment
+
+```
+convenience_store = ActiveMerchant::Billing::ConvenienceStore.new(
+  code:          ActiveMerchant::Billing::ConvenienceStore::SevenEleven,
+  fullname_kana: 'ヤマダ タロウ',
+  phone_nubmer:  '0312345678'
+)
+
+purchase_detail = {
+  user_id:      'YOUR_APP_USER_IDENTIFIER',
+  user_email:   'yamada-taro@example.com',
+  item_code:    'ITEM001',
+  item_name:    'Greate Product',
+  order_number: 'UNIQUE ORDER NUBMRE',
+}
+
+# 100_00 as convenience store paymet
+response = gateway.purchase(100_00, convenience_store, purchase_detail)
+
+if response.success?
+  puts "Successfully charged #{amount / 100} yen to the credit card #{credit_card.display_number}"
+else
+  raise StandardError, response.message
+end
+```
+
 ## Contributing
 
 1. Create your feature branch (`git checkout -b my-new-feature`)
