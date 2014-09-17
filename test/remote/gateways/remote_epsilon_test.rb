@@ -32,6 +32,14 @@ describe ActiveMerchant::Billing::EpsilonGateway do
     }
   }
 
+  let(:convenience_store) {
+    ActiveMerchant::Billing::ConvenienceStore.new(
+      code:          ActiveMerchant::Billing::ConvenienceStore::SevenEleven,
+      fullname_kana: 'ヤマダ タロウ',
+      phone_nubmer:  '0312345678'
+    )
+  }
+
   let(:amount) { 10000 }
 
   let(:gateway) { ActiveMerchant::Billing::EpsilonGateway.new }
@@ -58,6 +66,14 @@ describe ActiveMerchant::Billing::EpsilonGateway do
 
       it 'has trans_code' do
         subject.params['trans_code'].wont_be :empty?
+      end
+    end
+
+    describe 'valid convenience store' do
+      subject { gateway.purchase(amount, convenience_store, detail) }
+
+      it 'success' do
+        subject.must_be :success?
       end
     end
   end

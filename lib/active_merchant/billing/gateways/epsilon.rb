@@ -3,7 +3,7 @@ require 'nokogiri'
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class EpsilonGateway < Gateway
-      self.test_url = 'https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi'
+      self.test_url = 'https://beta.epsilon.jp/cgi-bin/order/'
       self.live_url = 'https://example.com/live'
 
       self.supported_countries = ['JP']
@@ -17,26 +17,57 @@ module ActiveMerchant #:nodoc:
         super
       end
 
-      def purchase(money, credit_card, detail = {})
-        params = {
-          contract_code: detail[:contract_code],
-          user_id: detail[:user_id],
-          user_name: credit_card.name,
-          user_mail_add: detail[:user_email],
-          item_code: detail[:item_code],
-          item_name: detail[:item_name],
-          order_number: detail[:order_number],
-          st_code: '10000-0000-0000',
-          mission_code: 1,
-          item_price: money,
-          process_code: 1,
-          card_number: credit_card.number,
-          expire_y: credit_card.year,
-          expire_m: credit_card.month,
-          user_agent: 'test'
-        }
+      def purchase(money, payment_method, detail = {})
+        path = case payment_method
+          when CreditCard
+            'direct_card_payment.cgi'
+          when ConvenienceStore
+            'receive_order3.cgi'
+          end
 
-        commit('purchase', params)
+        params = case payment_method
+          when CreditCard
+            {
+              contract_code: detail[:contract_code],
+              user_id: detail[:user_id],
+              user_name: payment_method.name,
+              user_mail_add: detail[:user_email],
+              item_code: detail[:item_code],
+              item_name: detail[:item_name],
+              order_number: detail[:order_number],
+              st_code: '10000-0000-0000',
+              mission_code: 1,
+              item_price: money,
+              process_code: 1,
+              card_number: payment_method.number,
+              expire_y: payment_method.year,
+              expire_m: payment_method.month,
+              user_agent: 'test'
+            }
+          when ConvenienceStore
+            {
+              contract_code: detail[:contract_code],
+              user_id: detail[:user_id],
+              user_name: payment_method.name,
+              user_mail_add: detail[:user_email],
+              item_code: detail[:item_code],
+              item_name: detail[:item_name],
+              order_number: detail[:order_number],
+              st_code: '00100-0000-0000',
+              mission_code: 1,
+              item_price: money,
+              process_code: 1,
+              conveni_code: payment_method.code,
+              user_name_kana: payment_method.name,
+              user_tel: payment_method.phone_number,
+              xml: 1,
+              user_agent: 'test'
+            }
+          else
+            {} # TODO
+        end
+
+        commit(path, params)
       end
 
       def authorize(money, payment, options={})
@@ -76,9 +107,9 @@ module ActiveMerchant #:nodoc:
         }
       end
 
-      def commit(_action, parameters)
+      def commit(path, parameters)
         url = (test? ? test_url : live_url)
-        response = parse(ssl_post(url, post_data(parameters)))
+        response = parse(ssl_post(url + path, post_data(parameters)))
 
         Response.new(
           success_from(response),
