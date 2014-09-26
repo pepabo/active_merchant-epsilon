@@ -36,6 +36,10 @@ describe ActiveMerchant::Billing::EpsilonGateway do
 
   let(:gateway) { ActiveMerchant::Billing::EpsilonGateway.new }
 
+  before do
+    WebMock.allow_net_connect!
+  end
+
   describe '#purchase' do
     describe 'valid creadit_card' do
       subject { gateway.purchase(amount, credit_card, detail) }
