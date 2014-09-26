@@ -31,8 +31,7 @@ gateway = ActiveMerchant::Billing::EpsilonGateway.new(
   contact_code: 'YOUR_CONTACT_CODE'
 )
 
-# Epsilon Gateway accepts all amount as Integer in 銭
-amount = 100_00 # 100 yen
+amount = 10000
 
 credit_card = ActiveMerchant::Billing::CreditCard.new(
   first_name: 'TARO',
@@ -51,11 +50,11 @@ purchase_detail = {
 }
 
 if credit_card.validate.empty?
-  # Capture 100 yen from the credit card
-  response = gateway.purchase(100_00, credit_card, purchase_detail)
+  # Capture 10000 yen from the credit card
+  response = gateway.purchase(amount, credit_card, purchase_detail)
 
   if response.success?
-    puts "Successfully charged #{amount / 100} yen to the credit card #{credit_card.display_number}"
+    puts "Successfully charged #{amount} yen to the credit card #{credit_card.display_number}"
   else
     raise StandardError, response.message
   end
