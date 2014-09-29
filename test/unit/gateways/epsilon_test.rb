@@ -12,7 +12,7 @@ class EpsilonGatewayTest < MiniTest::Test
       stub_gateway(status: 404)
     end
 
-    def test_success
+    def test_raise_error
       assert_raises(ActiveMerchant::ResponseError) do
         gateway.purchase(100, valid_credit_card, purchase_detail)
       end
@@ -24,7 +24,7 @@ class EpsilonGatewayTest < MiniTest::Test
       stub_gateway(status: 403)
     end
 
-    def test_success
+    def test_raise_error
       assert_raises(ActiveMerchant::ResponseError) do
         gateway.purchase(100, valid_credit_card, purchase_detail)
       end
@@ -36,7 +36,7 @@ class EpsilonGatewayTest < MiniTest::Test
       stub_gateway(status: 500)
     end
 
-    def test_success
+    def test_raise_error
       assert_raises(ActiveMerchant::ResponseError) do
         gateway.purchase(100, valid_credit_card, purchase_detail)
       end
