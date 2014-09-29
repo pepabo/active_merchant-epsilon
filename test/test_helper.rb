@@ -43,7 +43,7 @@ module SampleCreditCardMethods
     }
   end
 
-  def return_404
-    stub_request(:post, ActiveMerchant::Billing::EpsilonGateway.test_url).to_return(status: 404)
+  def stub_gateway(status: 200, body: nil)
+    stub_request(:post, ActiveMerchant::Billing::EpsilonGateway.test_url).to_return(status: status)
   end
 end

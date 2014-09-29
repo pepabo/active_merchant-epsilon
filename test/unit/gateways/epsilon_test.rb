@@ -9,11 +9,35 @@ class EpsilonGatewayTest < MiniTest::Test
 
   class NotFoundTest < self
     def setup
-      return_404
+      stub_gateway(status: 404)
     end
 
     def test_success
-      assert_raises(ActiveMerchant::ResponseError, 'Failed with 404') do
+      assert_raises(ActiveMerchant::ResponseError) do
+        gateway.purchase(100, valid_credit_card, purchase_detail)
+      end
+    end
+  end
+
+  class ForbiddenTest < self
+    def setup
+      stub_gateway(status: 403)
+    end
+
+    def test_success
+      assert_raises(ActiveMerchant::ResponseError) do
+        gateway.purchase(100, valid_credit_card, purchase_detail)
+      end
+    end
+  end
+
+  class ServerErrorTest < self
+    def setup
+      stub_gateway(status: 500)
+    end
+
+    def test_success
+      assert_raises(ActiveMerchant::ResponseError) do
         gateway.purchase(100, valid_credit_card, purchase_detail)
       end
     end
