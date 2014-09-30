@@ -61,6 +61,12 @@ if credit_card.validate.empty?
 end
 ```
 
+### Monthly Subscritpion(Recurring Billing)
+
+```ruby
+gateway.recurring(amount, creadit_card, purchase_detail)
+```
+
 ## Contributing
 
 1. Create your feature branch (`git checkout -b my-new-feature`)
