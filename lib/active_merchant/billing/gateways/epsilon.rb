@@ -66,13 +66,15 @@ module ActiveMerchant #:nodoc:
 
         success = xml.xpath('//Epsilon_result/result[@result]/@result').to_s == '1'
         error_code = xml.xpath('//Epsilon_result/result[@err_code]/@err_code').to_s
-        message = URI.decode(xml.xpath('//Epsilon_result/result[@err_detail][1]').to_s).encode('UTF-8', 'Shift_JIS')
+        error_detail = URI.decode(xml.xpath('//Epsilon_result/result[@err_detail]/@err_detail').to_s).encode(Encoding::UTF_8, Encoding::CP932)
         trans_code = xml.xpath('//Epsilon_result/result[@trans_code]/@trans_code').to_s
 
         {
           success: success,
-          message: "#{error_code}: #{message}",
-          trans_code: trans_code
+          message: "#{error_code}: #{error_detail}",
+          trans_code: trans_code,
+          err_code: error_code,
+          err_detail: error_detail
         }
       end
 

@@ -56,7 +56,44 @@ class EpsilonGatewayTest < MiniTest::Test
     end
 
     def test_trans_code
-      assert_equal @xml.css('result[trans_code]').first['trans_code'], @response.params['trans_code']
+      assert_equal(
+        @xml.css('result[trans_code]').first['trans_code'],
+        @response.params['trans_code']
+      )
+    end
+  end
+
+  class PurchaseFailTest < self
+    def setup
+      @xml = Nokogiri.parse(File.read('test/fixtures/invalid_card_number.xml').sub('x-sjis-cp932', 'CP932'))
+      stub_gateway(status: 200, body: @xml.to_s)
+
+      @response = gateway.purchase(100, invalid_credit_card, purchase_detail)
+    end
+
+    def test_success?
+      assert_equal false, @response.success?
+    end
+
+    def test_trans_code
+      assert_equal(
+        @xml.css('result[trans_code]').first['trans_code'],
+        @response.params['trans_code']
+      )
+    end
+
+    def test_err_code
+      assert_equal(
+        @xml.css('result[err_code]').first['err_code'],
+        @response.params['err_code']
+      )
+    end
+
+    def test_err_detail
+      assert_equal(
+        URI.decode(@xml.css('result[err_detail]').first['err_detail']).encode(Encoding::UTF_8, Encoding::CP932),
+        @response.params['err_detail']
+      )
     end
   end
 end
