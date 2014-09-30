@@ -44,6 +44,12 @@ module SampleCreditCardMethods
     }
   end
 
+  def fixture_xml(filename, parse: true)
+    xml = File.read("test/fixtures/#{filename}")
+
+    parse ? Nokogiri.parse(xml.sub('x-sjis-cp932', 'CP932')) : xml
+  end
+
   def stub_gateway(status: 200, body: nil)
     stub_request(:post, ActiveMerchant::Billing::EpsilonGateway.test_url).to_return(
       status: status,

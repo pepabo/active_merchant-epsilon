@@ -45,7 +45,7 @@ class EpsilonGatewayTest < MiniTest::Test
 
   class SuccessTest < self
     def setup
-      @xml = Nokogiri.parse(File.read('test/fixtures/success.xml').sub('x-sjis-cp932', 'CP932'))
+      @xml = fixture_xml('success.xml')
       stub_gateway(status: 200, body: @xml.to_s)
 
       @response = gateway.purchase(100, valid_credit_card, purchase_detail)
@@ -65,7 +65,8 @@ class EpsilonGatewayTest < MiniTest::Test
 
   class PurchaseFailTest < self
     def setup
-      @xml = Nokogiri.parse(File.read('test/fixtures/invalid_card_number.xml').sub('x-sjis-cp932', 'CP932'))
+      @xml = fixture_xml('invalid_card_number.xml')
+
       stub_gateway(status: 200, body: @xml.to_s)
 
       @response = gateway.purchase(100, invalid_credit_card, purchase_detail)
