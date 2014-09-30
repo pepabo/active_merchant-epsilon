@@ -65,16 +65,16 @@ module ActiveMerchant #:nodoc:
         xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'CP932'))
 
         success = xml.xpath('//Epsilon_result/result[@result]/@result').to_s == '1'
+        transaction_code = xml.xpath('//Epsilon_result/result[@trans_code]/@trans_code').to_s
         error_code = xml.xpath('//Epsilon_result/result[@err_code]/@err_code').to_s
         error_detail = URI.decode(xml.xpath('//Epsilon_result/result[@err_detail]/@err_detail').to_s).encode(Encoding::UTF_8, Encoding::CP932)
-        trans_code = xml.xpath('//Epsilon_result/result[@trans_code]/@trans_code').to_s
 
         {
           success: success,
           message: "#{error_code}: #{error_detail}",
-          trans_code: trans_code,
-          err_code: error_code,
-          err_detail: error_detail
+          transaction_code: transaction_code,
+          error_code: error_code,
+          error_detail: error_detail
         }
       end
 

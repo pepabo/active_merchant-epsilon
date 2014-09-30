@@ -55,10 +55,10 @@ class EpsilonGatewayTest < MiniTest::Test
       assert @response.success?
     end
 
-    def test_trans_code
+    def test_transaction_code
       assert_equal(
         @xml.css('result[trans_code]').first['trans_code'],
-        @response.params['trans_code']
+        @response.params['transaction_code']
       )
     end
   end
@@ -76,24 +76,24 @@ class EpsilonGatewayTest < MiniTest::Test
       assert_equal false, @response.success?
     end
 
-    def test_trans_code
+    def test_transaction_code
       assert_equal(
         @xml.css('result[trans_code]').first['trans_code'],
-        @response.params['trans_code']
+        @response.params['transaction_code']
       )
     end
 
-    def test_err_code
+    def test_error_code
       assert_equal(
         @xml.css('result[err_code]').first['err_code'],
-        @response.params['err_code']
+        @response.params['error_code']
       )
     end
 
-    def test_err_detail
+    def test_error_detail
       assert_equal(
         URI.decode(@xml.css('result[err_detail]').first['err_detail']).encode(Encoding::UTF_8, Encoding::CP932),
-        @response.params['err_detail']
+        @response.params['error_detail']
       )
     end
   end

@@ -48,8 +48,8 @@ describe ActiveMerchant::Billing::EpsilonGateway do
         subject.must_be :success?
       end
 
-      it 'has trans_code' do
-        subject.params['trans_code'].wont_be :empty?
+      it 'has transaction_code' do
+        subject.params['transaction_code'].wont_be :empty?
       end
     end
 
@@ -60,8 +60,8 @@ describe ActiveMerchant::Billing::EpsilonGateway do
         subject.wont_be :success?
       end
 
-      it 'has trans_code' do
-        subject.params['trans_code'].wont_be :empty?
+      it 'has transaction_code' do
+        subject.params['transaction_code'].wont_be :empty?
       end
     end
   end
