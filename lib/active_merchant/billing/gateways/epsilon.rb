@@ -62,7 +62,7 @@ module ActiveMerchant #:nodoc:
       private
 
       def parse(body)
-        xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'utf-8'))
+        xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'CP932'))
 
         success = xml.xpath('//Epsilon_result/result[@result]/@result').to_s == '1'
         error_code = xml.xpath('//Epsilon_result/result[@err_code]/@err_code').to_s

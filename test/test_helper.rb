@@ -5,6 +5,7 @@ require 'active_merchant/epsilon'
 
 require 'dotenv'
 require 'pry'
+require 'tapp'
 
 require 'webmock/minitest'
 
@@ -44,6 +45,9 @@ module SampleCreditCardMethods
   end
 
   def stub_gateway(status: 200, body: nil)
-    stub_request(:post, ActiveMerchant::Billing::EpsilonGateway.test_url).to_return(status: status)
+    stub_request(:post, ActiveMerchant::Billing::EpsilonGateway.test_url).to_return(
+      status: status,
+      body: body
+    )
   end
 end

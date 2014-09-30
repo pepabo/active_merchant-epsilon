@@ -42,4 +42,21 @@ class EpsilonGatewayTest < MiniTest::Test
       end
     end
   end
+
+  class SuccessTest < self
+    def setup
+      @xml = Nokogiri.parse(File.read('test/fixtures/success.xml').sub('x-sjis-cp932', 'CP932'))
+      stub_gateway(status: 200, body: @xml.to_s)
+
+      @response = gateway.purchase(100, valid_credit_card, purchase_detail)
+    end
+
+    def test_success?
+      assert @response.success?
+    end
+
+    def test_trans_code
+      assert_equal @xml.css('result[trans_code]').first['trans_code'], @response.params['trans_code']
+    end
+  end
 end
