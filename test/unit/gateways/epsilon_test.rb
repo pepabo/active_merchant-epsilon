@@ -66,7 +66,6 @@ class EpsilonGatewayTest < MiniTest::Test
   class PurchaseFailTest < self
     def setup
       @xml = fixture_xml('invalid_card_number.xml')
-
       stub_gateway(status: 200, body: @xml.to_s)
 
       @response = gateway.purchase(100, invalid_credit_card, purchase_detail)
@@ -92,7 +91,9 @@ class EpsilonGatewayTest < MiniTest::Test
 
     def test_error_detail
       assert_equal(
-        URI.decode(@xml.css('result[err_detail]').first['err_detail']).encode(Encoding::UTF_8, Encoding::CP932),
+        URI.decode(
+          @xml.css('result[err_detail]').first['err_detail']
+        ).encode(Encoding::UTF_8, Encoding::CP932),
         @response.params['error_detail']
       )
     end

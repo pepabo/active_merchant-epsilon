@@ -67,7 +67,9 @@ module ActiveMerchant #:nodoc:
         success = xml.xpath('//Epsilon_result/result[@result]/@result').to_s == '1'
         transaction_code = xml.xpath('//Epsilon_result/result[@trans_code]/@trans_code').to_s
         error_code = xml.xpath('//Epsilon_result/result[@err_code]/@err_code').to_s
-        error_detail = URI.decode(xml.xpath('//Epsilon_result/result[@err_detail]/@err_detail').to_s).encode(Encoding::UTF_8, Encoding::CP932)
+        error_detail = URI.decode(
+          xml.xpath('//Epsilon_result/result[@err_detail]/@err_detail').to_s
+        ).encode(Encoding::UTF_8, Encoding::CP932)
 
         {
           success: success,
