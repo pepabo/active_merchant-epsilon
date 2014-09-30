@@ -13,6 +13,13 @@ module ActiveMerchant #:nodoc:
       self.homepage_url = 'http://www.example.net/'
       self.display_name = 'New Gateway'
 
+      module ResponseXpath
+        RESULT = '//Epsilon_result/result[@result]/@result'
+        TRANSACTION_CODE = '//Epsilon_result/result[@trans_code]/@trans_code'
+        ERROR_CODE = '//Epsilon_result/result[@err_code]/@err_code'
+        ERROR_DETAIL = '//Epsilon_result/result[@err_detail]/@err_detail'
+      end
+
       def initialize(options={})
         super
       end
@@ -62,17 +69,21 @@ module ActiveMerchant #:nodoc:
       private
 
       def parse(body)
-        xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'utf-8'))
+        xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'CP932'))
 
-        success = xml.xpath('//Epsilon_result/result[@result]/@result').to_s == '1'
-        error_code = xml.xpath('//Epsilon_result/result[@err_code]/@err_code').to_s
-        message = URI.decode(xml.xpath('//Epsilon_result/result[@err_detail][1]').to_s).encode('UTF-8', 'Shift_JIS')
-        trans_code = xml.xpath('//Epsilon_result/result[@trans_code]/@trans_code').to_s
+        success = xml.xpath(ResponseXpath::RESULT).to_s == '1'
+        transaction_code = xml.xpath(ResponseXpath::TRANSACTION_CODE).to_s
+        error_code = xml.xpath(ResponseXpath::ERROR_CODE).to_s
+        error_detail = URI.decode(
+          xml.xpath(ResponseXpath::ERROR_DETAIL).to_s
+        ).encode(Encoding::UTF_8, Encoding::CP932)
 
         {
           success: success,
-          message: "#{error_code}: #{message}",
-          trans_code: trans_code
+          message: "#{error_code}: #{error_detail}",
+          transaction_code: transaction_code,
+          error_code: error_code,
+          error_detail: error_detail
         }
       end
 

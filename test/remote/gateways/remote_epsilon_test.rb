@@ -36,6 +36,10 @@ describe ActiveMerchant::Billing::EpsilonGateway do
 
   let(:gateway) { ActiveMerchant::Billing::EpsilonGateway.new }
 
+  before do
+    WebMock.allow_net_connect!
+  end
+
   describe '#purchase' do
     describe 'valid creadit_card' do
       subject { gateway.purchase(amount, credit_card, detail) }
@@ -44,8 +48,8 @@ describe ActiveMerchant::Billing::EpsilonGateway do
         subject.must_be :success?
       end
 
-      it 'has trans_code' do
-        subject.params['trans_code'].wont_be :empty?
+      it 'has transaction_code' do
+        subject.params['transaction_code'].wont_be :empty?
       end
     end
 
@@ -56,8 +60,8 @@ describe ActiveMerchant::Billing::EpsilonGateway do
         subject.wont_be :success?
       end
 
-      it 'has trans_code' do
-        subject.params['trans_code'].wont_be :empty?
+      it 'has transaction_code' do
+        subject.params['transaction_code'].wont_be :empty?
       end
     end
   end
