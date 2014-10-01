@@ -50,12 +50,16 @@ module ActiveMerchant #:nodoc:
       end
 
       def purchase(amount, credit_card, detail = {})
+        detail[:process_code] = 1
+        detail[:mission_code] = MissionCode::PURCHASE
+
         params = billing_params(amount, credit_card, detail)
 
         commit('purchase', params)
       end
 
       def recurring(amount, credit_card, detail = {})
+        detail[:process_code] = 1
         detail[:mission_code] ||= MissionCode::RECURRING_2
 
         params = billing_params(amount, credit_card, detail)
@@ -135,9 +139,9 @@ module ActiveMerchant #:nodoc:
           item_name: detail[:item_name],
           order_number: detail[:order_number],
           st_code: '10000-0000-0000',
-          mission_code: detail[:mission_code] || MissionCode::PURCHASE,
+          mission_code: detail[:mission_code],
           item_price: amount,
-          process_code: detail[:process_code] || 1,
+          process_code: detail[:process_code],
           card_number: credit_card.number,
           expire_y: credit_card.year,
           expire_m: credit_card.month,
