@@ -20,6 +20,31 @@ module ActiveMerchant #:nodoc:
         ERROR_DETAIL = '//Epsilon_result/result[@err_detail]/@err_detail'
       end
 
+      module MissionCode
+        # クレジット1回、またはクレジット決済以外の場合
+        PURCHASE = 1
+
+        # | CODE | 登録月 | 解除月 | 同月内での登録解除 |
+        # | 2    | 全額   | 無料   | 1ヶ月分            |
+        # | 3    | 全額   | 全額   | 1ヶ月分            |
+        # | 4    | 全額   | 日割   | 1ヶ月分            |
+        # | 5    | 無料   | 無料   | 無料               |
+        # | 6    | 無料   | 全角   | 1ヶ月分            |
+        # | 7    | 無料   | 日割   | 日割               |
+        # | 8    | 日割   | 無料   | 日割               |
+        # | 9    | 日割   | 全額   | 1ヶ月分            |
+        # | 10   | 日割   | 日割   | 日割               |
+        RECURRING_2 = 2
+        RECURRING_3 = 3
+        RECURRING_4 = 4
+        RECURRING_5 = 5
+        RECURRING_6 = 6
+        RECURRING_7 = 7
+        RECURRING_8 = 8
+        RECURRING_9 = 9
+        RECURRING_10 = 10
+      end
+
       def initialize(options={})
         super
       end
@@ -34,7 +59,7 @@ module ActiveMerchant #:nodoc:
           item_name: detail[:item_name],
           order_number: detail[:order_number],
           st_code: '10000-0000-0000',
-          mission_code: 1,
+          mission_code: MissionCode::PURCHASE,
           item_price: money,
           process_code: 1,
           card_number: credit_card.number,
