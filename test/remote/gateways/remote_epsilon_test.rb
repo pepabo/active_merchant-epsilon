@@ -22,4 +22,16 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
 
     assert_equal false, response.success?
   end
+
+  def test_recurring_successful
+    response = gateway.recurring(10000, valid_credit_card, purchase_detail)
+
+    assert_equal true, response.success?
+  end
+
+  def test_recurring_fail
+    response = gateway.recurring(10000, invalid_credit_card, purchase_detail)
+
+    assert_equal false, response.success?
+  end
 end

@@ -49,24 +49,16 @@ module ActiveMerchant #:nodoc:
         super
       end
 
-      def purchase(money, credit_card, detail = {})
-        params = {
-          contract_code: detail[:contract_code],
-          user_id: detail[:user_id],
-          user_name: credit_card.name,
-          user_mail_add: detail[:user_email],
-          item_code: detail[:item_code],
-          item_name: detail[:item_name],
-          order_number: detail[:order_number],
-          st_code: '10000-0000-0000',
-          mission_code: MissionCode::PURCHASE,
-          item_price: money,
-          process_code: 1,
-          card_number: credit_card.number,
-          expire_y: credit_card.year,
-          expire_m: credit_card.month,
-          user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
-        }
+      def purchase(amount, credit_card, detail = {})
+        params = billing_params(amount, credit_card, detail)
+
+        commit('purchase', params)
+      end
+
+      def recurring(amount, credit_card, detail = {})
+        detail[:mission_code] ||= MissionCode::RECURRING_2
+
+        params = billing_params(amount, credit_card, detail)
 
         commit('purchase', params)
       end
@@ -131,6 +123,26 @@ module ActiveMerchant #:nodoc:
 
       def message_from(response)
         response[:message]
+      end
+
+      def billing_params(amount, credit_card, detail)
+        {
+          contract_code: detail[:contract_code],
+          user_id: detail[:user_id],
+          user_name: credit_card.name,
+          user_mail_add: detail[:user_email],
+          item_code: detail[:item_code],
+          item_name: detail[:item_name],
+          order_number: detail[:order_number],
+          st_code: '10000-0000-0000',
+          mission_code: detail[:mission_code] || MissionCode::PURCHASE,
+          item_price: amount,
+          process_code: detail[:process_code] || 1,
+          card_number: credit_card.number,
+          expire_y: credit_card.year,
+          expire_m: credit_card.month,
+          user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
+        }
       end
 
       def authorization_from(response)
