@@ -65,7 +65,7 @@ module ActiveMerchant #:nodoc:
           card_number: credit_card.number,
           expire_y: credit_card.year,
           expire_m: credit_card.month,
-          user_agent: 'test'
+          user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
         }
 
         commit('purchase', params)
