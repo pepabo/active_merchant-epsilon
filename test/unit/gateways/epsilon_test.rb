@@ -98,4 +98,84 @@ class EpsilonGatewayTest < MiniTest::Test
       )
     end
   end
+
+  class RecurringSuccessTest < self
+    def setup
+      @xml = fixture_xml('success.xml')
+      stub_gateway(status: 200, body: @xml.to_s)
+
+      @response = gateway.recurring(100, valid_credit_card, purchase_detail)
+    end
+
+    def test_success?
+      assert @response.success?
+    end
+
+    def test_transaction_code
+      assert_equal(
+        @xml.css('result[trans_code]').first['trans_code'],
+        @response.params['transaction_code']
+      )
+    end
+  end
+
+  module RecurringFailTest
+    def setup
+      @xml = fixture_xml('invalid_card_number.xml')
+      stub_gateway(status: 200, body: @xml.to_s)
+
+      @response = gateway.recurring(100, valid_credit_card, purchase_detail)
+    end
+
+    def test_success?
+      assert @response.success?
+    end
+
+    def test_transaction_code
+      assert_equal(
+        @xml.css('result[trans_code]').first['trans_code'],
+        @response.params['transaction_code']
+      )
+    end
+
+    def test_error_code
+      assert_equal(
+        @xml.css('result[err_code]').first['err_code'],
+        @response.params['error_code']
+      )
+    end
+
+    def test_error_detail
+      assert_equal(
+        URI.decode(
+          @xml.css('result[err_detail]').first['err_detail']
+        ).encode(Encoding::UTF_8, Encoding::CP932),
+        @response.params['error_detail']
+      )
+    end
+  end
+
+  class RecurringMissionCodeValidationTest < self
+    def setup
+      stub_gateway(status: 200, body: fixture_xml('success.xml').to_s)
+
+      @detail = purchase_detail
+    end
+
+    def test_invalid_mission_code
+      @detail[:mission_code] = ActiveMerchant::Billing::EpsilonGateway::MissionCode::PURCHASE
+
+      assert_raises(ArgumentError) do
+        gateway.recurring(100, valid_credit_card, @detail)
+      end
+    end
+
+    def test_valid_mission_code
+      @detail[:mission_code] = ActiveMerchant::Billing::EpsilonGateway::MissionCode::RECURRING_6
+
+      gateway.recurring(100, valid_credit_card, @detail)
+
+      pass
+    end
+  end
 end

@@ -43,6 +43,8 @@ module ActiveMerchant #:nodoc:
         RECURRING_8 = 8
         RECURRING_9 = 9
         RECURRING_10 = 10
+
+        RECURRINGS = (2..10).to_a.freeze
       end
 
       def initialize(options={})
@@ -61,6 +63,8 @@ module ActiveMerchant #:nodoc:
       def recurring(amount, credit_card, detail = {})
         detail[:process_code] = 1
         detail[:mission_code] ||= MissionCode::RECURRING_2
+
+        requires!(detail, [:mission_code, *MissionCode::RECURRINGS])
 
         params = billing_params(amount, credit_card, detail)
 
