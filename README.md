@@ -61,7 +61,7 @@ if credit_card.validate.empty?
 end
 ```
 
-### Monthly Subscritpion(Recurring Billing)
+### Monthly Subscritpion (Recurring Billing)
 
 ```ruby
 purchase_detail[:mission_code] = ActiveMerchant::Billing::EpsilonGateway::MissionCode::RECURRING_6
