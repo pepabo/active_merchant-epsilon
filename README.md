@@ -71,12 +71,12 @@ gateway.recurring(amount, creadit_card, purchase_detail)
 
 ### Error handling
 
-If epsilon server returns status excepted 200, '#purchase' method raise `ActiveMerchant::ResponseError`.
+If epsilon server returns status excepted 200, `#purchase` method raise `ActiveMerchant::ResponseError`.
 
 When your request parameters are wrong(e.g. contract_code), the method return failuer response.
 
-- '#success?' returns `false`
-- '#params' has error detail
+- `#success?` returns `false`
+- `#params` has error detail
 
 ```ruby
 response = gateway.purchase(10000, creadit_card, invalid_detail)
