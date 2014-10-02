@@ -38,7 +38,7 @@ credit_card = ActiveMerchant::Billing::CreditCard.new(
   last_name:  'YAMADA',
   number:     '4242424242424242',
   month:      '10',
-  year:       Time.now.year+1
+  year:       Time.now.year + 1
 )
 
 purchase_detail = {
