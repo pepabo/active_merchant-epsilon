@@ -61,6 +61,14 @@ if credit_card.validate.empty?
 end
 ```
 
+### Monthly Subscritpion(Recurring Billing)
+
+```ruby
+purchase_detail[:mission_code] = ActiveMerchant::Billing::EpsilonGateway::MissionCode::RECURRING_6
+
+gateway.recurring(amount, creadit_card, purchase_detail)
+```
+
 ## Contributing
 
 1. Create your feature branch (`git checkout -b my-new-feature`)

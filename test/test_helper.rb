@@ -36,11 +36,12 @@ module SampleCreditCardMethods
 
   def purchase_detail
     {
-      user_id:      SecureRandom.hex(10),
-      user_email:   'yamada-taro@example.com',
-      item_code:    'ITEM001',
-      item_name:    'Greate Product',
-      order_number: 'UNIQUE ORDER NUBMRE',
+      contract_code: ENV['CONTRACT_CODE'],
+      user_id:       rand(1000),
+      user_email:    'yamada-taro@example.com',
+      item_code:     'ITEM001',
+      item_name:     'Greate Product',
+      order_number:  rand(1000)
     }
   end
 

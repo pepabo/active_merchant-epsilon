@@ -1,68 +1,37 @@
 require 'test_helper'
 
-describe ActiveMerchant::Billing::EpsilonGateway do
-  let(:credit_card) {
-    ActiveMerchant::Billing::CreditCard.new(
-      first_name: 'TARO',
-      last_name:  'YAMADA',
-      number:     '4242424242424242',
-      month:      '10',
-      year:       Time.now.year + 1
-    )
-  }
+class RemoteEpsilonGatewayTest < MiniTest::Test
+  include SampleCreditCardMethods
 
-  let(:invalid_credit_card) {
-    ActiveMerchant::Billing::CreditCard.new(
-      first_name: 'TARO',
-      last_name:  'YAMADA',
-      number:     '0000000000000000',
-      month:      '10',
-      year:       Time.now.year + 1 ,
-    )
-  }
+  def gateway
+    @gateway ||= ActiveMerchant::Billing::EpsilonGateway.new
+  end
 
-  let(:detail) {
-    {
-      contract_code: ENV['CONTRACT_CODE'],
-      user_id:       'YOUR_APP_USER_IDENTIFIER',
-      user_email:    'yamada-taro@example.com',
-      item_code:     'ITEM001',
-      item_name:     'Greate Product',
-      order_number:  rand(1000000),
-    }
-  }
-
-  let(:amount) { 10000 }
-
-  let(:gateway) { ActiveMerchant::Billing::EpsilonGateway.new }
-
-  before do
+  def setup
     WebMock.allow_net_connect!
   end
 
-  describe '#purchase' do
-    describe 'valid creadit_card' do
-      subject { gateway.purchase(amount, credit_card, detail) }
+  def test_purchase_successful
+    response = gateway.purchase(10000, valid_credit_card, purchase_detail)
 
-      it 'success' do
-        subject.must_be :success?
-      end
+    assert_equal true, response.success?
+  end
 
-      it 'has transaction_code' do
-        subject.params['transaction_code'].wont_be :empty?
-      end
-    end
+  def test_purchase_fail
+    response = gateway.purchase(10000, invalid_credit_card, purchase_detail)
 
-    describe 'invalid creadit_card' do
-      subject { gateway.purchase(amount, invalid_credit_card, detail) }
+    assert_equal false, response.success?
+  end
 
-      it 'fail' do
-        subject.wont_be :success?
-      end
+  def test_recurring_successful
+    response = gateway.recurring(10000, valid_credit_card, purchase_detail)
 
-      it 'has transaction_code' do
-        subject.params['transaction_code'].wont_be :empty?
-      end
-    end
+    assert_equal true, response.success?
+  end
+
+  def test_recurring_fail
+    response = gateway.recurring(10000, invalid_credit_card, purchase_detail)
+
+    assert_equal false, response.success?
   end
 end
