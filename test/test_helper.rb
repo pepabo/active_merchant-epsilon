@@ -13,6 +13,8 @@ Dotenv.load
 
 ActiveMerchant::Billing::Base.mode = :test
 
+ActiveMerchant::Billing::EpsilonGateway.contract_code = ENV['CONTRACT_CODE']
+
 module SampleCreditCardMethods
   def valid_credit_card
     ActiveMerchant::Billing::CreditCard.new(
@@ -36,7 +38,6 @@ module SampleCreditCardMethods
 
   def purchase_detail
     {
-      contract_code: ENV['CONTRACT_CODE'],
       user_id:       rand(1000),
       user_email:    'yamada-taro@example.com',
       item_code:     'ITEM001',

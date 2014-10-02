@@ -27,9 +27,9 @@ require 'active_merchant'
 
 ActiveMerchant::Billing::Base.mode = :test
 
-gateway = ActiveMerchant::Billing::EpsilonGateway.new(
-  contact_code: 'YOUR_CONTACT_CODE'
-)
+ActiveMerchant::Billing::EpsilonGateway.contract_code = 'YOUR_CONTRACT_CODE'
+
+gateway = ActiveMerchant::Billing::EpsilonGateway.new
 
 amount = 10000
 

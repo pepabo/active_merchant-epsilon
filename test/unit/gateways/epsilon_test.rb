@@ -4,7 +4,7 @@ class EpsilonGatewayTest < MiniTest::Test
   include SampleCreditCardMethods
 
   def gateway
-    @gateway ||= ActiveMerchant::Billing::EpsilonGateway.new(contact_code: 'Foo')
+    @gateway ||= ActiveMerchant::Billing::EpsilonGateway.new
   end
 
   class NotFoundTest < self
