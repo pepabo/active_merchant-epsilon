@@ -13,6 +13,8 @@ module ActiveMerchant #:nodoc:
       self.homepage_url = 'http://www.example.net/'
       self.display_name = 'New Gateway'
 
+      cattr_accessor :contract_code
+
       module ResponseXpath
         RESULT = '//Epsilon_result/result[@result]/@result'
         TRANSACTION_CODE = '//Epsilon_result/result[@trans_code]/@trans_code'
@@ -135,7 +137,7 @@ module ActiveMerchant #:nodoc:
 
       def billing_params(amount, credit_card, detail)
         {
-          contract_code: detail[:contract_code],
+          contract_code: detail[:contract_code] || self.contract_code,
           user_id: detail[:user_id],
           user_name: credit_card.name,
           user_mail_add: detail[:user_email],
