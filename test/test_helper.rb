@@ -37,7 +37,7 @@ module SampleCreditCardMethods
   end
 
   def purchase_detail
-    @_purchase_detail ||= {
+    {
       user_id:       rand(1000),
       user_email:    'yamada-taro@example.com',
       item_code:     'ITEM001',
