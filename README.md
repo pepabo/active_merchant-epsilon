@@ -69,6 +69,12 @@ purchase_detail[:mission_code] = ActiveMerchant::Billing::EpsilonGateway::Missio
 gateway.recurring(amount, creadit_card, purchase_detail)
 ```
 
+### Cancel recurring billing
+
+```ruby
+gateway.cancel_recurring(user_id: 'user_id', item_code: 'item_code')
+```
+
 ### Error handling
 
 If epsilon server returns status excepted 200, `#purchase` method raise `ActiveMerchant::ResponseError`.
