@@ -52,8 +52,11 @@ module SampleCreditCardMethods
     parse ? Nokogiri.parse(xml.sub('x-sjis-cp932', 'CP932')) : xml
   end
 
-  def stub_gateway(status: 200, body: nil)
-    stub_request(:post, ActiveMerchant::Billing::EpsilonGateway.test_url).to_return(
+  def stub_gateway(status: 200, body: nil, action: :purchase)
+    endpoint = ActiveMerchant::Billing::EpsilonGateway.test_url
+    path = ActiveMerchant::Billing::EpsilonGateway::PATHS[action]
+
+    stub_request(:post, endpoint + path).to_return(
       status: status,
       body: body
     )

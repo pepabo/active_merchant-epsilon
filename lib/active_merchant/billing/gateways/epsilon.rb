@@ -15,6 +15,11 @@ module ActiveMerchant #:nodoc:
 
       cattr_accessor :contract_code
 
+      PATHS = {
+        purchase: 'direct_card_payment.cgi',
+        cancel_recurring: 'receive_order3.cgi'
+      }.freeze
+
       module ResponseXpath
         RESULT = '//Epsilon_result/result[@result]/@result'
         TRANSACTION_CODE = '//Epsilon_result/result[@trans_code]/@trans_code'
@@ -128,14 +133,7 @@ module ActiveMerchant #:nodoc:
       def commit(action, parameters)
         url = (test? ? test_url : live_url)
 
-        path = case action
-               when 'purchase'
-                 'direct_card_payment.cgi'
-               when 'cancel_recurring'
-                 'receive_order3.cgi'
-               else
-                 raise ArgumentError
-               end
+        path = PATHS[action.to_sym]
 
         response = parse(ssl_post(url + path, post_data(parameters)))
 
