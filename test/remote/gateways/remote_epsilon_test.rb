@@ -61,4 +61,8 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
 
     assert_equal false, response.success?
   end
+
+  def test_store
+    fail
+  end
 end
