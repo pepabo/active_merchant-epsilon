@@ -3,7 +3,7 @@ require 'nokogiri'
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class EpsilonGateway < Gateway
-      self.test_url = 'https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi'
+      self.test_url = 'https://beta.epsilon.jp/cgi-bin/order/'
       self.live_url = 'https://example.com/live'
 
       self.supported_countries = ['JP']
@@ -14,6 +14,11 @@ module ActiveMerchant #:nodoc:
       self.display_name = 'New Gateway'
 
       cattr_accessor :contract_code
+
+      PATHS = {
+        purchase: 'direct_card_payment.cgi',
+        cancel_recurring: 'receive_order3.cgi'
+      }.freeze
 
       module ResponseXpath
         RESULT = '//Epsilon_result/result[@result]/@result'
@@ -73,6 +78,17 @@ module ActiveMerchant #:nodoc:
         commit('purchase', params)
       end
 
+      def cancel_recurring(user_id:, item_code:)
+        commit(
+          'cancel_recurring',
+          contract_code: self.contract_code,
+          user_id: user_id,
+          item_code: item_code,
+          xml: 1,
+          process_code: 8
+        )
+      end
+
       def authorize(money, payment, options={})
         raise
       end
@@ -114,9 +130,12 @@ module ActiveMerchant #:nodoc:
         }
       end
 
-      def commit(_action, parameters)
+      def commit(action, parameters)
         url = (test? ? test_url : live_url)
-        response = parse(ssl_post(url, post_data(parameters)))
+
+        path = PATHS[action.to_sym]
+
+        response = parse(ssl_post(url + path, post_data(parameters)))
 
         Response.new(
           success_from(response),
