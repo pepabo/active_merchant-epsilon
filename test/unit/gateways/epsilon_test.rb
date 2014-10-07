@@ -192,4 +192,18 @@ class EpsilonGatewayTest < MiniTest::Test
       assert_equal true, response.success?
     end
   end
+
+  class CancelRecurringFailTest < self
+    def setup
+      stub_gateway(status: 200, body: fixture_xml('cancel_recurring_fail.xml').to_s, action: :cancel_recurring)
+
+      @detail = purchase_detail
+    end
+
+    def test_cancel_recurring
+      response = gateway.cancel_recurring(user_id: @detail[:user_id], item_code: @detail[:item_code])
+
+      assert_equal false, response.success?
+    end
+  end
 end
