@@ -75,6 +75,18 @@ gateway.recurring(amount, creadit_card, purchase_detail)
 gateway.cancel_recurring(user_id: 'user_id', item_code: 'item_code')
 ```
 
+### Void Transaction
+
+```ruby
+gateway.void('order_number')
+```
+
+### Verify Credit Card
+
+```ruby
+gateway.verify(credit_card, user_id: 'user_id', user_email: 'user@example.com')
+```
+
 ### Error handling
 
 If epsilon server returns status excepted 200, `#purchase` method raise `ActiveMerchant::ResponseError`.
