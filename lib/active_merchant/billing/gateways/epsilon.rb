@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'active_support/core_ext/string'
 
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
@@ -111,7 +112,15 @@ module ActiveMerchant #:nodoc:
       end
 
       def verify(credit_card, options={})
-        raise
+        o = options.dup
+        o[:order_number] ||= "#{Time.now.to_i}#{options[:user_id]}".first(32)
+        o[:item_code] = 'verifycreditcard'
+        o[:item_name] = 'verify credit card'
+
+        MultiResponse.run(:use_first_response) do |r|
+          r.process { purchase(1, credit_card, o) }
+          r.process(:ignore_result) { void(o[:order_number]) }
+        end
       end
 
       private
