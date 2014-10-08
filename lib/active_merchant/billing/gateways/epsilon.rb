@@ -17,7 +17,8 @@ module ActiveMerchant #:nodoc:
 
       PATHS = {
         purchase: 'direct_card_payment.cgi',
-        cancel_recurring: 'receive_order3.cgi'
+        cancel_recurring: 'receive_order3.cgi',
+        void: 'cancel_payment.cgi'
       }.freeze
 
       module ResponseXpath
@@ -101,8 +102,12 @@ module ActiveMerchant #:nodoc:
         raise
       end
 
-      def void(authorization, options={})
-        raise
+      def void(order_number)
+        commit(
+          'void',
+          contract_code: self.contract_code,
+          order_number: order_number
+        )
       end
 
       def verify(credit_card, options={})

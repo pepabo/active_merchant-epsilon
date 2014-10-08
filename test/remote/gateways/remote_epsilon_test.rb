@@ -61,4 +61,22 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
 
     assert_equal false, response.success?
   end
+
+  def test_void
+    detail = purchase_detail
+
+    purchase_response = gateway.purchase(100, valid_credit_card, detail)
+
+    assert_equal true, purchase_response.success?
+
+    response = gateway.void(detail[:order_number])
+
+    assert_equal true, response.success?
+  end
+
+  def test_void_fail
+    response = gateway.void('1234567890')
+
+    assert_equal false, response.success?
+  end
 end
