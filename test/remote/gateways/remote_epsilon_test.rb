@@ -85,4 +85,10 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
 
     assert_equal true, response.success?
   end
+
+  def test_verify_fail
+    response = gateway.verify(invalid_credit_card, purchase_detail.slice(:user_id, :user_email))
+
+    assert_equal false, response.success?
+  end
 end
