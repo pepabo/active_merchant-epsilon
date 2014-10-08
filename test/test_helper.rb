@@ -38,11 +38,11 @@ module SampleCreditCardMethods
 
   def purchase_detail
     {
-      user_id:       rand(1000),
+      user_id:       "U#{Time.now.to_i}",
       user_email:    'yamada-taro@example.com',
       item_code:     'ITEM001',
       item_name:     'Greate Product',
-      order_number:  rand(1000)
+      order_number:  "O#{Time.now.to_i}"
     }
   end
 
