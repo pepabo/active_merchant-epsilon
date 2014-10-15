@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 15 Oct 2014 05:59:46 GMT
+      - Wed, 15 Oct 2014 06:45:41 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -38,5 +38,5 @@ http_interactions:
           <result result="9" />
         </Epsilon_result>
     http_version: 
-  recorded_at: Wed, 15 Oct 2014 05:59:46 GMT
+  recorded_at: Wed, 15 Oct 2014 06:45:42 GMT
 recorded_with: VCR 2.9.3

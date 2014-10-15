@@ -5,7 +5,7 @@ http_interactions:
     uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
     body:
       encoding: US-ASCII
-      string: contract_code=<CONTRACT_CODE>&user_id=U1413352788&user_name=TARO+YAMADA&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O48622675&st_code=10000-0000-0000&mission_code=2&item_price=10000&process_code=1&card_number=4242424242424242&expire_y=2015&expire_m=10&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1
+      string: contract_code=<CONTRACT_CODE>&user_id=U1413355547&user_name=TARO+YAMADA&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O47958839&st_code=10000-0000-0000&mission_code=2&item_price=10000&process_code=1&card_number=4242424242424242&expire_y=2015&expire_m=10&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 15 Oct 2014 05:59:48 GMT
+      - Wed, 15 Oct 2014 06:45:48 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -39,16 +39,16 @@ http_interactions:
           <result kari_flag="0" />
           <result pareq="" />
           <result result="1" />
-          <result trans_code="494168" />
+          <result trans_code="494189" />
         </Epsilon_result>
     http_version: 
-  recorded_at: Wed, 15 Oct 2014 05:59:49 GMT
+  recorded_at: Wed, 15 Oct 2014 06:45:49 GMT
 - request:
     method: post
     uri: https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi
     body:
       encoding: US-ASCII
-      string: contract_code=<CONTRACT_CODE>&user_id=U1413352788&item_code=ITEM001wrong&xml=1&process_code=8
+      string: contract_code=<CONTRACT_CODE>&user_id=U1413355547&item_code=ITEM001&xml=1&process_code=8
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -64,7 +64,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 15 Oct 2014 05:59:50 GMT
+      - Wed, 15 Oct 2014 06:45:49 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -74,9 +74,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "<?xml version=\"1.0\" encoding=\"x-sjis-cp932\" ?>\r\n  <Epsilon_result>\r\n
-        \   <result result=\"0\" />\r\n    <result err_code=\"605\" />\r\n    <result
-        err_detail=\"%8C%8E%8E%9F%89%DB%8B%E0%83f%81%5B%83%5E%8C%9F%8D%F5%83G%83%89%81%5B\"
-        />\r\n    <result memo1=\"\" />\r\n    <result memo2=\"\" />\r\n  </Epsilon_result>"
+        \   <result result=\"1\" />\r\n    <result user_id=\"U1413355547\" />\r\n
+        \   <result item_code=\"ITEM001\" />\r\n    <result item_name=\"Greate%20Product\"
+        />\r\n    <result item_price=\"10000\" />\r\n    <result mission_code=\"2\"
+        />\r\n    <result memo1=\"\" />\r\n    <result memo2=\"\" />\r\n </Epsilon_result>\r\n"
     http_version: 
-  recorded_at: Wed, 15 Oct 2014 05:59:50 GMT
+  recorded_at: Wed, 15 Oct 2014 06:45:50 GMT
 recorded_with: VCR 2.9.3

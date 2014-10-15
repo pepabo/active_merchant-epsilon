@@ -5,7 +5,7 @@ http_interactions:
     uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
     body:
       encoding: US-ASCII
-      string: contract_code=<CONTRACT_CODE>&user_id=U1413352794&user_name=TARO+YAMADA&user_mail_add=yamada-taro%40example.com&item_code=verifycreditcard&item_name=verify+credit+card&order_number=1413352794U1413352794&st_code=10000-0000-0000&mission_code=1&item_price=1&process_code=1&card_number=0000000000000000&expire_y=2015&expire_m=10&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1
+      string: contract_code=<CONTRACT_CODE>&user_id=U1413355552&user_name=TARO+YAMADA&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O52423457&st_code=10000-0000-0000&mission_code=1&item_price=10000&process_code=1&card_number=4242424242424242&expire_y=2015&expire_m=10&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 15 Oct 2014 05:59:54 GMT
+      - Wed, 15 Oct 2014 06:45:52 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -34,12 +34,13 @@ http_interactions:
         <?xml version="1.0" encoding="x-sjis-cp932"?>
         <Epsilon_result>
           <result acsurl="" />
-          <result err_code="601" />
-          <result err_detail="%82%B2%97%98%97p%82%CC%93X%95%DC%82%C5%82%CD%97%98%97p%82%C5%82%AB%82%C8%82%A2%83J%81%5B%83h%94%D4%8D%86%82%C5%82%B7%81B%8D%C4%93x%93%FC%97%CD%82%A8%8A%E8%82%A2%82%A2%82%BD%82%B5%82%DC%82%B7%81B" />
+          <result err_code="" />
+          <result err_detail="" />
+          <result kari_flag="1" />
           <result pareq="" />
-          <result result="0" />
-          <result trans_code="494172" />
+          <result result="1" />
+          <result trans_code="494192" />
         </Epsilon_result>
     http_version: 
-  recorded_at: Wed, 15 Oct 2014 05:59:54 GMT
+  recorded_at: Wed, 15 Oct 2014 06:45:54 GMT
 recorded_with: VCR 2.9.3

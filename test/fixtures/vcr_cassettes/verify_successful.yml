@@ -5,7 +5,7 @@ http_interactions:
     uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
     body:
       encoding: US-ASCII
-      string: contract_code=<CONTRACT_CODE>&user_id=U1413352786&user_name=TARO+YAMADA&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O46788123&st_code=10000-0000-0000&mission_code=1&item_price=100&process_code=1&card_number=4242424242424242&expire_y=2015&expire_m=10&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1
+      string: contract_code=<CONTRACT_CODE>&user_id=U1413355542&user_name=TARO+YAMADA&user_mail_add=yamada-taro%40example.com&item_code=verifycreditcard&item_name=verify+credit+card&order_number=1413355542U1413355542&st_code=10000-0000-0000&mission_code=1&item_price=1&process_code=1&card_number=4242424242424242&expire_y=2015&expire_m=10&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 15 Oct 2014 05:59:46 GMT
+      - Wed, 15 Oct 2014 06:45:42 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -39,16 +39,16 @@ http_interactions:
           <result kari_flag="1" />
           <result pareq="" />
           <result result="1" />
-          <result trans_code="494167" />
+          <result trans_code="494187" />
         </Epsilon_result>
     http_version: 
-  recorded_at: Wed, 15 Oct 2014 05:59:48 GMT
+  recorded_at: Wed, 15 Oct 2014 06:45:44 GMT
 - request:
     method: post
     uri: https://beta.epsilon.jp/cgi-bin/order/cancel_payment.cgi
     body:
       encoding: US-ASCII
-      string: contract_code=<CONTRACT_CODE>&order_number=O46788123
+      string: contract_code=<CONTRACT_CODE>&order_number=1413355542U1413355542
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -64,7 +64,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 15 Oct 2014 05:59:48 GMT
+      - Wed, 15 Oct 2014 06:45:45 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -81,5 +81,5 @@ http_interactions:
           <result result="1" />
         </Epsilon_result>
     http_version: 
-  recorded_at: Wed, 15 Oct 2014 05:59:48 GMT
+  recorded_at: Wed, 15 Oct 2014 06:45:45 GMT
 recorded_with: VCR 2.9.3
