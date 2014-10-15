@@ -1,0 +1,85 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
+    body:
+      encoding: US-ASCII
+      string: contract_code=<CONTRACT_CODE>&user_id=U1413352786&user_name=TARO+YAMADA&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O46788123&st_code=10000-0000-0000&mission_code=1&item_price=100&process_code=1&card_number=4242424242424242&expire_y=2015&expire_m=10&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 15 Oct 2014 05:59:46 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result acsurl="" />
+          <result err_code="" />
+          <result err_detail="" />
+          <result kari_flag="1" />
+          <result pareq="" />
+          <result result="1" />
+          <result trans_code="494167" />
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Wed, 15 Oct 2014 05:59:48 GMT
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/cancel_payment.cgi
+    body:
+      encoding: US-ASCII
+      string: contract_code=<CONTRACT_CODE>&order_number=O46788123
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 15 Oct 2014 05:59:48 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result err_code="" />
+          <result err_detail="" />
+          <result result="1" />
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Wed, 15 Oct 2014 05:59:48 GMT
+recorded_with: VCR 2.9.3
