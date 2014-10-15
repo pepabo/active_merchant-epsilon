@@ -8,4 +8,4 @@ build:
 
     - script:
         name: rake test:unit
-        code: bundle exec rake test:unit
+        code: bundle exec rake test:remote
