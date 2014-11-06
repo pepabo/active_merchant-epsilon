@@ -206,4 +206,21 @@ class EpsilonGatewayTest < MiniTest::Test
       assert_equal false, response.success?
     end
   end
+
+  class RegisteredRecurringTest < self
+    def setup
+      stub_gateway(status: 200, body: fixture_xml('success.xml').to_s, action: :registered_recurring)
+
+      @detail = purchase_detail
+    end
+
+    def test_registered_recurring
+      response = gateway.registered_recurring(1000, @detail)
+
+      assert_equal true, response.success?
+    end
+  end
+
+  class RegisteredRecurringFailTest < self
+  end
 end
