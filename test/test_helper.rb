@@ -54,7 +54,7 @@ module SampleCreditCardMethods
       item_code:     'ITEM001',
       item_name:     'Greate Product',
       order_number:  "O#{Time.now.to_i}",
-      misson_code:   '6'
+      mission_code:   '6'
     }
   end
 
