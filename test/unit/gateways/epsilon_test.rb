@@ -211,7 +211,7 @@ class EpsilonGatewayTest < MiniTest::Test
     def setup
       stub_gateway(status: 200, body: fixture_xml('success.xml').to_s, action: :registered_recurring)
 
-      @detail = purchase_detail
+      @detail = purchase_detail_for_registered
     end
 
     def test_registered_recurring
