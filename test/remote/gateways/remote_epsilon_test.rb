@@ -7,88 +7,97 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
     @gateway ||= ActiveMerchant::Billing::EpsilonGateway.new
   end
 
-  def setup
-    WebMock.allow_net_connect!
-  end
-
   def test_purchase_successful
-    response = gateway.purchase(10000, valid_credit_card, purchase_detail)
-
-    assert_equal true, response.success?
+    VCR.use_cassette(:purchase_successful) do
+      response = gateway.purchase(10000, valid_credit_card, purchase_detail)
+      assert_equal true, response.success?
+    end
   end
 
   def test_purchase_fail
-    response = gateway.purchase(10000, invalid_credit_card, purchase_detail)
-
-    assert_equal false, response.success?
+    VCR.use_cassette(:purchase_fail) do
+      response = gateway.purchase(10000, invalid_credit_card, purchase_detail)
+      assert_equal false, response.success?
+    end
   end
 
   def test_recurring_successful
-    response = gateway.recurring(10000, valid_credit_card, purchase_detail)
-
-    assert_equal true, response.success?
+    VCR.use_cassette(:recurring_successful) do
+      response = gateway.recurring(10000, valid_credit_card, purchase_detail)
+      assert_equal true, response.success?
+    end
   end
 
   def test_recurring_fail
-    response = gateway.recurring(10000, invalid_credit_card, purchase_detail)
-
-    assert_equal false, response.success?
+    VCR.use_cassette(:recurring_fail) do
+      response = gateway.recurring(10000, invalid_credit_card, purchase_detail)
+      assert_equal false, response.success?
+    end
   end
 
   def test_cancel_recurring
-    detail = purchase_detail
+    VCR.use_cassette(:cancel_recurring_successful) do
+      detail = purchase_detail
 
-    response = gateway.recurring(10000, valid_credit_card, detail)
+      response = gateway.recurring(10000, valid_credit_card, detail)
 
-    assert_equal true, response.success?
+      assert_equal true, response.success?
 
-    response = gateway.cancel_recurring(user_id: detail[:user_id], item_code: detail[:item_code])
+      response = gateway.cancel_recurring(user_id: detail[:user_id], item_code: detail[:item_code])
 
-    assert_equal true, response.success?
+      assert_equal true, response.success?
+    end
   end
 
   def test_cancel_recurring_fail
-    detail = purchase_detail
+    VCR.use_cassette(:cancel_recurring_fail) do
+      detail = purchase_detail
 
-    response = gateway.recurring(10000, valid_credit_card, detail)
+      response = gateway.recurring(10000, valid_credit_card, detail)
 
-    assert_equal true, response.success?
+      assert_equal true, response.success?
 
-    response = gateway.cancel_recurring(
-      user_id: detail[:user_id],
-      item_code: detail[:item_code] + 'wrong'
-    )
+      response = gateway.cancel_recurring(
+        user_id: detail[:user_id],
+        item_code: detail[:item_code] + 'wrong'
+      )
 
-    assert_equal false, response.success?
+      assert_equal false, response.success?
+    end
   end
 
   def test_void
-    detail = purchase_detail
+    VCR.use_cassette(:void_successful) do
+      detail = purchase_detail
 
-    purchase_response = gateway.purchase(100, valid_credit_card, detail)
+      purchase_response = gateway.purchase(100, valid_credit_card, detail)
 
-    assert_equal true, purchase_response.success?
+      assert_equal true, purchase_response.success?
 
-    response = gateway.void(detail[:order_number])
+      response = gateway.void(detail[:order_number])
 
-    assert_equal true, response.success?
+      assert_equal true, response.success?
+    end
   end
 
   def test_void_fail
-    response = gateway.void('1234567890')
-
-    assert_equal false, response.success?
+    VCR.use_cassette(:void_fail) do
+      response = gateway.void('1234567890')
+      assert_equal false, response.success?
+    end
   end
 
   def test_verify
-    response = gateway.verify(valid_credit_card, purchase_detail.slice(:user_id, :user_email))
-
-    assert_equal true, response.success?
+    VCR.use_cassette(:verify_successful) do
+      response = gateway.verify(valid_credit_card, purchase_detail.slice(:user_id, :user_email))
+      assert_equal true, response.success?
+    end
   end
 
   def test_verify_fail
-    response = gateway.verify(invalid_credit_card, purchase_detail.slice(:user_id, :user_email))
-
-    assert_equal false, response.success?
+    VCR.use_cassette(:verify_fail) do
+      response = gateway.verify(invalid_credit_card, purchase_detail.slice(:user_id, :user_email))
+      assert_equal false, response.success?
+    end
   end
 end
