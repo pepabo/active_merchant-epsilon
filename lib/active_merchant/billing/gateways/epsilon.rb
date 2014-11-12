@@ -14,6 +14,8 @@ module ActiveMerchant #:nodoc:
       self.homepage_url = 'http://www.example.net/'
       self.display_name = 'New Gateway'
 
+      # Allow access ActiveMerchant::Connection properties(proxy_address and proxy_port).
+      # see: https://github.com/Shopify/active_utils/blob/master/lib/active_utils/common/connection.rb#L34-L35
       cattr_accessor :contract_code, :proxy_address, :proxy_port
 
       PATHS = {
@@ -160,6 +162,8 @@ module ActiveMerchant #:nodoc:
         )
       end
 
+      # Override ActiveMerchant::PostsData#raw_ssl_request
+      # see: https://github.com/Shopify/active_utils/blob/master/lib/active_utils/common/posts_data.rb#L39
       def raw_ssl_request(method, endpoint, data, headers = {})
         logger.warn "#{self.class} using ssl_strict=false, which is insecure" if logger unless ssl_strict
 
