@@ -5,7 +5,7 @@ module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class EpsilonGateway < Gateway
       self.test_url = 'https://beta.epsilon.jp/cgi-bin/order/'
-      self.live_url = 'https://example.com/live'
+      self.live_url = 'https://secure.epsilon.jp/cgi-bin/order/'
 
       self.supported_countries = ['JP']
       self.default_currency = 'JPY'
