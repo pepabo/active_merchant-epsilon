@@ -6,6 +6,7 @@ require 'active_merchant/epsilon'
 require 'dotenv'
 require 'pry'
 require 'tapp'
+require 'vcr'
 
 require 'webmock/minitest'
 
@@ -14,6 +15,12 @@ Dotenv.load
 ActiveMerchant::Billing::Base.mode = :test
 
 ActiveMerchant::Billing::EpsilonGateway.contract_code = ENV['CONTRACT_CODE']
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'test/fixtures/vcr_cassettes'
+  c.hook_into :webmock
+  c.filter_sensitive_data('<CONTRACT_CODE>') { ENV['CONTRACT_CODE'] }
+end
 
 module SampleCreditCardMethods
   def valid_credit_card
@@ -37,12 +44,13 @@ module SampleCreditCardMethods
   end
 
   def purchase_detail
+    now = Time.now
     {
       user_id:       "U#{Time.now.to_i}",
       user_email:    'yamada-taro@example.com',
       item_code:     'ITEM001',
       item_name:     'Greate Product',
-      order_number:  "O#{Time.now.to_i}"
+      order_number:  "O#{now.sec}#{now.usec}"
     }
   end
 
