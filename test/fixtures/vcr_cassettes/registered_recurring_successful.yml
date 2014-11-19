@@ -1,0 +1,41 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi
+    body:
+      encoding: US-ASCII
+      string: contract_code=<CONTRACT_CODE>&user_id=U1416380387&user_name=YAMADA+TARO&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O1416380387&st_code=10000-0000-0000&mission_code=6&item_price=10000&process_code=2&xml=1
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 19 Nov 2014 06:59:46 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8" ?>
+         <Epsilon_result>
+          <result result="1" />
+          <result redirect="https%3A%2F%2Fbeta.epsilon.jp%2Fcgi-bin%2Forder%2Fcard3.cgi%3Ftrans_code%3D497895" />
+          </Epsilon_result>
+    http_version: 
+  recorded_at: Wed, 19 Nov 2014 06:59:48 GMT
+recorded_with: VCR 2.9.3
