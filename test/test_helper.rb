@@ -56,7 +56,7 @@ module SampleCreditCardMethods
 
   def purchase_detail_for_registered
     {
-      user_id:       "U#{Time.now.to_i}",
+      user_id:       "U1416470209",
       user_email:    'yamada-taro@example.com',
       user_name:     'YAMADA TARO',
       item_code:     'ITEM001',

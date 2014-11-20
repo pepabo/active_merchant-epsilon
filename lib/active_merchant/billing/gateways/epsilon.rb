@@ -20,7 +20,7 @@ module ActiveMerchant #:nodoc:
 
       PATHS = {
         purchase: 'direct_card_payment.cgi',
-        registered_recurring: 'receive_order3.cgi',
+        registered_recurring: 'direct_card_payment.cgi',
         cancel_recurring: 'receive_order3.cgi',
         void: 'cancel_payment.cgi'
       }.freeze
