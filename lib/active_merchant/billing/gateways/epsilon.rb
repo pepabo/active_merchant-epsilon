@@ -20,6 +20,7 @@ module ActiveMerchant #:nodoc:
 
       PATHS = {
         purchase: 'direct_card_payment.cgi',
+        registered_recurring: 'direct_card_payment.cgi',
         cancel_recurring: 'receive_order3.cgi',
         void: 'cancel_payment.cgi'
       }.freeze
@@ -80,6 +81,24 @@ module ActiveMerchant #:nodoc:
         params = billing_params(amount, credit_card, detail)
 
         commit('purchase', params)
+      end
+
+      def registered_recurring(amount, detail = {})
+        commit(
+          'registered_recurring',
+          contract_code: self.contract_code,
+          user_id: detail[:user_id],
+          user_name: detail[:user_name],
+          user_mail_add: detail[:user_email],
+          item_code: detail[:item_code],
+          item_name: detail[:item_name],
+          order_number: detail[:order_number],
+          st_code: '10000-0000-0000',
+          mission_code: detail[:mission_code],
+          item_price: amount,
+          process_code: 2,
+          xml: 1
+        )
       end
 
       def cancel_recurring(user_id:, item_code:)

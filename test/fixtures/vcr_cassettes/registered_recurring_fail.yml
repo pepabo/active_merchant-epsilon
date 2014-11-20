@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
+    body:
+      encoding: US-ASCII
+      string: contract_code=<CONTRACT_CODE>&user_id=U1416470209&user_name=YAMADA+TARO&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O1416471014&st_code=10000-0000-0000&mission_code=&item_price=10000&process_code=2&xml=1
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 20 Nov 2014 08:10:18 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result acsurl="" />
+          <result err_code="909" />
+          <result err_detail="%89%DB%8B%E0%8B%E6%95%AA%82%CC%8Ew%92%E8%82%AA%88%D9%8F%ED%82%C5%82%B7" />
+          <result pareq="" />
+          <result result="9" />
+          <result trans_code="" />
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Thu, 20 Nov 2014 08:10:15 GMT
+recorded_with: VCR 2.9.3

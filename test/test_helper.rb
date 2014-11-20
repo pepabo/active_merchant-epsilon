@@ -54,6 +54,18 @@ module SampleCreditCardMethods
     }
   end
 
+  def purchase_detail_for_registered
+    {
+      user_id:       "U1416470209",
+      user_email:    'yamada-taro@example.com',
+      user_name:     'YAMADA TARO',
+      item_code:     'ITEM001',
+      item_name:     'Greate Product',
+      order_number:  "O#{Time.now.to_i}",
+      mission_code:   '6'
+    }
+  end
+
   def fixture_xml(filename, parse: true)
     xml = File.read("test/fixtures/#{filename}")
 
