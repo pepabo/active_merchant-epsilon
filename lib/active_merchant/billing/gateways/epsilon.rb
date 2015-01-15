@@ -116,13 +116,23 @@ module ActiveMerchant #:nodoc:
       #   commit(path, params)
       # end
 
-      def purchase(amount, credit_card, detail = {})
+      def purchase(amount, payment_method, detail = {})
         detail[:process_code] = 1
         detail[:mission_code] = MissionCode::PURCHASE
 
-        params = billing_params(amount, credit_card, detail)
+        case payment_method
+        when CreditCard
+          action = 'purchase'
+          params = billing_params(amount, payment_method, detail)
+        when ConvenienceStore
+          # TODO
+          raise 'do NOT work yet'
+        else
+          # TODO
+          raise 'do NOT work yet'
+        end
 
-        commit('purchase', params)
+        commit(action, params)
       end
 
       def recurring(amount, credit_card, detail = {})
