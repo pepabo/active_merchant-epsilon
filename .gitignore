@@ -13,4 +13,5 @@
 *.a
 mkmf.log
 
-/.env
+.env
+.ruby-version

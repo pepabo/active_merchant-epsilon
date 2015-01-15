@@ -1,80 +1,129 @@
 require 'test_helper'
 
-describe ActiveMerchant::Billing::EpsilonGateway do
-  let(:credit_card) {
-    ActiveMerchant::Billing::CreditCard.new(
-      first_name: 'TARO',
-      last_name:  'YAMADA',
-      number:     '4242424242424242',
-      month:      '10',
-      year:       Time.now.year + 1
-    )
-  }
+  # let(:convenience_store) {
+  #   ActiveMerchant::Billing::ConvenienceStore.new(
+  #     code:          ActiveMerchant::Billing::ConvenienceStore::SevenEleven,
+  #     fullname_kana: 'ヤマダ タロウ',
+  #     phone_nubmer:  '0312345678'
+  #   )
+  # }
 
-  let(:invalid_credit_card) {
-    ActiveMerchant::Billing::CreditCard.new(
-      first_name: 'TARO',
-      last_name:  'YAMADA',
-      number:     '0000000000000000',
-      month:      '10',
-      year:       Time.now.year + 1 ,
-    )
-  }
+class RemoteEpsilonGatewayTest < MiniTest::Test
+  include SampleCreditCardMethods
 
-  let(:detail) {
-    {
-      contract_code: ENV['CONTRACT_CODE'],
-      user_id:       'YOUR_APP_USER_IDENTIFIER',
-      user_email:    'yamada-taro@example.com',
-      item_code:     'ITEM001',
-      item_name:     'Greate Product',
-      order_number:  rand(1000000),
-    }
-  }
+  def gateway
+    @gateway ||= ActiveMerchant::Billing::EpsilonGateway.new
+  end
 
-  let(:convenience_store) {
-    ActiveMerchant::Billing::ConvenienceStore.new(
-      code:          ActiveMerchant::Billing::ConvenienceStore::SevenEleven,
-      fullname_kana: 'ヤマダ タロウ',
-      phone_nubmer:  '0312345678'
-    )
-  }
-
-  let(:amount) { 10000 }
-
-  let(:gateway) { ActiveMerchant::Billing::EpsilonGateway.new }
-
-  describe '#purchase' do
-    describe 'valid creadit_card' do
-      subject { gateway.purchase(amount, credit_card, detail) }
-
-      it 'success' do
-        subject.must_be :success?
-      end
-
-      it 'has trans_code' do
-        subject.params['trans_code'].wont_be :empty?
-      end
+  def test_purchase_successful
+    VCR.use_cassette(:purchase_successful) do
+      response = gateway.purchase(10000, valid_credit_card, purchase_detail)
+      assert_equal true, response.success?
     end
+  end
 
-    describe 'invalid creadit_card' do
-      subject { gateway.purchase(amount, invalid_credit_card, detail) }
-
-      it 'fail' do
-        subject.wont_be :success?
-      end
-
-      it 'has trans_code' do
-        subject.params['trans_code'].wont_be :empty?
-      end
+  def test_purchase_fail
+    VCR.use_cassette(:purchase_fail) do
+      response = gateway.purchase(10000, invalid_credit_card, purchase_detail)
+      assert_equal false, response.success?
     end
+  end
 
-    describe 'valid convenience store' do
-      subject { gateway.purchase(amount, convenience_store, detail) }
+  def test_recurring_successful
+    VCR.use_cassette(:recurring_successful) do
+      response = gateway.recurring(10000, valid_credit_card, purchase_detail)
+      assert_equal true, response.success?
+    end
+  end
 
-      it 'success' do
-        subject.must_be :success?
-      end
+  def test_recurring_fail
+    VCR.use_cassette(:recurring_fail) do
+      response = gateway.recurring(10000, invalid_credit_card, purchase_detail)
+      assert_equal false, response.success?
+    end
+  end
+
+  def test_registered_recurring_successful
+    VCR.use_cassette(:registered_recurring_successful) do
+      response = gateway.registered_recurring(10000, purchase_detail_for_registered)
+
+      assert_equal true, response.success?
+    end
+  end
+
+  def test_registered_recurring_fail
+    VCR.use_cassette(:registered_recurring_fail) do
+      invalid_purchase_detail = purchase_detail_for_registered
+      invalid_purchase_detail[:mission_code] = ''
+      response = gateway.registered_recurring(10000, invalid_purchase_detail)
+
+      assert_equal false, response.success?
+    end
+  end
+
+  def test_cancel_recurring
+    VCR.use_cassette(:cancel_recurring_successful) do
+      detail = purchase_detail
+
+      response = gateway.recurring(10000, valid_credit_card, detail)
+
+      assert_equal true, response.success?
+
+      response = gateway.cancel_recurring(user_id: detail[:user_id], item_code: detail[:item_code])
+
+      assert_equal true, response.success?
+    end
+  end
+
+  def test_cancel_recurring_fail
+    VCR.use_cassette(:cancel_recurring_fail) do
+      detail = purchase_detail
+
+      response = gateway.recurring(10000, valid_credit_card, detail)
+
+      assert_equal true, response.success?
+
+      response = gateway.cancel_recurring(
+        user_id: detail[:user_id],
+        item_code: detail[:item_code] + 'wrong'
+      )
+
+      assert_equal false, response.success?
+    end
+  end
+
+  def test_void
+    VCR.use_cassette(:void_successful) do
+      detail = purchase_detail
+
+      purchase_response = gateway.purchase(100, valid_credit_card, detail)
+
+      assert_equal true, purchase_response.success?
+
+      response = gateway.void(detail[:order_number])
+
+      assert_equal true, response.success?
+    end
+  end
+
+  def test_void_fail
+    VCR.use_cassette(:void_fail) do
+      response = gateway.void('1234567890')
+      assert_equal false, response.success?
+    end
+  end
+
+  def test_verify
+    VCR.use_cassette(:verify_successful) do
+      response = gateway.verify(valid_credit_card, purchase_detail.slice(:user_id, :user_email))
+      assert_equal true, response.success?
+    end
+  end
+
+  def test_verify_fail
+    VCR.use_cassette(:verify_fail) do
+      response = gateway.verify(invalid_credit_card, purchase_detail.slice(:user_id, :user_email))
+      assert_equal false, response.success?
     end
   end
 end

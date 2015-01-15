@@ -27,19 +27,18 @@ require 'active_merchant'
 
 ActiveMerchant::Billing::Base.mode = :test
 
-gateway = ActiveMerchant::Billing::EpsilonGateway.new(
-  contact_code: 'YOUR_CONTACT_CODE'
-)
+ActiveMerchant::Billing::EpsilonGateway.contract_code = 'YOUR_CONTRACT_CODE'
 
-# Epsilon Gateway accepts all amount as Integer in 銭
-amount = 100_00 # 100 yen
+gateway = ActiveMerchant::Billing::EpsilonGateway.new
+
+amount = 10000
 
 credit_card = ActiveMerchant::Billing::CreditCard.new(
   first_name: 'TARO',
   last_name:  'YAMADA',
   number:     '4242424242424242',
   month:      '10',
-  year:       Time.now.year+1
+  year:       Time.now.year + 1
 )
 
 purchase_detail = {
@@ -51,11 +50,11 @@ purchase_detail = {
 }
 
 if credit_card.validate.empty?
-  # Capture 100 yen from the credit card
-  response = gateway.purchase(100_00, credit_card, purchase_detail)
+  # Capture 10000 yen from the credit card
+  response = gateway.purchase(amount, credit_card, purchase_detail)
 
   if response.success?
-    puts "Successfully charged #{amount / 100} yen to the credit card #{credit_card.display_number}"
+    puts "Successfully charged #{amount} yen to the credit card #{credit_card.display_number}"
   else
     raise StandardError, response.message
   end
@@ -87,6 +86,48 @@ if response.success?
 else
   raise StandardError, response.message
 end
+```
+
+### Recurring Billing (Monthly subscritpion)
+
+```ruby
+purchase_detail[:mission_code] = ActiveMerchant::Billing::EpsilonGateway::MissionCode::RECURRING_6
+
+gateway.recurring(amount, creadit_card, purchase_detail)
+```
+
+### Cancel recurring billing
+
+```ruby
+gateway.cancel_recurring(user_id: 'user_id', item_code: 'item_code')
+```
+
+### Void Transaction
+
+```ruby
+gateway.void('order_number')
+```
+
+### Verify Credit Card
+
+```ruby
+gateway.verify(credit_card, user_id: 'user_id', user_email: 'user@example.com')
+```
+
+### Error handling
+
+If epsilon server returns status excepted 200, `#purchase` method raise `ActiveMerchant::ResponseError`.
+
+When your request parameters are wrong(e.g. contract_code), the method return failuer response.
+
+- `#success?` returns `false`
+- `#params` has error detail
+
+```ruby
+response = gateway.purchase(10000, creadit_card, invalid_detail)
+
+response.success? # => false
+response.params   # => Hash included error detail
 ```
 
 ## Contributing
