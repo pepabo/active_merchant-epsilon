@@ -1,13 +1,5 @@
 require 'test_helper'
 
-  # let(:convenience_store) {
-  #   ActiveMerchant::Billing::ConvenienceStore.new(
-  #     code:          ActiveMerchant::Billing::ConvenienceStore::SevenEleven,
-  #     fullname_kana: 'ヤマダ タロウ',
-  #     phone_nubmer:  '0312345678'
-  #   )
-  # }
-
 class RemoteEpsilonGatewayTest < MiniTest::Test
   include SampleCreditCardMethods
 
@@ -124,6 +116,13 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
     VCR.use_cassette(:verify_fail) do
       response = gateway.verify(invalid_credit_card, purchase_detail.slice(:user_id, :user_email))
       assert_equal false, response.success?
+    end
+  end
+
+  def test_convenience_store_purchase_successful
+    VCR.use_cassette(:convenience_store_purchase_successful) do
+      response = gateway.purchase(10000, valid_convenience_store, purchase_detail)
+      assert_equal true, response.success?
     end
   end
 end

@@ -66,6 +66,14 @@ module SampleCreditCardMethods
     }
   end
 
+  def valid_convenience_store
+    ActiveMerchant::Billing::ConvenienceStore.new(
+      code:          ActiveMerchant::Billing::ConvenienceStore::Lawson,
+      fullname_kana: 'ヤマダ タロウ',
+      phone_number:  '0312345678'
+    )
+  end
+
   def fixture_xml(filename, parse: true)
     xml = File.read("test/fixtures/#{filename}")
 

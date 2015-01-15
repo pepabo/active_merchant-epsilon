@@ -22,7 +22,8 @@ module ActiveMerchant #:nodoc:
         purchase: 'direct_card_payment.cgi',
         registered_recurring: 'direct_card_payment.cgi',
         cancel_recurring: 'receive_order3.cgi',
-        void: 'cancel_payment.cgi'
+        void: 'cancel_payment.cgi',
+        convenience_store_purchase: 'receive_order3.cgi',
       }.freeze
 
       module ResponseXpath
@@ -125,8 +126,8 @@ module ActiveMerchant #:nodoc:
           action = 'purchase'
           params = billing_params(amount, payment_method, detail)
         when ConvenienceStore
-          # TODO
-          raise 'do NOT work yet'
+          action = 'convenience_store_purchase'
+          params = convenience_store_params(amount, payment_method, detail)
         else
           # TODO
           raise 'do NOT work yet'
@@ -294,6 +295,27 @@ module ActiveMerchant #:nodoc:
           card_number: credit_card.number,
           expire_y: credit_card.year,
           expire_m: credit_card.month,
+          user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
+        }
+      end
+
+      def convenience_store_params(amount, payment_method, detail)
+        # TODO: merge "billing_params" method
+        {
+          contract_code: detail[:contract_code] || self.contract_code,
+          user_id: detail[:user_id],
+          user_name: payment_method.name,
+          user_mail_add: detail[:user_email],
+          user_tel: payment_method.phone_number,
+          item_code: detail[:item_code],
+          item_name: detail[:item_name],
+          order_number: detail[:order_number],
+          st_code: '00100-0000-0000',
+          mission_code: detail[:mission_code],
+          item_price: amount,
+          process_code: detail[:process_code],
+          xml: 1,
+          conveni_code: payment_method.code,
           user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
         }
       end
