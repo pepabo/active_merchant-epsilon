@@ -1,15 +1,15 @@
 module ActiveMerchant
   module Billing
     class ConvenienceStore
-      SevenEleven = 11
-      FamilyMart = 21
-      Lawson = 31
-      Seicomart = 32
+      SEVEN_ELEVEN = 11
+      FAMILY_MART  = 21
+      LAWSON       = 31
+      SEICO_MART   = 32
 
       def initialize(code:, fullname_kana:, phone_number:)
-        @code = code
+        @code          = code
         @fullname_kana = fullname_kana
-        @phone_number = phone_number
+        @phone_number  = phone_number
       end
 
       def code
