@@ -15,7 +15,7 @@ module ActiveMerchant #:nodoc:
       self.display_name = 'New Gateway'
 
       # Allow access ActiveMerchant::Connection properties(proxy_address and proxy_port).
-      # see: https://github.com/Shopify/active_utils/blob/master/lib/active_utils/common/connection.rb#L34-L35
+      # see: https://github.com/Shopify/active_utils/blob/v2.2.3/lib/active_utils/common/connection.rb#L34-L35
       cattr_accessor :contract_code, :proxy_address, :proxy_port
 
       PATHS = {
