@@ -37,7 +37,7 @@ http_interactions:
         process_code=\"1\" />\r\n  <result last_update=\"2015-01-16%2008%3A30%3A31\"
         />\r\n  <result item_price=\"10000\" />\r\n  <result memo1=\"\" />\r\n  <result
         memo2=\"\" />\r\n  <result mission_code=\"1\" />\r\n  <result st_code=\"00100-0000-00000-00000-00000-00000-00000\"
-        />\r\n  <result contract_code=\"<CONTRACT_CODE>\" />\r\n  <result item_name=\"Greate%20Product\"
+        />\r\n  <result contract_code=\"\" />\r\n  <result item_name=\"Greate%20Product\"
         />\r\n  <result payment_code=\"3\" />\r\n  <result user_mail_add=\"yamada-taro%40example.com\"
         />\r\n  <result item_code=\"ITEM001\" />\r\n  <result conveni_code=\"31\"
         />\r\n  <result receipt_no=\"0005180\" />\r\n  <result kigyou_code=\"\" />\r\n
@@ -45,6 +45,6 @@ http_interactions:
         />\r\n  <result paid=\"0\" />\r\n  <result receipt_date=\"2015-01-16%2008%3A30%3A31\"
         />\r\n  <result conveni_limit=\"2015-01-26\" />\r\n  <result conveni_time=\"\"
         />\r\n</Epsilon_result>\r\n"
-    http_version: 
+    http_version:
   recorded_at: Thu, 15 Jan 2015 23:30:31 GMT
 recorded_with: VCR 2.9.3
