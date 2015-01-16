@@ -131,4 +131,11 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       assert_match /\d{4}\-\d{2}\-\d{2}/, response.params['convenience_store_limit_date']
     end
   end
+
+  def test_convenience_store_purchase_fail
+    VCR.use_cassette(:convenience_store_purchase_fail) do
+      response = gateway.purchase(10000, invalid_convenience_store, purchase_detail)
+      assert_equal false, response.success?
+    end
+  end
 end
