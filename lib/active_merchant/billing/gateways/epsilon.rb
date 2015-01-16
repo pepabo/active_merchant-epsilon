@@ -72,17 +72,16 @@ module ActiveMerchant #:nodoc:
         detail[:process_code] = 1
         detail[:mission_code] = MissionCode::PURCHASE
 
-        case payment_method
-        when CreditCard
-          action = 'purchase'
-          params = billing_params(amount, payment_method, detail)
-        when ConvenienceStore
-          action = 'convenience_store_purchase'
-          params = convenience_store_params(amount, payment_method, detail)
-        else
-          # TODO
-          raise
-        end
+        action = case payment_method
+          when CreditCard
+            'purchase'
+          when ConvenienceStore
+            'convenience_store_purchase'
+          else
+            raise
+          end
+
+        params = billing_params(amount, payment_method, detail)
 
         commit(action, params)
       end
@@ -239,45 +238,39 @@ module ActiveMerchant #:nodoc:
         response[:message]
       end
 
-      def billing_params(amount, credit_card, detail)
-        {
-          contract_code: detail[:contract_code] || self.contract_code,
-          user_id: detail[:user_id],
-          user_name: credit_card.name,
-          user_mail_add: detail[:user_email],
-          item_code: detail[:item_code],
-          item_name: detail[:item_name],
-          order_number: detail[:order_number],
-          st_code: '10000-0000-0000',
-          mission_code: detail[:mission_code],
-          item_price: amount,
-          process_code: detail[:process_code],
-          card_number: credit_card.number,
-          expire_y: credit_card.year,
-          expire_m: credit_card.month,
-          user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
-        }
-      end
-
-      def convenience_store_params(amount, payment_method, detail)
-        # TODO: merge "billing_params" method
-        {
+      def billing_params(amount, payment_method, detail)
+        params = {
           contract_code: detail[:contract_code] || self.contract_code,
           user_id: detail[:user_id],
           user_name: payment_method.name,
           user_mail_add: detail[:user_email],
-          user_tel: payment_method.phone_number,
           item_code: detail[:item_code],
           item_name: detail[:item_name],
           order_number: detail[:order_number],
-          st_code: '00100-0000-0000',
           mission_code: detail[:mission_code],
           item_price: amount,
           process_code: detail[:process_code],
-          xml: 1,
-          conveni_code: payment_method.code,
           user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
         }
+
+        case payment_method
+        when CreditCard
+          params.merge(
+            st_code: '10000-0000-0000',
+            card_number: payment_method.number,
+            expire_y: payment_method.year,
+            expire_m: payment_method.month,
+          )
+        when ConvenienceStore
+          params.merge(
+            user_tel: payment_method.phone_number,
+            st_code: '00100-0000-0000',
+            xml: 1,
+            conveni_code: payment_method.code,
+          )
+        else
+          raise
+        end
       end
 
       def authorization_from(response)
