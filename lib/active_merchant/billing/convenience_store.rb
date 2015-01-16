@@ -34,10 +34,13 @@ module ActiveMerchant
         errors = []
 
         if code.blank?
-          errors << [:code, "cannot be empty"]
+          errors << [:code, "is required"]
         elsif !valid_code?(code)
           errors << [:code, "is invalid"]
         end
+
+        errors << [:fullname_kana, "is required"] if name.blank?
+        errors << [:phone_number, "is required"] if phone_number.blank?
 
         errors
       end
