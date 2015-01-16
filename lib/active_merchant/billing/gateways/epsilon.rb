@@ -81,7 +81,7 @@ module ActiveMerchant #:nodoc:
           params = convenience_store_params(amount, payment_method, detail)
         else
           # TODO
-          raise 'do NOT work yet'
+          raise
         end
 
         commit(action, params)
@@ -167,19 +167,11 @@ module ActiveMerchant #:nodoc:
         success = xml.xpath(ResponseXpath::RESULT).to_s == '1'
         transaction_code = xml.xpath(ResponseXpath::TRANSACTION_CODE).to_s
         error_code = xml.xpath(ResponseXpath::ERROR_CODE).to_s
-        error_detail = URI.decode(
-          xml.xpath(ResponseXpath::ERROR_DETAIL).to_s
-        ).encode(Encoding::UTF_8, Encoding::CP932)
+        error_detail = uri_decode(xml.xpath(ResponseXpath::ERROR_DETAIL).to_s)
 
         receipt_number = xml.xpath(ResponseXpath::RECEIPT_NUMBER).to_s
-
-        receipt_date = URI.decode(
-          xml.xpath(ResponseXpath::RECEIPT_DATE).to_s
-        ).encode(Encoding::UTF_8, Encoding::CP932)
-
-        convenience_store_limit_date = URI.decode(
-          xml.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s
-        ).encode(Encoding::UTF_8, Encoding::CP932)
+        receipt_date = uri_decode(xml.xpath(ResponseXpath::RECEIPT_DATE).to_s)
+        convenience_store_limit_date = uri_decode(xml.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
 
         {
           success: success,
@@ -191,6 +183,10 @@ module ActiveMerchant #:nodoc:
           receipt_date: receipt_date,
           convenience_store_limit_date: convenience_store_limit_date,
         }
+      end
+
+      def uri_decode(string)
+        URI.decode(string).encode(Encoding::UTF_8, Encoding::CP932)
       end
 
       def commit(action, parameters)

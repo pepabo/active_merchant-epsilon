@@ -38,7 +38,6 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
   def test_registered_recurring_successful
     VCR.use_cassette(:registered_recurring_successful) do
       response = gateway.registered_recurring(10000, purchase_detail_for_registered)
-
       assert_equal true, response.success?
     end
   end
@@ -48,8 +47,6 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       invalid_purchase_detail = purchase_detail_for_registered
       invalid_purchase_detail[:mission_code] = ''
       response = gateway.registered_recurring(10000, invalid_purchase_detail)
-
-
 
       assert_equal false, response.success?
     end
