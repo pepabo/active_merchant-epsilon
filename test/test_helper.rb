@@ -22,7 +22,7 @@ VCR.configure do |c|
   c.filter_sensitive_data('<CONTRACT_CODE>') { ENV['CONTRACT_CODE'] }
 end
 
-module SampleCreditCardMethods
+module SamplePaymentMethods
   def valid_credit_card
     ActiveMerchant::Billing::CreditCard.new(
       first_name: 'TARO',

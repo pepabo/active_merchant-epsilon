@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class RemoteEpsilonGatewayTest < MiniTest::Test
-  include SampleCreditCardMethods
+  include SamplePaymentMethods
 
   def gateway
     @gateway ||= ActiveMerchant::Billing::EpsilonGateway.new
