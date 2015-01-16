@@ -19,7 +19,7 @@ ActiveMerchant::Billing::EpsilonGateway.contract_code = ENV['CONTRACT_CODE']
 VCR.configure do |c|
   c.cassette_library_dir = 'test/fixtures/vcr_cassettes'
   c.hook_into :webmock
-  c.filter_sensitive_data('<CONTRACT_CODE>') { ENV['CONTRACT_CODE'] }
+  c.filter_sensitive_data('[CONTRACT_CODE]') { ENV['CONTRACT_CODE'] }
 end
 
 module SamplePaymentMethods

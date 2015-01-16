@@ -5,7 +5,7 @@ http_interactions:
     uri: https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi
     body:
       encoding: US-ASCII
-      string: contract_code=<CONTRACT_CODE>&user_id=U1421367428&user_name=%E3%83%A4%E3%83%9E%E3%83%80+%E3%82%BF%E3%83%AD%E3%82%A6&user_mail_add=yamada-taro%40example.com&user_tel=0312345678901&item_code=ITEM001&item_name=Greate+Product&order_number=O8805285&st_code=00100-0000-0000&mission_code=1&item_price=10000&process_code=1&xml=1&conveni_code=31&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1
+      string: contract_code=[CONTRACT_CODE]&user_id=U1421367428&user_name=%E3%83%A4%E3%83%9E%E3%83%80+%E3%82%BF%E3%83%AD%E3%82%A6&user_mail_add=yamada-taro%40example.com&user_tel=0312345678901&item_code=ITEM001&item_name=Greate+Product&order_number=O8805285&st_code=00100-0000-0000&mission_code=1&item_price=10000&process_code=1&xml=1&conveni_code=31&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -34,6 +34,6 @@ http_interactions:
         \   <result result=\"0\" />\r\n    <result err_code=\"601\" />\r\n    <result
         err_detail=\"%93d%98b%94%D4%8D%86%82%F0%90%B3%82%B5%82%AD%93%FC%97%CD%82%B5%82%C4%82%AD%82%BE%82%B3%82%A2\"
         />\r\n    <result memo1=\"\" />\r\n    <result memo2=\"\" />\r\n  </Epsilon_result>\r\n"
-    http_version: 
+    http_version:
   recorded_at: Fri, 16 Jan 2015 00:17:09 GMT
 recorded_with: VCR 2.9.3
