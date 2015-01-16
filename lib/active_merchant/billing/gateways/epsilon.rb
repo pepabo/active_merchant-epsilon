@@ -239,19 +239,7 @@ module ActiveMerchant #:nodoc:
       end
 
       def billing_params(amount, payment_method, detail)
-        params = {
-          contract_code: detail[:contract_code] || self.contract_code,
-          user_id: detail[:user_id],
-          user_name: payment_method.name,
-          user_mail_add: detail[:user_email],
-          item_code: detail[:item_code],
-          item_name: detail[:item_name],
-          order_number: detail[:order_number],
-          mission_code: detail[:mission_code],
-          item_price: amount,
-          process_code: detail[:process_code],
-          user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
-        }
+        params = billing_params_base(amount, payment_method, detail)
 
         case payment_method
         when CreditCard
@@ -271,6 +259,22 @@ module ActiveMerchant #:nodoc:
         else
           raise
         end
+      end
+
+      def billing_params_base(amount, payment_method, detail)
+        {
+          contract_code: detail[:contract_code] || self.contract_code,
+          user_id: detail[:user_id],
+          user_name: payment_method.name,
+          user_mail_add: detail[:user_email],
+          item_code: detail[:item_code],
+          item_name: detail[:item_name],
+          order_number: detail[:order_number],
+          mission_code: detail[:mission_code],
+          item_price: amount,
+          process_code: detail[:process_code],
+          user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
+        }
       end
 
       def authorization_from(response)
