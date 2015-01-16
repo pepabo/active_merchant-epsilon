@@ -78,7 +78,7 @@ module ActiveMerchant #:nodoc:
           when ConvenienceStore
             'convenience_store_purchase'
           else
-            raise
+            raise ActiveMerchant::Epsilon::InvalidPaymentMethodError
           end
 
         params = billing_params(amount, payment_method, detail)
@@ -127,15 +127,15 @@ module ActiveMerchant #:nodoc:
       end
 
       def authorize(money, payment, options={})
-        raise
+        raise ActiveMerchant::Epsilon::InvalidActionError
       end
 
       def capture(money, authorization, options={})
-        raise
+        raise ActiveMerchant::Epsilon::InvalidActionError
       end
 
       def refund(money, authorization, options={})
-        raise
+        raise ActiveMerchant::Epsilon::InvalidActionError
       end
 
       def void(order_number)
@@ -259,7 +259,7 @@ module ActiveMerchant #:nodoc:
             conveni_code: payment_method.code,
           )
         else
-          raise
+          raise ActiveMerchant::Epsilon::InvalidPaymentMethodError
         end
       end
 
