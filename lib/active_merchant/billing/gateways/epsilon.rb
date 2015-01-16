@@ -161,7 +161,9 @@ module ActiveMerchant #:nodoc:
       private
 
       def parse(body)
-        xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'CP932'))
+        # x-sjis-cp932 だと下記エラーが出る。また、レスポンスボディのエンコーディングは UTF-8 で返ってきているため
+        # Nokogiri::XML::SyntaxError: Unsupported encoding x-sjis-cp932
+        xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'UTF-8'))
 
         success = xml.xpath(ResponseXpath::RESULT).to_s == '1'
         transaction_code = xml.xpath(ResponseXpath::TRANSACTION_CODE).to_s
