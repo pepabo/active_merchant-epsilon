@@ -31,6 +31,10 @@ module ActiveMerchant #:nodoc:
         TRANSACTION_CODE = '//Epsilon_result/result[@trans_code]/@trans_code'
         ERROR_CODE = '//Epsilon_result/result[@err_code]/@err_code'
         ERROR_DETAIL = '//Epsilon_result/result[@err_detail]/@err_detail'
+
+        RECEIPT_NUMBER = '//Epsilon_result/result[@receipt_no][1]/@receipt_no'
+        RECEIPT_DATE = '//Epsilon_result/result[@receipt_date][1]/@receipt_date'
+        CONVENIENCE_STORE_LIMIT_DATE = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
       end
 
       module MissionCode
@@ -220,12 +224,25 @@ module ActiveMerchant #:nodoc:
           xml.xpath(ResponseXpath::ERROR_DETAIL).to_s
         ).encode(Encoding::UTF_8, Encoding::CP932)
 
+        receipt_number = xml.xpath(ResponseXpath::RECEIPT_NUMBER).to_s
+
+        receipt_date = URI.decode(
+          xml.xpath(ResponseXpath::RECEIPT_DATE).to_s
+        ).encode(Encoding::UTF_8, Encoding::CP932)
+
+        convenience_store_limit_date = URI.decode(
+          xml.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s
+        ).encode(Encoding::UTF_8, Encoding::CP932)
+
         {
           success: success,
           message: "#{error_code}: #{error_detail}",
           transaction_code: transaction_code,
           error_code: error_code,
-          error_detail: error_detail
+          error_detail: error_detail,
+          receipt_number: receipt_number,
+          receipt_date: receipt_date,
+          convenience_store_limit_date: convenience_store_limit_date,
         }
       end
 
