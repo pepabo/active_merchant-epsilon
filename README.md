@@ -63,7 +63,7 @@ end
 
 ### Convenience Store Payment
 
-```
+```ruby
 convenience_store = ActiveMerchant::Billing::ConvenienceStore.new(
   code:          ActiveMerchant::Billing::ConvenienceStore::SevenEleven,
   fullname_kana: 'ヤマダ タロウ',
