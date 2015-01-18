@@ -6,10 +6,10 @@ module ActiveMerchant
       LAWSON       = 31
       SEICO_MART   = 32
 
-      def initialize(code:, fullname_kana:, phone_number:)
-        @code          = code
-        @fullname_kana = fullname_kana
-        @phone_number  = phone_number
+      def initialize(code:, full_name_kana:, phone_number:)
+        @code           = code
+        @full_name_kana = full_name_kana
+        @phone_number   = phone_number
       end
 
       def code
@@ -17,7 +17,7 @@ module ActiveMerchant
       end
 
       def name
-        @fullname_kana
+        @full_name_kana
       end
 
       def phone_number
@@ -39,7 +39,7 @@ module ActiveMerchant
           errors << [:code, "is invalid"]
         end
 
-        errors << [:fullname_kana, "is required"] if name.blank?
+        errors << [:full_name_kana, "is required"] if name.blank?
         errors << [:phone_number, "is required"] if phone_number.blank?
 
         errors
