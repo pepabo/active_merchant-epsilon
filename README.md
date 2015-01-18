@@ -65,7 +65,7 @@ end
 
 ```ruby
 convenience_store = ActiveMerchant::Billing::ConvenienceStore.new(
-  code:          ActiveMerchant::Billing::ConvenienceStore::SevenEleven,
+  code:          ActiveMerchant::Billing::ConvenienceStore::LAWSON,
   fullname_kana: 'ヤマダ タロウ',
   phone_nubmer:  '0312345678'
 )
