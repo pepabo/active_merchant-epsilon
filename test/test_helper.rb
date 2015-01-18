@@ -68,7 +68,7 @@ module SamplePaymentMethods
 
   def valid_convenience_store
     ActiveMerchant::Billing::ConvenienceStore.new(
-      code:           ActiveMerchant::Billing::ConvenienceStore::LAWSON,
+      code:           ActiveMerchant::Billing::ConvenienceStore::Code::LAWSON,
       full_name_kana: 'ヤマダ タロウ',
       phone_number:   '0312345678'
     )
@@ -76,7 +76,7 @@ module SamplePaymentMethods
 
   def invalid_convenience_store
     ActiveMerchant::Billing::ConvenienceStore.new(
-      code:           ActiveMerchant::Billing::ConvenienceStore::LAWSON,
+      code:           ActiveMerchant::Billing::ConvenienceStore::Code::LAWSON,
       full_name_kana: 'ヤマダ タロウ',
       phone_number:   '0312345678901'
     )
