@@ -78,13 +78,17 @@ purchase_detail = {
   order_number: 'UNIQUE ORDER NUBMRE',
 }
 
-# 100_00 as convenience store paymet
-response = gateway.purchase(100_00, convenience_store, purchase_detail)
+if credit_card.validate.empty?
+  # 10000 yen as convenience store paymet
+  response = gateway.purchase(amount, convenience_store, purchase_detail)
 
-if response.success?
-  puts "Successfully charged #{amount / 100} yen to the credit card #{credit_card.display_number}"
-else
-  raise StandardError, response.message
+  if response.success?
+    puts "Successfully charged #{amount} yen as convenience store payment"
+    puts "Receipt number is #{response.params['receipt_number']}"
+    puts "Payment limit date is #{response.params['convenience_store_limit_date']}"
+  else
+    raise StandardError, response.message
+  end
 end
 ```
 
