@@ -20,6 +20,17 @@ Or install it yourself as:
 
 ## Usage
 
+### Settings
+
+An example Rails initializer would look something like this:
+
+```ruby
+ActiveMerchant::Billing::Base.mode = :production
+ActiveMerchant::Billing::EpsilonGateway.contract_code = '12345678'
+ActiveMerchant::Billing::EpsilonGateway.proxy_port = 8080
+ActiveMerchant::Billing::EpsilonGateway.proxy_address = 'myproxy.dev'
+```
+
 ### CreditCard Payment
 
 ```ruby
