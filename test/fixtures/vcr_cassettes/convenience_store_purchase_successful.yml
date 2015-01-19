@@ -1,0 +1,50 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi
+    body:
+      encoding: US-ASCII
+      string: contract_code=[CONTRACT_CODE]&user_id=U1421364630&user_name=%E3%83%A4%E3%83%9E%E3%83%80+%E3%82%BF%E3%83%AD%E3%82%A6&user_mail_add=yamada-taro%40example.com&user_tel=0312345678&item_code=ITEM001&item_name=Greate+Product&order_number=O3042483&st_code=00100-0000-0000&mission_code=1&item_price=10000&process_code=1&xml=1&conveni_code=31&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 Jan 2015 23:30:30 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\r\n<Epsilon_result>\r\n
+        \ <result result=\"1\" />\r\n  <result trans_code=\"504052\" />\r\n  <result
+        order_number=\"O3042483\" />\r\n  <result state=\"0\" />\r\n  <result user_id=\"U1421364630\"
+        />\r\n  <result user_name=\"%83%84%83%7D%83_%20%83%5E%83%8D%83E\" />\r\n  <result
+        process_code=\"1\" />\r\n  <result last_update=\"2015-01-16%2008%3A30%3A31\"
+        />\r\n  <result item_price=\"10000\" />\r\n  <result memo1=\"\" />\r\n  <result
+        memo2=\"\" />\r\n  <result mission_code=\"1\" />\r\n  <result st_code=\"00100-0000-00000-00000-00000-00000-00000\"
+        />\r\n  <result contract_code=\"[CONTRACT_CODE]\" />\r\n  <result item_name=\"Greate%20Product\"
+        />\r\n  <result payment_code=\"3\" />\r\n  <result user_mail_add=\"yamada-taro%40example.com\"
+        />\r\n  <result item_code=\"ITEM001\" />\r\n  <result conveni_code=\"31\"
+        />\r\n  <result receipt_no=\"0005180\" />\r\n  <result kigyou_code=\"\" />\r\n
+        \ <result haraikomi_url=\"http%3A%2F%2Fbeta.epsilon.jp%2Fsample%2Fecon_sample.pdf\"
+        />\r\n  <result paid=\"0\" />\r\n  <result receipt_date=\"2015-01-16%2008%3A30%3A31\"
+        />\r\n  <result conveni_limit=\"2015-01-26\" />\r\n  <result conveni_time=\"\"
+        />\r\n</Epsilon_result>\r\n"
+    http_version:
+  recorded_at: Thu, 15 Jan 2015 23:30:31 GMT
+recorded_with: VCR 2.9.3

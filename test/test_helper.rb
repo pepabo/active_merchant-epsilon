@@ -19,10 +19,10 @@ ActiveMerchant::Billing::EpsilonGateway.contract_code = ENV['CONTRACT_CODE']
 VCR.configure do |c|
   c.cassette_library_dir = 'test/fixtures/vcr_cassettes'
   c.hook_into :webmock
-  c.filter_sensitive_data('<CONTRACT_CODE>') { ENV['CONTRACT_CODE'] }
+  c.filter_sensitive_data('[CONTRACT_CODE]') { ENV['CONTRACT_CODE'] }
 end
 
-module SampleCreditCardMethods
+module SamplePaymentMethods
   def valid_credit_card
     ActiveMerchant::Billing::CreditCard.new(
       first_name: 'TARO',
@@ -64,6 +64,22 @@ module SampleCreditCardMethods
       order_number:  "O#{Time.now.to_i}",
       mission_code:   '6'
     }
+  end
+
+  def valid_convenience_store
+    ActiveMerchant::Billing::ConvenienceStore.new(
+      code:           ActiveMerchant::Billing::ConvenienceStore::Code::LAWSON,
+      full_name_kana: 'ヤマダ タロウ',
+      phone_number:   '0312345678'
+    )
+  end
+
+  def invalid_convenience_store
+    ActiveMerchant::Billing::ConvenienceStore.new(
+      code:           ActiveMerchant::Billing::ConvenienceStore::Code::LAWSON,
+      full_name_kana: 'ヤマダ タロウ',
+      phone_number:   '0312345678901'
+    )
   end
 
   def fixture_xml(filename, parse: true)

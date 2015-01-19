@@ -61,6 +61,37 @@ if credit_card.validate.empty?
 end
 ```
 
+### Convenience Store Payment
+
+```ruby
+convenience_store = ActiveMerchant::Billing::ConvenienceStore.new(
+  code:           ActiveMerchant::Billing::ConvenienceStore::Code::LAWSON,
+  full_name_kana: 'ヤマダ タロウ',
+  phone_nubmer:   '0312345678'
+)
+
+purchase_detail = {
+  user_id:      'YOUR_APP_USER_IDENTIFIER',
+  user_email:   'yamada-taro@example.com',
+  item_code:    'ITEM001',
+  item_name:    'Greate Product',
+  order_number: 'UNIQUE ORDER NUBMRE',
+}
+
+if credit_card.validate.empty?
+  # 10000 yen as convenience store paymet
+  response = gateway.purchase(amount, convenience_store, purchase_detail)
+
+  if response.success?
+    puts "Successfully charged #{amount} yen as convenience store payment"
+    puts "Receipt number is #{response.params['receipt_number']}"
+    puts "Payment limit date is #{response.params['convenience_store_limit_date']}"
+  else
+    raise StandardError, response.message
+  end
+end
+```
+
 ### Recurring Billing (Monthly subscritpion)
 
 ```ruby
