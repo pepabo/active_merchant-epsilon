@@ -24,7 +24,7 @@ module ActiveMerchant #:nodoc:
         cancel_recurring: 'receive_order3.cgi',
         void: 'cancel_payment.cgi',
         convenience_store_purchase: 'receive_order3.cgi',
-        get_user_info: 'get_user_info.cgi',
+        find_user: 'get_user_info.cgi',
       }.freeze
 
       module ResponseXpath
@@ -129,9 +129,9 @@ module ActiveMerchant #:nodoc:
         )
       end
 
-      def get_user_info(user_id:)
+      def find_user(user_id:)
         commit(
-          'get_user_info',
+          'find_user',
           contract_code: self.contract_code,
           user_id: user_id
         )
