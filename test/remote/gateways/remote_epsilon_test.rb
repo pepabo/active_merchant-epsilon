@@ -135,4 +135,18 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       assert_equal false, response.success?
     end
   end
+
+  def test_get_user_info_success
+    VCR.use_cassette(:get_user_info_success) do
+      response = gateway.get_user_info(user_id: "U1416470209")
+      assert_equal true, response.success?
+    end
+  end
+
+  def test_get_user_info_failure
+    VCR.use_cassette(:get_user_info_failure) do
+      response = gateway.get_user_info(user_id: "")
+      assert_equal false, response.success?
+    end
+  end
 end

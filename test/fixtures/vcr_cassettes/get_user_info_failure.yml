@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/get_user_info.cgi
+    body:
+      encoding: US-ASCII
+      string: contract_code=[CONTRACT_CODE]&user_id=
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 02 Feb 2015 08:40:02 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result card_brand="" />
+          <result card_number_mask="" />
+          <result err_code="801" />
+          <result err_detail="%83C%83v%83V%83%8D%83%93%82%C9%93o%98%5E%82%CC%93d%98b%94%D4%8D%86%82%CC%89%BA4%8C%85%28%89%BA%8EO%8C%85%82%CC%8F%EA%8D%87%82%CD%89%BA%8EO%8C%85%29%82%F0%93%FC%97%CD%82%A8%8A%E8%82%A2%82%B5%82%DC%82%B7%81B" />
+          <result result="2" />
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Mon, 02 Feb 2015 08:40:03 GMT
+recorded_with: VCR 2.9.3
