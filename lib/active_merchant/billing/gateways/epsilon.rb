@@ -36,6 +36,8 @@ module ActiveMerchant #:nodoc:
         RECEIPT_NUMBER = '//Epsilon_result/result[@receipt_no][1]/@receipt_no'
         RECEIPT_DATE = '//Epsilon_result/result[@receipt_date][1]/@receipt_date'
         CONVENIENCE_STORE_LIMIT_DATE = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
+        CARD_NUMBER_MASK = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
+        CARD_BLAND = '//Epsilon_result/result[@card_bland]/@card_bland'
       end
 
       module MissionCode
@@ -182,6 +184,8 @@ module ActiveMerchant #:nodoc:
         receipt_number = xml.xpath(ResponseXpath::RECEIPT_NUMBER).to_s
         receipt_date = uri_decode(xml.xpath(ResponseXpath::RECEIPT_DATE).to_s)
         convenience_store_limit_date = uri_decode(xml.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
+        card_number_mask = uri_decode(xml.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
+        card_bland = uri_decode(xml.xpath(ResponseXpath::CARD_BLAND).to_s)
 
         {
           success: success,
@@ -192,6 +196,8 @@ module ActiveMerchant #:nodoc:
           receipt_number: receipt_number,
           receipt_date: receipt_date,
           convenience_store_limit_date: convenience_store_limit_date,
+          card_number_mask: card_number_mask,
+          card_bland: card_bland,
         }
       end
 
