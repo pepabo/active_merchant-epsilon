@@ -1,3 +1,5 @@
+require 'active_merchant/billing/model'
+
 module ActiveMerchant
   module Billing
     class ConvenienceStore < Model
