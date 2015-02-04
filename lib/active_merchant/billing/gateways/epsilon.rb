@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'active_support/core_ext/string'
+require 'active_merchant/billing/gateway'
 
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
