@@ -149,4 +149,20 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       assert_equal false, response.success?
     end
   end
+
+  def test_registered_purchase_successful
+    VCR.use_cassette(:registered_purchase_successful) do
+      response = gateway.registered_purchase(10000, purchase_detail_for_registered)
+      assert_equal true, response.success?
+    end
+  end
+
+  def test_registered_purchase_fail
+    VCR.use_cassette(:registered_purchase_fail) do
+      invalid_purchase_detail = purchase_detail_for_registered
+      invalid_purchase_detail[:user_id] = ''
+      response = gateway.registered_purchase(10000, invalid_purchase_detail)
+      assert_equal false, response.success?
+    end
+  end
 end
