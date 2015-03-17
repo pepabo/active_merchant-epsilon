@@ -50,6 +50,7 @@ credit_card = ActiveMerchant::Billing::CreditCard.new(
   number:     '4242424242424242',
   month:      '10',
   year:       Time.now.year + 1
+  verification_value: '000', # security code
 )
 
 purchase_detail = {
