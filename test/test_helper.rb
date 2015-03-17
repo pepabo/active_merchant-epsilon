@@ -43,6 +43,7 @@ module SamplePaymentMethods
       number:     '4242424242424242',
       month:      '10',
       year:       Time.now.year + 1,
+      require_verification_value: true,
       verification_value: '000',
     )
   end
