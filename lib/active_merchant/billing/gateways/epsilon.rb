@@ -284,6 +284,8 @@ module ActiveMerchant #:nodoc:
             card_number: payment_method.number,
             expire_y: payment_method.year,
             expire_m: payment_method.month,
+            security_code: payment_method.verification_value,
+            security_check: 1, # use security code
           )
         when ConvenienceStore
           params.merge(

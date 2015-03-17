@@ -5,7 +5,7 @@ http_interactions:
     uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
     body:
       encoding: US-ASCII
-      string: contract_code=[CONTRACT_CODE]&user_id=U1426594529&user_name=TARO+YAMADA&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O29772150&mission_code=1&item_price=10000&process_code=1&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1&st_code=10000-0000-0000&card_number=4242424242424242&expire_y=2016&expire_m=10
+      string: contract_code=[CONTRACT_CODE]&user_id=U1426595294&user_name=TARO+YAMADA&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O14178352&mission_code=1&item_price=10000&process_code=1&user_agent=ActiveMerchant%3A%3AEpsilon-0.0.1&st_code=10000-0000-0000&card_number=4242424242424242&expire_y=2016&expire_m=10&security_code=000&security_check=1
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -21,7 +21,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Tue, 17 Mar 2015 12:15:29 GMT
+      - Tue, 17 Mar 2015 12:28:14 GMT
       Server:
       - Apache
       Transfer-Encoding:
@@ -39,8 +39,8 @@ http_interactions:
           <result kari_flag="0" />
           <result pareq="" />
           <result result="1" />
-          <result trans_code="520639" />
+          <result trans_code="520640" />
         </Epsilon_result>
     http_version: 
-  recorded_at: Tue, 17 Mar 2015 12:15:31 GMT
+  recorded_at: Tue, 17 Mar 2015 12:28:15 GMT
 recorded_with: VCR 2.9.3
