@@ -14,6 +14,13 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
     end
   end
 
+  def test_purchase_with_verification_value_successful
+    VCR.use_cassette(:purchase_with_verification_value) do
+      response = gateway.purchase(10000, valid_credit_card_with_verification_value, purchase_detail)
+      assert_equal true, response.success?
+    end
+  end
+
   def test_purchase_fail
     VCR.use_cassette(:purchase_fail) do
       response = gateway.purchase(10000, invalid_credit_card, purchase_detail)

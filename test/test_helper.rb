@@ -32,6 +32,17 @@ module SamplePaymentMethods
       number:     '4242424242424242',
       month:      '10',
       year:       Time.now.year + 1,
+      require_verification_value: false,
+    )
+  end
+
+  def valid_credit_card_with_verification_value
+    ActiveMerchant::Billing::CreditCard.new(
+      first_name: 'TARO',
+      last_name:  'YAMADA',
+      number:     '4242424242424242',
+      month:      '10',
+      year:       Time.now.year + 1,
       verification_value: '000',
     )
   end
@@ -43,7 +54,7 @@ module SamplePaymentMethods
       number:     '0000000000000000',
       month:      '10',
       year:       Time.now.year + 1 ,
-      verification_value: '000',
+      require_verification_value: false,
     )
   end
 
