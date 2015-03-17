@@ -15,6 +15,8 @@ Dotenv.load
 ActiveMerchant::Billing::Base.mode = :test
 
 ActiveMerchant::Billing::EpsilonGateway.contract_code = ENV['CONTRACT_CODE']
+ActiveMerchant::Billing::EpsilonGateway.proxy_address = ENV['PROXY_ADDRESS'] if ENV['PROXY_ADDRESS']
+ActiveMerchant::Billing::EpsilonGateway.proxy_port = ENV['PROXY_PORT'] if ENV['PROXY_PORT']
 
 VCR.configure do |c|
   c.cassette_library_dir = 'test/fixtures/vcr_cassettes'
