@@ -31,7 +31,8 @@ module SamplePaymentMethods
       last_name:  'YAMADA',
       number:     '4242424242424242',
       month:      '10',
-      year:       Time.now.year + 1
+      year:       Time.now.year + 1,
+      verification_value: '000',
     )
   end
 
@@ -42,6 +43,7 @@ module SamplePaymentMethods
       number:     '0000000000000000',
       month:      '10',
       year:       Time.now.year + 1 ,
+      verification_value: '000',
     )
   end
 
