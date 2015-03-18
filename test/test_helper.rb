@@ -16,7 +16,7 @@ ActiveMerchant::Billing::Base.mode = :test
 
 ActiveMerchant::Billing::EpsilonGateway.contract_code = ENV['CONTRACT_CODE']
 ActiveMerchant::Billing::EpsilonGateway.proxy_address = ENV['PROXY_ADDRESS'] if ENV['PROXY_ADDRESS']
-ActiveMerchant::Billing::EpsilonGateway.proxy_port = ENV['PROXY_PORT'] if ENV['PROXY_PORT']
+ActiveMerchant::Billing::EpsilonGateway.proxy_port    = ENV['PROXY_PORT'] if ENV['PROXY_PORT']
 
 VCR.configure do |c|
   c.cassette_library_dir = 'test/fixtures/vcr_cassettes'
@@ -27,34 +27,34 @@ end
 module SamplePaymentMethods
   def valid_credit_card
     ActiveMerchant::Billing::CreditCard.new(
-      first_name: 'TARO',
-      last_name:  'YAMADA',
-      number:     '4242424242424242',
-      month:      '10',
-      year:       Time.now.year + 1,
+      first_name:                 'TARO',
+      last_name:                  'YAMADA',
+      number:                     '4242424242424242',
+      month:                      '10',
+      year:                       Time.now.year + 1,
       require_verification_value: false,
     )
   end
 
   def valid_credit_card_with_verification_value
     ActiveMerchant::Billing::CreditCard.new(
-      first_name: 'TARO',
-      last_name:  'YAMADA',
-      number:     '4242424242424242',
-      month:      '10',
-      year:       Time.now.year + 1,
+      first_name:                 'TARO',
+      last_name:                  'YAMADA',
+      number:                     '4242424242424242',
+      month:                      '10',
+      year:                       Time.now.year + 1,
       require_verification_value: true,
-      verification_value: '000',
+      verification_value:         '000',
     )
   end
 
   def invalid_credit_card
     ActiveMerchant::Billing::CreditCard.new(
-      first_name: 'TARO',
-      last_name:  'YAMADA',
-      number:     '0000000000000000',
-      month:      '10',
-      year:       Time.now.year + 1 ,
+      first_name:                 'TARO',
+      last_name:                  'YAMADA',
+      number:                     '0000000000000000',
+      month:                      '10',
+      year:                       Time.now.year + 1,
       require_verification_value: false,
     )
   end
@@ -100,7 +100,6 @@ module SamplePaymentMethods
 
   def fixture_xml(filename, parse: true)
     xml = File.read("test/fixtures/#{filename}")
-
     parse ? Nokogiri.parse(xml.sub('x-sjis-cp932', 'CP932')) : xml
   end
 
