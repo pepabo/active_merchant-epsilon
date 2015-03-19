@@ -279,12 +279,22 @@ module ActiveMerchant #:nodoc:
 
         case payment_method
         when CreditCard
-          params.merge(
-            st_code: '10000-0000-0000',
+          params.merge!(
+            st_code:     '10000-0000-0000',
             card_number: payment_method.number,
-            expire_y: payment_method.year,
-            expire_m: payment_method.month,
+            expire_y:    payment_method.year,
+            expire_m:    payment_method.month,
           )
+
+          if payment_method.require_verification_value
+            params.merge!(
+              security_code:  payment_method.verification_value,
+              security_check: 1, # use security code
+            )
+          end
+
+          params
+
         when ConvenienceStore
           params.merge(
             user_tel: payment_method.phone_number,
