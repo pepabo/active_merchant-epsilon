@@ -56,6 +56,7 @@ credit_card = ActiveMerchant::Billing::CreditCard.new(
 
 purchase_detail = {
   user_id:      'YOUR_APP_USER_IDENTIFIER',
+  user_name:    '山田 太郎',
   user_email:   'yamada-taro@example.com',
   item_code:    'ITEM001',
   item_name:    'Greate Product',
