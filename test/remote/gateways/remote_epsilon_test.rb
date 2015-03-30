@@ -30,11 +30,15 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
   def test_purchase_with_3d_secure_card_successful
     VCR.use_cassette(:purchase_with_3d_secure_card_successful) do
       if valid_3d_secure_card.validate.empty?
-        response = gateway.purchase(10000, valid_3d_secure_card, purchase_detail)
+        response = gateway.purchase(
+          10000,
+          valid_3d_secure_card,
+          purchase_detail.merge(three_d_secure_check_code: 1)
+        )
       end
 
-      skip "Not yet implemented"
-      assert_equal true, response.three_d_secure?
+      assert_equal true, response.success?
+      assert_equal true, response.params['three_d_secure']
     end
   end
 

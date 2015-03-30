@@ -33,12 +33,13 @@ module ActiveMerchant #:nodoc:
         TRANSACTION_CODE = '//Epsilon_result/result[@trans_code]/@trans_code'
         ERROR_CODE = '//Epsilon_result/result[@err_code]/@err_code'
         ERROR_DETAIL = '//Epsilon_result/result[@err_detail]/@err_detail'
-
         RECEIPT_NUMBER = '//Epsilon_result/result[@receipt_no][1]/@receipt_no'
         RECEIPT_DATE = '//Epsilon_result/result[@receipt_date][1]/@receipt_date'
         CONVENIENCE_STORE_LIMIT_DATE = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
         CARD_NUMBER_MASK = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
         CARD_BRAND = '//Epsilon_result/result[@card_brand]/@card_brand'
+        ACS_URL = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
+        PAREQ = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payment authentication request)
       end
 
       module MissionCode
@@ -195,7 +196,7 @@ module ActiveMerchant #:nodoc:
         #   Nokogiri::XML::SyntaxError: Unsupported encoding x-sjis-cp932
         xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'UTF-8'))
 
-        success = xml.xpath(ResponseXpath::RESULT).to_s == '1'
+        result = xml.xpath(ResponseXpath::RESULT).to_s
         transaction_code = xml.xpath(ResponseXpath::TRANSACTION_CODE).to_s
         error_code = xml.xpath(ResponseXpath::ERROR_CODE).to_s
         error_detail = uri_decode(xml.xpath(ResponseXpath::ERROR_DETAIL).to_s)
@@ -205,9 +206,11 @@ module ActiveMerchant #:nodoc:
         convenience_store_limit_date = uri_decode(xml.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
         card_number_mask = uri_decode(xml.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
         card_brand = uri_decode(xml.xpath(ResponseXpath::CARD_BRAND).to_s)
+        acs_url = uri_decode(xml.xpath(ResponseXpath::ACS_URL).to_s)
+        pareq = xml.xpath(ResponseXpath::PAREQ).to_s
 
         {
-          success: success,
+          success: result == '1' || result == '5',
           message: "#{error_code}: #{error_detail}",
           transaction_code: transaction_code,
           error_code: error_code,
@@ -217,6 +220,9 @@ module ActiveMerchant #:nodoc:
           convenience_store_limit_date: convenience_store_limit_date,
           card_number_mask: card_number_mask,
           card_brand: card_brand,
+          three_d_secure: result == '5',
+          acs_url: acs_url,
+          pareq: pareq,
         }
       end
 
@@ -319,6 +325,7 @@ module ActiveMerchant #:nodoc:
           mission_code: detail[:mission_code],
           item_price: amount,
           process_code: detail[:process_code],
+          tds_check_code: detail[:three_d_secure_check_code],
           user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
         }
       end
@@ -328,7 +335,7 @@ module ActiveMerchant #:nodoc:
       end
 
       def post_data(parameters = {})
-        parameters.map {|k, v| "#{k}=#{CGI.escape(v.to_s)}"}.join('&')
+        parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
       end
     end
   end
