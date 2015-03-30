@@ -14,6 +14,9 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       end
 
       assert_equal true, response.success?
+      assert_equal false, response.params['three_d_secure']
+      assert_empty response.params['acs_url']
+      assert_empty response.params['pareq']
     end
   end
 
@@ -39,6 +42,8 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
 
       assert_equal true, response.success?
       assert_equal true, response.params['three_d_secure']
+      assert_match /\Ahttps?/, response.params['acs_url']
+      refute_empty response.params['pareq']
     end
   end
 
