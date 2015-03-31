@@ -30,12 +30,12 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
     end
   end
 
-  def test_purchase_with_3d_secure_card_successful
-    VCR.use_cassette(:purchase_with_3d_secure_card_successful) do
-      if valid_3d_secure_card.validate.empty?
+  def test_purchase_with_three_d_secure_card_successful
+    VCR.use_cassette(:purchase_with_three_d_secure_card_successful) do
+      if valid_three_d_secure_card.validate.empty?
         response = gateway.purchase(
           10000,
-          valid_3d_secure_card,
+          valid_three_d_secure_card,
           purchase_detail.merge(three_d_secure_check_code: 1)
         )
       end
@@ -46,7 +46,7 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       refute_empty response.params['pareq']
     end
 
-    VCR.use_cassette(:autheticate_3d_secure_card_successful) do
+    VCR.use_cassette(:autheticate_three_d_secure_card_successful) do
       response = gateway.authenticate(valid_three_d_secure_pares)
       assert_equal true, response.success?
     end

@@ -48,7 +48,7 @@ module SamplePaymentMethods
     )
   end
 
-  def valid_3d_secure_card
+  def valid_three_d_secure_card
     ActiveMerchant::Billing::CreditCard.new(
       first_name:                 'TARO',
       last_name:                  'YAMADA',
