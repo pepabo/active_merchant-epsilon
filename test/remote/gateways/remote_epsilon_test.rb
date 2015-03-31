@@ -45,6 +45,11 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       assert_match /\Ahttps?/, response.params['acs_url']
       refute_empty response.params['pareq']
     end
+
+    VCR.use_cassette(:autheticate_3d_secure_card_successful) do
+      response = gateway.authenticate(valid_three_d_secure_pares)
+      assert_equal true, response.success?
+    end
   end
 
   def test_purchase_fail

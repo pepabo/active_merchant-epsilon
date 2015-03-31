@@ -94,6 +94,14 @@ module SamplePaymentMethods
     }
   end
 
+  def valid_three_d_secure_pares
+    now = Time.now
+    {
+      order_number:         "O#{now.sec}#{now.usec}",
+      three_d_secure_pares: 'xxxxxxxxxxxxxxxx',
+    }
+  end
+
   def valid_convenience_store
     ActiveMerchant::Billing::ConvenienceStore.new(
       code:           ActiveMerchant::Billing::ConvenienceStore::Code::LAWSON,

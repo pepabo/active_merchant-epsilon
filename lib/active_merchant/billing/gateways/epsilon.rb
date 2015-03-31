@@ -164,6 +164,20 @@ module ActiveMerchant #:nodoc:
         )
       end
 
+      #
+      # 3D セキュアの 2回目のリクエスト
+      #
+      def authenticate(order_number:, three_d_secure_pares:, contract_code: nil)
+        params = {
+          contract_code:  contract_code || self.contract_code,
+          order_number:   order_number,
+          tds_check_code: 2,
+          tds_pares:      three_d_secure_pares,
+        }
+
+        commit('purchase', params)
+      end
+
       def authorize(money, payment, options={})
         raise ActiveMerchant::Epsilon::InvalidActionError
       end

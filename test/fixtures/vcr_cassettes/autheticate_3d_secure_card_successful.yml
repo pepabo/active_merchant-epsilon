@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
+    body:
+      encoding: US-ASCII
+      string: contract_code=[CONTRACT_CODE]&order_number=O42938159&tds_check_code=2&tds_pares=xxxxxxxxxxxxxxxx
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 31 Mar 2015 03:58:45 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result acsurl="" />
+          <result err_code="" />
+          <result err_detail="" />
+          <result kari_flag="0" />
+          <result pareq="" />
+          <result result="1" />
+          <result trans_code="521710" />
+        </Epsilon_result>
+    http_version:
+  recorded_at: Tue, 31 Mar 2015 03:58:43 GMT
+recorded_with: VCR 2.9.3
