@@ -167,9 +167,9 @@ module ActiveMerchant #:nodoc:
       #
       # Second request for 3D secure
       #
-      def authenticate(contract_code: nil, order_number:, three_d_secure_pares:)
+      def authenticate(order_number:, three_d_secure_pares:)
         params = {
-          contract_code:  contract_code || self.contract_code,
+          contract_code:  self.contract_code,
           order_number:   order_number,
           tds_check_code: 2,
           tds_pares:      three_d_secure_pares,
@@ -336,7 +336,7 @@ module ActiveMerchant #:nodoc:
 
       def billing_params_base(amount, payment_method, detail)
         {
-          contract_code: detail[:contract_code] || self.contract_code,
+          contract_code: self.contract_code,
           user_id: detail[:user_id],
           user_name: detail[:user_name] || payment_method.name, # 後方互換性のために payment_method.name を残した
           user_mail_add: detail[:user_email],
