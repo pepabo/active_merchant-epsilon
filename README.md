@@ -114,6 +114,8 @@ if credit_card.validate.empty?
   end
 end
 
+# (The card holder identifies himself on credit card's page and comes back here)
+
 # AND SECOND REQUEST
 
 response = gateway.authenticate(
