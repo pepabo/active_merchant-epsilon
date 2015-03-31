@@ -28,6 +28,13 @@ module ActiveMerchant #:nodoc:
         find_user: 'get_user_info.cgi',
       }.freeze
 
+      module ResultCode
+        FAILURE = '0'
+        SUCCESS = '1'
+        THREE_D_SECURE = '5'
+        SYSTEM_ERROR = '9'
+      end
+
       module ResponseXpath
         RESULT = '//Epsilon_result/result[@result]/@result'
         TRANSACTION_CODE = '//Epsilon_result/result[@trans_code]/@trans_code'
@@ -210,7 +217,7 @@ module ActiveMerchant #:nodoc:
         pareq = xml.xpath(ResponseXpath::PAREQ).to_s
 
         {
-          success: result == '1' || result == '5',
+          success: result == ResultCode::SUCCESS || result == ResultCode::THREE_D_SECURE,
           message: "#{error_code}: #{error_detail}",
           transaction_code: transaction_code,
           error_code: error_code,
@@ -220,7 +227,7 @@ module ActiveMerchant #:nodoc:
           convenience_store_limit_date: convenience_store_limit_date,
           card_number_mask: card_number_mask,
           card_brand: card_brand,
-          three_d_secure: result == '5',
+          three_d_secure: result == ResultCode::THREE_D_SECURE,
           acs_url: acs_url,
           pareq: pareq,
         }
