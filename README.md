@@ -78,14 +78,6 @@ end
 ### CreditCard Payment with 3D secure
 
 ```ruby
-require 'active_merchant'
-
-ActiveMerchant::Billing::Base.mode = :test
-
-ActiveMerchant::Billing::EpsilonGateway.contract_code = 'YOUR_CONTRACT_CODE'
-
-gateway = ActiveMerchant::Billing::EpsilonGateway.new
-
 amount = 10000
 
 credit_card = ActiveMerchant::Billing::CreditCard.new(
@@ -121,6 +113,19 @@ if credit_card.validate.empty?
     puts "Successfully charged #{amount} yen to the credit card #{credit_card.display_number}"
   end
 end
+
+# AND SECOND REQUEST
+
+response = gateway.authenticate(
+  order_number:         'ORDER NUMBER',
+  three_d_secure_pares: 'PAYMENT AUTHENTICATION RESPONSE',
+)
+
+if response.success?
+  puts "Successfully charged to the credit card"
+else
+  raise StandardError, response.message
+end
 ```
 
 ### Convenience Store Payment
@@ -137,7 +142,7 @@ purchase_detail = {
   user_email:   'yamada-taro@example.com',
   item_code:    'ITEM001',
   item_name:    'Greate Product',
-  order_number: 'UNIQUE ORDER NUBMRE',
+  order_number: 'UNIQUE ORDER NUMBER',
 }
 
 if credit_card.validate.empty?
