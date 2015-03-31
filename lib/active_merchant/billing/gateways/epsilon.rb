@@ -167,7 +167,7 @@ module ActiveMerchant #:nodoc:
       #
       # 3D セキュアの 2回目のリクエスト
       #
-      def authenticate(order_number:, three_d_secure_pares:, contract_code: nil)
+      def authenticate(contract_code: nil, order_number:, three_d_secure_pares:)
         params = {
           contract_code:  contract_code || self.contract_code,
           order_number:   order_number,
