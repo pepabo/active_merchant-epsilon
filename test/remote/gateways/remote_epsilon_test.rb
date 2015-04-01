@@ -16,7 +16,7 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       assert_equal true, response.success?
       assert_equal false, response.params['three_d_secure']
       assert_empty response.params['acs_url']
-      assert_empty response.params['pareq']
+      assert_empty response.params['pa_req']
     end
   end
 
@@ -43,11 +43,11 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       assert_equal true, response.success?
       assert_equal true, response.params['three_d_secure']
       assert_match /\Ahttps?/, response.params['acs_url']
-      refute_empty response.params['pareq']
+      refute_empty response.params['pa_req']
     end
 
     VCR.use_cassette(:autheticate_three_d_secure_card_successful) do
-      response = gateway.authenticate(valid_three_d_secure_pares)
+      response = gateway.authenticate(valid_three_d_secure_pa_res)
       assert_equal true, response.success?
     end
   end

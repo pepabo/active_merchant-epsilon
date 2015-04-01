@@ -46,7 +46,7 @@ module ActiveMerchant #:nodoc:
         CARD_NUMBER_MASK = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
         CARD_BRAND = '//Epsilon_result/result[@card_brand]/@card_brand'
         ACS_URL = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
-        PAREQ = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payment authentication request)
+        PA_REQ = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payment authentication request)
       end
 
       module MissionCode
@@ -167,12 +167,12 @@ module ActiveMerchant #:nodoc:
       #
       # Second request for 3D secure
       #
-      def authenticate(order_number:, three_d_secure_pares:)
+      def authenticate(order_number:, three_d_secure_pa_res:)
         params = {
           contract_code:  self.contract_code,
           order_number:   order_number,
           tds_check_code: 2,
-          tds_pares:      three_d_secure_pares,
+          tds_pares:      three_d_secure_pa_res,
         }
 
         commit('purchase', params)
@@ -228,7 +228,7 @@ module ActiveMerchant #:nodoc:
         card_number_mask = uri_decode(xml.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
         card_brand = uri_decode(xml.xpath(ResponseXpath::CARD_BRAND).to_s)
         acs_url = uri_decode(xml.xpath(ResponseXpath::ACS_URL).to_s)
-        pareq = xml.xpath(ResponseXpath::PAREQ).to_s
+        pa_req = xml.xpath(ResponseXpath::PA_REQ).to_s
 
         {
           success: result == ResultCode::SUCCESS || result == ResultCode::THREE_D_SECURE,
@@ -243,7 +243,7 @@ module ActiveMerchant #:nodoc:
           card_brand: card_brand,
           three_d_secure: result == ResultCode::THREE_D_SECURE,
           acs_url: acs_url,
-          pareq: pareq,
+          pa_req: pa_req,
         }
       end
 

@@ -93,11 +93,11 @@ module SamplePaymentMethods
     }
   end
 
-  def valid_three_d_secure_pares
+  def valid_three_d_secure_pa_res
     now = Time.now
     {
-      order_number:         "O#{now.sec}#{now.usec}",
-      three_d_secure_pares: 'xxxxxxxxxxxxxxxx',
+      order_number:          "O#{now.sec}#{now.usec}",
+      three_d_secure_pa_res: 'xxxxxxxxxxxxxxxx',
     }
   end
 
