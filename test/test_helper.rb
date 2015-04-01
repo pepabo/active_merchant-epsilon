@@ -52,11 +52,10 @@ module SamplePaymentMethods
     ActiveMerchant::Billing::CreditCard.new(
       first_name:                 'TARO',
       last_name:                  'YAMADA',
-      number:                     '4242424242424242', # 現在はイプシロンのテスト環境に 3D セキュアのカードを投げても通常のクレジットカード決済になるので、3D セキュアのカード番号書いても意味がない
+      number:                     '4123451111111117',
       month:                      '12',
-      year:                       '2016',
-      require_verification_value: true,
-      verification_value:         '908',
+      year:                       '2023',
+      require_verification_value: false,
     )
   end
 
