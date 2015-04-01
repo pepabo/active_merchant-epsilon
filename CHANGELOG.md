@@ -3,11 +3,11 @@
 ### 0.3.0
 
 * Support credit card payment with 3D secure
-* Disable to specify contract_code via purchase_detail
+* Disable to specify contract_code with purchase_detail
 
 ### 0.2.0
 
-* Specification user_name via purchase_detail
+* Specification user_name with purchase_detail
 
 ### 0.1.0
 
