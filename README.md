@@ -60,7 +60,7 @@ purchase_detail = {
   user_email:   'yamada-taro@example.com',
   item_code:    'ITEM001',
   item_name:    'Greate Product',
-  order_number: 'UNIQUE ORDER NUBMRE',
+  order_number: 'UNIQUE ORDER NUMBER',
 }
 
 if credit_card.validate.empty?
@@ -72,6 +72,61 @@ if credit_card.validate.empty?
   else
     raise StandardError, response.message
   end
+end
+```
+
+### CreditCard Payment with 3D secure
+
+```ruby
+amount = 10000
+
+credit_card = ActiveMerchant::Billing::CreditCard.new(
+  first_name:                 'TARO',
+  last_name:                  'YAMADA',
+  number:                     '4242424242424242',
+  month:                      '10',
+  year:                       Time.now.year + 1
+  require_verification_value: true, # default: true
+  verification_value:         '000', # security code
+)
+
+purchase_detail = {
+  user_id:                   'YOUR_APP_USER_IDENTIFIER',
+  user_name:                 '山田 太郎',
+  user_email:                'yamada-taro@example.com',
+  item_code:                 'ITEM001',
+  item_name:                 'Greate Product',
+  order_number:              'UNIQUE ORDER NUMBER',
+  three_d_secure_check_code: 1,
+}
+
+if credit_card.validate.empty?
+  response = gateway.purchase(amount, credit_card, purchase_detail)
+
+  raise StandardError, response.message unless response.success?
+  
+  if response.params['three_d_secure']
+    puts response.params['acs_url']
+    puts response.params['pareq']
+  else
+    # NOT 3D SECURE
+    puts "Successfully charged #{amount} yen to the credit card #{credit_card.display_number}"
+  end
+end
+
+# (The card holder identifies himself on credit card's page and comes back here)
+
+# AND SECOND REQUEST
+
+response = gateway.authenticate(
+  order_number:         'ORDER NUMBER',
+  three_d_secure_pares: 'PAYMENT AUTHENTICATION RESPONSE',
+)
+
+if response.success?
+  puts "Successfully charged to the credit card"
+else
+  raise StandardError, response.message
 end
 ```
 
@@ -89,7 +144,7 @@ purchase_detail = {
   user_email:   'yamada-taro@example.com',
   item_code:    'ITEM001',
   item_name:    'Greate Product',
-  order_number: 'UNIQUE ORDER NUBMRE',
+  order_number: 'UNIQUE ORDER NUMBER',
 }
 
 if credit_card.validate.empty?

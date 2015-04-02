@@ -28,17 +28,25 @@ module ActiveMerchant #:nodoc:
         find_user: 'get_user_info.cgi',
       }.freeze
 
+      module ResultCode
+        FAILURE = '0'
+        SUCCESS = '1'
+        THREE_D_SECURE = '5'
+        SYSTEM_ERROR = '9'
+      end
+
       module ResponseXpath
         RESULT = '//Epsilon_result/result[@result]/@result'
         TRANSACTION_CODE = '//Epsilon_result/result[@trans_code]/@trans_code'
         ERROR_CODE = '//Epsilon_result/result[@err_code]/@err_code'
         ERROR_DETAIL = '//Epsilon_result/result[@err_detail]/@err_detail'
-
         RECEIPT_NUMBER = '//Epsilon_result/result[@receipt_no][1]/@receipt_no'
         RECEIPT_DATE = '//Epsilon_result/result[@receipt_date][1]/@receipt_date'
         CONVENIENCE_STORE_LIMIT_DATE = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
         CARD_NUMBER_MASK = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
         CARD_BRAND = '//Epsilon_result/result[@card_brand]/@card_brand'
+        ACS_URL = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
+        PA_REQ = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payment authentication request)
       end
 
       module MissionCode
@@ -156,6 +164,20 @@ module ActiveMerchant #:nodoc:
         )
       end
 
+      #
+      # Second request for 3D secure
+      #
+      def authenticate(order_number:, three_d_secure_pa_res:)
+        params = {
+          contract_code:  self.contract_code,
+          order_number:   order_number,
+          tds_check_code: 2,
+          tds_pares:      three_d_secure_pa_res,
+        }
+
+        commit('purchase', params)
+      end
+
       def authorize(money, payment, options={})
         raise ActiveMerchant::Epsilon::InvalidActionError
       end
@@ -195,7 +217,7 @@ module ActiveMerchant #:nodoc:
         #   Nokogiri::XML::SyntaxError: Unsupported encoding x-sjis-cp932
         xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'UTF-8'))
 
-        success = xml.xpath(ResponseXpath::RESULT).to_s == '1'
+        result = xml.xpath(ResponseXpath::RESULT).to_s
         transaction_code = xml.xpath(ResponseXpath::TRANSACTION_CODE).to_s
         error_code = xml.xpath(ResponseXpath::ERROR_CODE).to_s
         error_detail = uri_decode(xml.xpath(ResponseXpath::ERROR_DETAIL).to_s)
@@ -205,9 +227,11 @@ module ActiveMerchant #:nodoc:
         convenience_store_limit_date = uri_decode(xml.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
         card_number_mask = uri_decode(xml.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
         card_brand = uri_decode(xml.xpath(ResponseXpath::CARD_BRAND).to_s)
+        acs_url = uri_decode(xml.xpath(ResponseXpath::ACS_URL).to_s)
+        pa_req = xml.xpath(ResponseXpath::PA_REQ).to_s
 
         {
-          success: success,
+          success: result == ResultCode::SUCCESS || result == ResultCode::THREE_D_SECURE,
           message: "#{error_code}: #{error_detail}",
           transaction_code: transaction_code,
           error_code: error_code,
@@ -217,6 +241,9 @@ module ActiveMerchant #:nodoc:
           convenience_store_limit_date: convenience_store_limit_date,
           card_number_mask: card_number_mask,
           card_brand: card_brand,
+          three_d_secure: result == ResultCode::THREE_D_SECURE,
+          acs_url: acs_url,
+          pa_req: pa_req,
         }
       end
 
@@ -309,7 +336,7 @@ module ActiveMerchant #:nodoc:
 
       def billing_params_base(amount, payment_method, detail)
         {
-          contract_code: detail[:contract_code] || self.contract_code,
+          contract_code: self.contract_code,
           user_id: detail[:user_id],
           user_name: detail[:user_name] || payment_method.name, # 後方互換性のために payment_method.name を残した
           user_mail_add: detail[:user_email],
@@ -319,6 +346,7 @@ module ActiveMerchant #:nodoc:
           mission_code: detail[:mission_code],
           item_price: amount,
           process_code: detail[:process_code],
+          tds_check_code: detail[:three_d_secure_check_code],
           user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
         }
       end
@@ -328,7 +356,7 @@ module ActiveMerchant #:nodoc:
       end
 
       def post_data(parameters = {})
-        parameters.map {|k, v| "#{k}=#{CGI.escape(v.to_s)}"}.join('&')
+        parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
       end
     end
   end

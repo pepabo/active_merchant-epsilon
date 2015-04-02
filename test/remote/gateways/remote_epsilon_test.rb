@@ -14,6 +14,9 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       end
 
       assert_equal true, response.success?
+      assert_equal false, response.params['three_d_secure']
+      assert_empty response.params['acs_url']
+      assert_empty response.params['pa_req']
     end
   end
 
@@ -23,6 +26,28 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
         response = gateway.purchase(10000, valid_credit_card_with_verification_value, purchase_detail)
       end
 
+      assert_equal true, response.success?
+    end
+  end
+
+  def test_purchase_with_three_d_secure_card_successful
+    VCR.use_cassette(:purchase_with_three_d_secure_card_successful) do
+      if valid_three_d_secure_card.validate.empty?
+        response = gateway.purchase(
+          10000,
+          valid_three_d_secure_card,
+          purchase_detail.merge(three_d_secure_check_code: 1)
+        )
+      end
+
+      assert_equal true, response.success?
+      assert_equal true, response.params['three_d_secure']
+      assert_match /\Ahttps?/, response.params['acs_url']
+      refute_empty response.params['pa_req']
+    end
+
+    VCR.use_cassette(:autheticate_three_d_secure_card_successful) do
+      response = gateway.authenticate(valid_three_d_secure_pa_res)
       assert_equal true, response.success?
     end
   end

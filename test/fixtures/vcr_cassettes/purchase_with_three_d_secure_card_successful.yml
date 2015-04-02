@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
+    body:
+      encoding: US-ASCII
+      string: contract_code=[CONTRACT_CODE]&user_id=U1427867795&user_name=TARO+YAMADA&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O35443475&mission_code=1&item_price=10000&process_code=1&tds_check_code=1&user_agent=ActiveMerchant%3A%3AEpsilon-0.3.0&st_code=10000-0000-0000&card_number=4123451111111117&expire_y=2023&expire_m=12&security_code=012&security_check=1
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 01 Apr 2015 05:56:35 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result acsurl="https%3A%2F%2Ftestacsds.gmopg.jp%2FThreeDSim%2FACS" />
+          <result err_code="" />
+          <result err_detail="" />
+          <result pareq="eJxVUttOwzAM%2FZWq7yy3ppfJDSoUBA8bE4wPCKnZimg72o51f0%2FSdQwiRfGxLR%2F7OHA9VJ%2FeN7Zd2dSpz2bU97A2TVHWm9R%2FXd9fxf61gvW2Rcxf0OxbVLDArtMb9Moi9Vf6Gb9YwKM4jKIkpFHEOEuoEFIKEQgeRJwJX8Eqs3kKJiZliWYcyBnakq3Z6rpXoM3XzeNSBYyLQAKZIFTYPuZqdIZRnNApfHJDrStUFMj4gmn2dd8eFRUhkDOAffuptn2%2FmxNyOBxmm50%2BVlj33cw0FQHiwkAufaz2zupsuaEs1OIjG5brjC7yu2GZv%2FJFnh3cfcqzFIjLgEL3qDhlkgaUeVTOZTh3DYx%2B0JXrQzFqj53qhGDnSLJ%2Fob8usHq3dh1HJRKr1i8CHHZNbZt3M%2F%2FaUGBnlGcZ3QvkMsHtg9PV9FYqWbwzHovwTSAKlHHyLo1GGrzFXDi1xyRXv7SaccH4SOAAEFeGTIsk0yew1r%2FP8QMmJryw" />
+          <result result="5" />
+          <result trans_code="522778" />
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Wed, 01 Apr 2015 05:56:36 GMT
+recorded_with: VCR 2.9.3

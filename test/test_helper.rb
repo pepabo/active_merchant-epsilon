@@ -48,6 +48,17 @@ module SamplePaymentMethods
     )
   end
 
+  def valid_three_d_secure_card
+    ActiveMerchant::Billing::CreditCard.new(
+      first_name:                 'TARO',
+      last_name:                  'YAMADA',
+      number:                     '4123451111111117',
+      month:                      '12',
+      year:                       '2023',
+      require_verification_value: false,
+    )
+  end
+
   def invalid_credit_card
     ActiveMerchant::Billing::CreditCard.new(
       first_name:                 'TARO',
@@ -79,6 +90,14 @@ module SamplePaymentMethods
       item_name:     'Greate Product',
       order_number:  "O#{Time.now.to_i}",
       mission_code:   '6'
+    }
+  end
+
+  def valid_three_d_secure_pa_res
+    now = Time.now
+    {
+      order_number:          "O#{now.sec}#{now.usec}",
+      three_d_secure_pa_res: 'xxxxxxxxxxxxxxxx',
     }
   end
 
