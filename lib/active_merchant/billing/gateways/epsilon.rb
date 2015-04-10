@@ -228,7 +228,7 @@ module ActiveMerchant #:nodoc:
         card_number_mask = uri_decode(xml.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
         card_brand = uri_decode(xml.xpath(ResponseXpath::CARD_BRAND).to_s)
         acs_url = uri_decode(xml.xpath(ResponseXpath::ACS_URL).to_s)
-        pa_req = xml.xpath(ResponseXpath::PA_REQ).to_s
+        pa_req = uri_decode(xml.xpath(ResponseXpath::PA_REQ).to_s)
 
         {
           success: result == ResultCode::SUCCESS || result == ResultCode::THREE_D_SECURE,
