@@ -104,7 +104,7 @@ if credit_card.validate.empty?
   response = gateway.purchase(amount, credit_card, purchase_detail)
 
   raise StandardError, response.message unless response.success?
-  
+
   if response.params['three_d_secure']
     puts response.params['acs_url']
     puts response.params['pareq']
