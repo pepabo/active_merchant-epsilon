@@ -285,7 +285,7 @@ module ActiveMerchant #:nodoc:
             expire_m:    payment_method.month,
           )
 
-          if payment_method.require_verification_value
+          if payment_method.class.requires_verification_value?
             params.merge!(
               security_code:  payment_method.verification_value,
               security_check: 1, # use security code
