@@ -44,13 +44,13 @@ gateway = ActiveMerchant::Billing::EpsilonGateway.new
 
 amount = 10000
 
+ActiveMerchant::Billing::CreditCard.require_verification_value = true
 credit_card = ActiveMerchant::Billing::CreditCard.new(
   first_name:                 'TARO',
   last_name:                  'YAMADA',
   number:                     '4242424242424242',
   month:                      '10',
   year:                       Time.now.year + 1
-  require_verification_value: true, # default: true
   verification_value:         '000', # security code
 )
 
@@ -80,13 +80,13 @@ end
 ```ruby
 amount = 10000
 
+ActiveMerchant::Billing::CreditCard.require_verification_value = true
 credit_card = ActiveMerchant::Billing::CreditCard.new(
   first_name:                 'TARO',
   last_name:                  'YAMADA',
   number:                     '4242424242424242',
   month:                      '10',
   year:                       Time.now.year + 1
-  require_verification_value: true, # default: true
   verification_value:         '000', # security code
 )
 
