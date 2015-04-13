@@ -1,4 +1,5 @@
 # ActiveMerchant::Epsilon
+[![wercker status](https://app.wercker.com/status/43c6648e20f325c8c0a560c36e89781c/s/master "wercker status")](https://app.wercker.com/project/bykey/43c6648e20f325c8c0a560c36e89781c)
 
 Epsilon integration for ActiveMerchant.
 
@@ -44,13 +45,13 @@ gateway = ActiveMerchant::Billing::EpsilonGateway.new
 
 amount = 10000
 
+ActiveMerchant::Billing::CreditCard.require_verification_value = true
 credit_card = ActiveMerchant::Billing::CreditCard.new(
   first_name:                 'TARO',
   last_name:                  'YAMADA',
   number:                     '4242424242424242',
   month:                      '10',
   year:                       Time.now.year + 1
-  require_verification_value: true, # default: true
   verification_value:         '000', # security code
 )
 
@@ -80,13 +81,13 @@ end
 ```ruby
 amount = 10000
 
+ActiveMerchant::Billing::CreditCard.require_verification_value = true
 credit_card = ActiveMerchant::Billing::CreditCard.new(
   first_name:                 'TARO',
   last_name:                  'YAMADA',
   number:                     '4242424242424242',
   month:                      '10',
   year:                       Time.now.year + 1
-  require_verification_value: true, # default: true
   verification_value:         '000', # security code
 )
 
@@ -104,7 +105,7 @@ if credit_card.validate.empty?
   response = gateway.purchase(amount, credit_card, purchase_detail)
 
   raise StandardError, response.message unless response.success?
-  
+
   if response.params['three_d_secure']
     puts response.params['acs_url']
     puts response.params['pareq']
