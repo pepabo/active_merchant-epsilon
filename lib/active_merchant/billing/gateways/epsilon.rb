@@ -285,10 +285,12 @@ module ActiveMerchant #:nodoc:
         case payment_method
         when CreditCard
           params.merge!(
-            st_code:     '10000-0000-0000',
-            card_number: payment_method.number,
-            expire_y:    payment_method.year,
-            expire_m:    payment_method.month,
+            st_code:      '10000-0000-0000',
+            card_number:  payment_method.number,
+            expire_y:     payment_method.year,
+            expire_m:     payment_method.month,
+            card_st_code: detail[:credit_type],
+            pay_time:     detail[:number_of_payments],
           )
 
           if payment_method.class.requires_verification_value?

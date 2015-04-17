@@ -36,8 +36,6 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
         response = gateway.purchase(10000, valid_credit_card_with_verification_value, installment_purchase_detail)
       end
 
-      skip 'Not yet implemented'
-
       assert_equal true, response.success?
     end
   end
@@ -47,8 +45,6 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       if valid_credit_card_with_verification_value.validate.empty?
         response = gateway.purchase(10000, valid_credit_card_with_verification_value, revolving_purchase_detail)
       end
-
-      skip 'Not yet implemented'
 
       assert_equal true, response.success?
     end
