@@ -74,6 +74,12 @@ module ActiveMerchant #:nodoc:
         RECURRINGS = (2..10).to_a.freeze
       end
 
+      module CreditType
+        SINGLE      = 10
+        INSTALLMENT = 61
+        REVOLVING   = 80
+      end
+
       def initialize(options={})
         super
       end
