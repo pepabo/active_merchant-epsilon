@@ -28,56 +28,56 @@ module SamplePaymentMethods
   def valid_credit_card
     ActiveMerchant::Billing::CreditCard.require_verification_value = false
     ActiveMerchant::Billing::CreditCard.new(
-      first_name:                 'TARO',
-      last_name:                  'YAMADA',
-      number:                     '4242424242424242',
-      month:                      '10',
-      year:                       Time.now.year + 1,
+      first_name: 'TARO',
+      last_name:  'YAMADA',
+      number:     '4242424242424242',
+      month:      '10',
+      year:       Time.now.year + 1,
     )
   end
 
   def valid_credit_card_with_verification_value
     ActiveMerchant::Billing::CreditCard.require_verification_value = true
     ActiveMerchant::Billing::CreditCard.new(
-      first_name:                 'TARO',
-      last_name:                  'YAMADA',
-      number:                     '4242424242424242',
-      month:                      '10',
-      year:                       Time.now.year + 1,
-      verification_value:         '000',
+      first_name:         'TARO',
+      last_name:          'YAMADA',
+      number:             '4242424242424242',
+      month:              '10',
+      year:               Time.now.year + 1,
+      verification_value: '000',
     )
   end
 
   def valid_three_d_secure_card
     ActiveMerchant::Billing::CreditCard.require_verification_value = false
     ActiveMerchant::Billing::CreditCard.new(
-      first_name:                 'TARO',
-      last_name:                  'YAMADA',
-      number:                     '4123451111111117',
-      month:                      '12',
-      year:                       '2023',
+      first_name: 'TARO',
+      last_name:  'YAMADA',
+      number:     '4123451111111117',
+      month:      '12',
+      year:       '2023',
     )
   end
 
   def invalid_credit_card
     ActiveMerchant::Billing::CreditCard.require_verification_value = false
     ActiveMerchant::Billing::CreditCard.new(
-      first_name:                 'TARO',
-      last_name:                  'YAMADA',
-      number:                     '0000000000000000',
-      month:                      '10',
-      year:                       Time.now.year + 1,
+      first_name: 'TARO',
+      last_name:  'YAMADA',
+      number:     '0000000000000000',
+      month:      '10',
+      year:       Time.now.year + 1,
     )
   end
 
   def purchase_detail
     now = Time.now
     {
-      user_id:       "U#{Time.now.to_i}",
-      user_email:    'yamada-taro@example.com',
-      item_code:     'ITEM001',
-      item_name:     'Greate Product',
-      order_number:  "O#{now.sec}#{now.usec}"
+      user_id:      "U#{Time.now.to_i}",
+      user_email:   'yamada-taro@example.com',
+      item_code:    'ITEM001',
+      item_name:    'Greate Product',
+      order_number: "O#{now.sec}#{now.usec}"
     }
   end
 
@@ -108,13 +108,13 @@ module SamplePaymentMethods
 
   def purchase_detail_for_registered
     {
-      user_id:       "U1416470209",
-      user_email:    'yamada-taro@example.com',
-      user_name:     'YAMADA TARO',
-      item_code:     'ITEM001',
-      item_name:     'Greate Product',
-      order_number:  "O#{Time.now.to_i}",
-      mission_code:   '6'
+      user_id:      "U1416470209",
+      user_email:   'yamada-taro@example.com',
+      user_name:    'YAMADA TARO',
+      item_code:    'ITEM001',
+      item_name:    'Greate Product',
+      order_number: "O#{Time.now.to_i}",
+      mission_code: '6'
     }
   end
 
