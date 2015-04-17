@@ -74,6 +74,12 @@ module ActiveMerchant #:nodoc:
         RECURRINGS = (2..10).to_a.freeze
       end
 
+      module CreditType
+        SINGLE      = 10
+        INSTALLMENT = 61
+        REVOLVING   = 80
+      end
+
       def initialize(options={})
         super
       end
@@ -279,10 +285,13 @@ module ActiveMerchant #:nodoc:
         case payment_method
         when CreditCard
           params.merge!(
-            st_code:     '10000-0000-0000',
-            card_number: payment_method.number,
-            expire_y:    payment_method.year,
-            expire_m:    payment_method.month,
+            st_code:        '10000-0000-0000',
+            card_number:    payment_method.number,
+            expire_y:       payment_method.year,
+            expire_m:       payment_method.month,
+            card_st_code:   detail[:credit_type],
+            pay_time:       detail[:number_of_payments],
+            tds_check_code: detail[:three_d_secure_check_code],
           )
 
           if payment_method.class.requires_verification_value?
@@ -318,7 +327,6 @@ module ActiveMerchant #:nodoc:
           mission_code: detail[:mission_code],
           item_price: amount,
           process_code: detail[:process_code],
-          tds_check_code: detail[:three_d_secure_check_code],
           user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
         }
       end

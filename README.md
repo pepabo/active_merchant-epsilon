@@ -133,6 +133,43 @@ else
 end
 ```
 
+### CreditCard Installment Payment
+
+```ruby
+# (snip)
+
+purchase_detail = {
+  user_id:            'YOUR_APP_USER_IDENTIFIER',
+  user_name:          '山田 太郎',
+  user_email:         'yamada-taro@example.com',
+  item_code:          'ITEM001',
+  item_name:          'Greate Product',
+  order_number:       'UNIQUE ORDER NUMBER',
+  credit_type:        ActiveMerchant::Billing::EpsilonGateway::CreditType::INSTALLMENT,
+  number_of_payments: 3, # 3, 5, 6, 10, 12, 15, 18, 20, 24
+}
+
+# (snip)
+```
+
+### CreditCard Revolving Payment
+
+```ruby
+# (snip)
+
+purchase_detail = {
+  user_id:      'YOUR_APP_USER_IDENTIFIER',
+  user_name:    '山田 太郎',
+  user_email:   'yamada-taro@example.com',
+  item_code:    'ITEM001',
+  item_name:    'Greate Product',
+  order_number: 'UNIQUE ORDER NUMBER',
+  credit_type:  ActiveMerchant::Billing::EpsilonGateway::CreditType::REVOLVING,
+}
+
+# (snip)
+```
+
 ### Convenience Store Payment
 
 ```ruby
