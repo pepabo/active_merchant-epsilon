@@ -1,5 +1,12 @@
 # CHANGELOG
 
+### 0.4.0
+
+* Support credit card installment payment
+* Support credit card revolving payment
+* Fix response of credit card payment with 3D secure
+* Remove raw_ssl_request method
+
 ### 0.3.0
 
 * Support credit card payment with 3D secure
