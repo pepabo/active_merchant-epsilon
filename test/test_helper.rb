@@ -84,13 +84,13 @@ module SamplePaymentMethods
   def installment_purchase_detail
     now = Time.now
     {
-      user_id:            "U#{Time.now.to_i}",
-      user_email:         'yamada-taro@example.com',
-      item_code:          'ITEM001',
-      item_name:          'Greate Product',
-      order_number:       "O#{now.sec}#{now.usec}",
-      credit_type:        ActiveMerchant::Billing::EpsilonGateway::CreditType::INSTALLMENT,
-      number_of_payments: 3,
+      user_id:      "U#{Time.now.to_i}",
+      user_email:   'yamada-taro@example.com',
+      item_code:    'ITEM001',
+      item_name:    'Greate Product',
+      order_number: "O#{now.sec}#{now.usec}",
+      credit_type:  ActiveMerchant::Billing::EpsilonGateway::CreditType::INSTALLMENT,
+      payment_time: 3,
     }
   end
 

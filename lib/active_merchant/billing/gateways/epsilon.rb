@@ -290,7 +290,7 @@ module ActiveMerchant #:nodoc:
             expire_y:       payment_method.year,
             expire_m:       payment_method.month,
             card_st_code:   detail[:credit_type],
-            pay_time:       detail[:number_of_payments],
+            pay_time:       detail[:payment_time],
             tds_check_code: detail[:three_d_secure_check_code],
           )
 
