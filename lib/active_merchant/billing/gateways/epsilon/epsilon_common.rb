@@ -25,6 +25,18 @@ module ActiveMerchant #:nodoc:
         commit('purchase', params)
       end
 
+      def authorize(money, payment, options = {})
+        raise ActiveMerchant::Epsilon::InvalidActionError
+      end
+
+      def capture(money, authorization, options = {})
+        raise ActiveMerchant::Epsilon::InvalidActionError
+      end
+
+      def refund(money, authorization, options = {})
+        raise ActiveMerchant::Epsilon::InvalidActionError
+      end
+
       private
 
       def authorization_from(response)

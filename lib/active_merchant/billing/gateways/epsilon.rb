@@ -12,17 +12,17 @@ module ActiveMerchant #:nodoc:
         commit(
           'registered_purchase',
           contract_code: self.contract_code,
-          user_id: detail[:user_id],
-          user_name: detail[:user_name],
+          user_id:       detail[:user_id],
+          user_name:     detail[:user_name],
           user_mail_add: detail[:user_email],
-          item_code: detail[:item_code],
-          item_name: detail[:item_name],
-          order_number: detail[:order_number],
-          st_code: '10000-0000-0000',
-          mission_code: Epsilon::MissionCode::PURCHASE,
-          item_price: amount,
-          process_code: 2,
-          xml: 1
+          item_code:     detail[:item_code],
+          item_name:     detail[:item_name],
+          order_number:  detail[:order_number],
+          st_code:       '10000-0000-0000',
+          mission_code:  Epsilon::MissionCode::PURCHASE,
+          item_price:    amount,
+          process_code:  2,
+          xml:           1
         )
       end
 
@@ -41,17 +41,17 @@ module ActiveMerchant #:nodoc:
         commit(
           'registered_recurring',
           contract_code: self.contract_code,
-          user_id: detail[:user_id],
-          user_name: detail[:user_name],
+          user_id:       detail[:user_id],
+          user_name:     detail[:user_name],
           user_mail_add: detail[:user_email],
-          item_code: detail[:item_code],
-          item_name: detail[:item_name],
-          order_number: detail[:order_number],
-          st_code: '10000-0000-0000',
-          mission_code: detail[:mission_code],
-          item_price: amount,
-          process_code: 2,
-          xml: 1
+          item_code:     detail[:item_code],
+          item_name:     detail[:item_name],
+          order_number:  detail[:order_number],
+          st_code:       '10000-0000-0000',
+          mission_code:  detail[:mission_code],
+          item_price:    amount,
+          process_code:  2,
+          xml:           1
         )
       end
 
@@ -59,10 +59,10 @@ module ActiveMerchant #:nodoc:
         commit(
           'cancel_recurring',
           contract_code: self.contract_code,
-          user_id: user_id,
-          item_code: item_code,
-          xml: 1,
-          process_code: 8
+          user_id:       user_id,
+          item_code:     item_code,
+          xml:           1,
+          process_code:  8
         )
       end
 
@@ -70,7 +70,7 @@ module ActiveMerchant #:nodoc:
         commit(
           'find_user',
           contract_code: self.contract_code,
-          user_id: user_id
+          user_id:       user_id
         )
       end
 
@@ -88,23 +88,11 @@ module ActiveMerchant #:nodoc:
         commit('purchase', params)
       end
 
-      def authorize(money, payment, options={})
-        raise ActiveMerchant::Epsilon::InvalidActionError
-      end
-
-      def capture(money, authorization, options={})
-        raise ActiveMerchant::Epsilon::InvalidActionError
-      end
-
-      def refund(money, authorization, options={})
-        raise ActiveMerchant::Epsilon::InvalidActionError
-      end
-
       def void(order_number)
         commit(
           'void',
           contract_code: self.contract_code,
-          order_number: order_number
+          order_number:  order_number
         )
       end
 
