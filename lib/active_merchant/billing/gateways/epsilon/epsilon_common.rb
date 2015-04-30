@@ -99,7 +99,7 @@ module ActiveMerchant #:nodoc:
         error_detail     = uri_decode(doc.xpath(ResponseXpath::ERROR_DETAIL).to_s)
 
         {
-          success:          result(doc) == Epsilon::ResultCode::SUCCESS || result(doc) == Epsilon::ResultCode::THREE_D_SECURE,
+          success:          [Epsilon::ResultCode::SUCCESS, Epsilon::ResultCode::THREE_D_SECURE].include?(result(doc)),
           message:          "#{error_code}: #{error_detail}",
           transaction_code: transaction_code,
           error_code:       error_code,
