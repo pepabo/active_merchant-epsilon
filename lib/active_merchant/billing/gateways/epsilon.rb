@@ -8,19 +8,16 @@ module ActiveMerchant #:nodoc:
 
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
-      cattr_accessor :contract_code, :proxy_address, :proxy_port
-
       PATHS = {
-        purchase: 'direct_card_payment.cgi',
+        purchase:             'direct_card_payment.cgi',
         registered_recurring: 'direct_card_payment.cgi',
-        registered_purchase: 'direct_card_payment.cgi',
-        cancel_recurring: 'receive_order3.cgi',
-        void: 'cancel_payment.cgi',
-        convenience_store_purchase: 'receive_order3.cgi',
-        find_user: 'get_user_info.cgi',
+        registered_purchase:  'direct_card_payment.cgi',
+        cancel_recurring:     'receive_order3.cgi',
+        void:                 'cancel_payment.cgi',
+        find_user:            'get_user_info.cgi',
       }.freeze
 
-      def initialize(options={})
+      def initialize(options = {})
         super
       end
 

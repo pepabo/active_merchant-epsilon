@@ -8,6 +8,8 @@ module ActiveMerchant #:nodoc:
         base.default_currency    = 'JPY'
         base.homepage_url        = 'http://www.example.net/'
         base.display_name        = 'New Gateway'
+
+        base.cattr_accessor :contract_code, :proxy_address, :proxy_port
       end
     end
   end

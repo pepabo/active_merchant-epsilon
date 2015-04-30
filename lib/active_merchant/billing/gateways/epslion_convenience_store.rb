@@ -6,8 +6,6 @@ module ActiveMerchant #:nodoc:
     class EpsilonConvenienceStoreGateway < Gateway
       include EpsilonCommon
 
-      cattr_accessor :contract_code, :proxy_address, :proxy_port
-
       PATHS = {
         purchase: 'receive_order3.cgi',
       }.freeze
@@ -19,7 +17,8 @@ module ActiveMerchant #:nodoc:
       def purchase(amount, convenience_store, detail = {})
         detail[:process_code] = 1
         detail[:mission_code] = Epsilon::MissionCode::PURCHASE
-        params = billing_params('purchase', convenience_store, detail)
+
+        params = billing_params(amount, convenience_store, detail)
 
         commit('purchase', params)
       end
