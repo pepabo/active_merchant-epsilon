@@ -4,15 +4,7 @@ require 'active_support/core_ext/string'
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class EpsilonConvenienceStoreGateway < Gateway
-      self.test_url = 'https://beta.epsilon.jp/cgi-bin/order/'
-      self.live_url = 'https://secure.epsilon.jp/cgi-bin/order/'
-
-      self.supported_countries = ['JP']
-      self.default_currency    = 'JPY'
-      self.supported_cardtypes = [:visa, :master, :american_express, :discover]
-
-      self.homepage_url = 'http://www.example.net/'
-      self.display_name = 'New Gateway'
+      include EpsilonCommon
 
       cattr_accessor :contract_code, :proxy_address, :proxy_port
 
