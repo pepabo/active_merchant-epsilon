@@ -25,18 +25,9 @@ module ActiveMerchant #:nodoc:
         detail[:process_code] = 1
         detail[:mission_code] = Epsilon::MissionCode::PURCHASE
 
-        action = case payment_method
-          when CreditCard
-            'purchase'
-          when ConvenienceStore
-            'convenience_store_purchase'
-          else
-            raise ActiveMerchant::Epsilon::InvalidPaymentMethodError
-          end
-
         params = billing_params(amount, payment_method, detail)
 
-        commit(action, params)
+        commit('purchase', params)
       end
 
       def registered_purchase(amount, detail = {})
