@@ -20,11 +20,10 @@ module ActiveMerchant #:nodoc:
 
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
-      def purchase(amount, payment_method, detail = {})
-        detail[:process_code] = 1
+      def purchase(amount, credit_card, detail = {})
         detail[:mission_code] = Epsilon::MissionCode::PURCHASE
 
-        params = billing_params(amount, payment_method, detail)
+        params = billing_params(amount, credit_card, detail)
 
         commit('purchase', params)
       end
@@ -49,7 +48,6 @@ module ActiveMerchant #:nodoc:
       end
 
       def recurring(amount, credit_card, detail = {})
-        detail[:process_code] = 1
         detail[:mission_code] ||= Epsilon::MissionCode::RECURRING_2
 
         requires!(detail, [:mission_code, *Epsilon::MissionCode::RECURRINGS])
@@ -122,7 +120,7 @@ module ActiveMerchant #:nodoc:
         commit('void', params)
       end
 
-      def verify(credit_card, options={})
+      def verify(credit_card, options = {})
         o = options.dup
         o[:order_number] ||= "#{Time.now.to_i}#{options[:user_id]}".first(32)
         o[:item_code] = 'verifycreditcard'
@@ -137,17 +135,26 @@ module ActiveMerchant #:nodoc:
       private
 
       def billing_params(amount, payment_method, detail)
-        params = billing_params_base(amount, payment_method, detail)
-
-        params.merge!(
+        params = {
+          contract_code:  self.contract_code,
+          user_id:        detail[:user_id],
+          user_name:      detail[:user_name],
+          user_mail_add:  detail[:user_email],
+          item_code:      detail[:item_code],
+          item_name:      detail[:item_name],
+          order_number:   detail[:order_number],
           st_code:        '10000-0000-0000',
+          mission_code:   detail[:mission_code],
+          item_price:     amount,
+          process_code:   1,
           card_number:    payment_method.number,
           expire_y:       payment_method.year,
           expire_m:       payment_method.month,
           card_st_code:   detail[:credit_type],
           pay_time:       detail[:payment_time],
           tds_check_code: detail[:three_d_secure_check_code],
-        )
+          user_agent:     "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
+        }
 
         if payment_method.class.requires_verification_value?
           params.merge!(
