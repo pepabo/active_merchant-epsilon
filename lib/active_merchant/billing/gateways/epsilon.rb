@@ -26,20 +26,6 @@ module ActiveMerchant #:nodoc:
         find_user: 'get_user_info.cgi',
       }.freeze
 
-      module ResponseXpath
-        RESULT = '//Epsilon_result/result[@result]/@result'
-        TRANSACTION_CODE = '//Epsilon_result/result[@trans_code]/@trans_code'
-        ERROR_CODE = '//Epsilon_result/result[@err_code]/@err_code'
-        ERROR_DETAIL = '//Epsilon_result/result[@err_detail]/@err_detail'
-        RECEIPT_NUMBER = '//Epsilon_result/result[@receipt_no][1]/@receipt_no'
-        RECEIPT_DATE = '//Epsilon_result/result[@receipt_date][1]/@receipt_date'
-        CONVENIENCE_STORE_LIMIT_DATE = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
-        CARD_NUMBER_MASK = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
-        CARD_BRAND = '//Epsilon_result/result[@card_brand]/@card_brand'
-        ACS_URL = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
-        PA_REQ = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payment authentication request)
-      end
-
       module MissionCode
         # クレジット1回、またはクレジット決済以外の場合
         PURCHASE = 1
@@ -214,18 +200,18 @@ module ActiveMerchant #:nodoc:
         #   Nokogiri::XML::SyntaxError: Unsupported encoding x-sjis-cp932
         xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'UTF-8'))
 
-        result = xml.xpath(ResponseXpath::RESULT).to_s
-        transaction_code = xml.xpath(ResponseXpath::TRANSACTION_CODE).to_s
-        error_code = xml.xpath(ResponseXpath::ERROR_CODE).to_s
-        error_detail = uri_decode(xml.xpath(ResponseXpath::ERROR_DETAIL).to_s)
+        result = xml.xpath(Epsilon::ResponseXpath::RESULT).to_s
+        transaction_code = xml.xpath(Epsilon::ResponseXpath::TRANSACTION_CODE).to_s
+        error_code = xml.xpath(Epsilon::ResponseXpath::ERROR_CODE).to_s
+        error_detail = uri_decode(xml.xpath(Epsilon::ResponseXpath::ERROR_DETAIL).to_s)
 
-        receipt_number = xml.xpath(ResponseXpath::RECEIPT_NUMBER).to_s
-        receipt_date = uri_decode(xml.xpath(ResponseXpath::RECEIPT_DATE).to_s)
-        convenience_store_limit_date = uri_decode(xml.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
-        card_number_mask = uri_decode(xml.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
-        card_brand = uri_decode(xml.xpath(ResponseXpath::CARD_BRAND).to_s)
-        acs_url = uri_decode(xml.xpath(ResponseXpath::ACS_URL).to_s)
-        pa_req = uri_decode(xml.xpath(ResponseXpath::PA_REQ).to_s)
+        receipt_number = xml.xpath(Epsilon::ResponseXpath::RECEIPT_NUMBER).to_s
+        receipt_date = uri_decode(xml.xpath(Epsilon::ResponseXpath::RECEIPT_DATE).to_s)
+        convenience_store_limit_date = uri_decode(xml.xpath(Epsilon::ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
+        card_number_mask = uri_decode(xml.xpath(Epsilon::ResponseXpath::CARD_NUMBER_MASK).to_s)
+        card_brand = uri_decode(xml.xpath(Epsilon::ResponseXpath::CARD_BRAND).to_s)
+        acs_url = uri_decode(xml.xpath(Epsilon::ResponseXpath::ACS_URL).to_s)
+        pa_req = uri_decode(xml.xpath(Epsilon::ResponseXpath::PA_REQ).to_s)
 
         {
           success: result == Epsilon::ResultCode::SUCCESS || result == Epsilon::ResultCode::THREE_D_SECURE,
