@@ -20,6 +20,15 @@ module ActiveMerchant #:nodoc:
 
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
+      def purchase(amount, payment_method, detail = {})
+        detail[:process_code] = 1
+        detail[:mission_code] = Epsilon::MissionCode::PURCHASE
+
+        params = billing_params(amount, payment_method, detail)
+
+        commit('purchase', params)
+      end
+
       def registered_purchase(amount, detail = {})
         params = {
           contract_code: self.contract_code,

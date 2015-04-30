@@ -9,6 +9,15 @@ module ActiveMerchant #:nodoc:
         CONVENIENCE_STORE_LIMIT_DATE = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
       end
 
+      def purchase(amount, payment_method, detail = {})
+        detail[:process_code] = 1
+        detail[:mission_code] = Epsilon::MissionCode::PURCHASE
+
+        params = billing_params(amount, payment_method, detail)
+
+        commit('purchase', params)
+      end
+
       private
 
       def billing_params(amount, payment_method, detail)
