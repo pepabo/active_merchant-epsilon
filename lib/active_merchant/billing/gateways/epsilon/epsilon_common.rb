@@ -94,13 +94,12 @@ module ActiveMerchant #:nodoc:
       end
 
       def parse_base(doc)
-        result           = doc.xpath(ResponseXpath::RESULT).to_s
         transaction_code = doc.xpath(ResponseXpath::TRANSACTION_CODE).to_s
         error_code       = doc.xpath(ResponseXpath::ERROR_CODE).to_s
         error_detail     = uri_decode(doc.xpath(ResponseXpath::ERROR_DETAIL).to_s)
 
         {
-          success:          result == Epsilon::ResultCode::SUCCESS || result == Epsilon::ResultCode::THREE_D_SECURE,
+          success:          result(doc) == Epsilon::ResultCode::SUCCESS || result(doc) == Epsilon::ResultCode::THREE_D_SECURE,
           message:          "#{error_code}: #{error_detail}",
           transaction_code: transaction_code,
           error_code:       error_code,
@@ -110,6 +109,10 @@ module ActiveMerchant #:nodoc:
 
       def post_data(parameters = {})
         parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
+      end
+
+      def result(doc)
+        doc.xpath(ResponseXpath::RESULT).to_s
       end
 
       def success_from(response)

@@ -7,7 +7,6 @@ module ActiveMerchant #:nodoc:
       include EpsilonCommon
 
       module ResponseXpath
-        RESULT           = '//Epsilon_result/result[@result]/@result'
         CARD_NUMBER_MASK = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
         CARD_BRAND       = '//Epsilon_result/result[@card_brand]/@card_brand'
         ACS_URL          = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
@@ -142,7 +141,6 @@ module ActiveMerchant #:nodoc:
       end
 
       def parse(doc)
-        result           = doc.xpath(ResponseXpath::RESULT).to_s
         card_number_mask = uri_decode(doc.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
         card_brand       = uri_decode(doc.xpath(ResponseXpath::CARD_BRAND).to_s)
         acs_url          = uri_decode(doc.xpath(ResponseXpath::ACS_URL).to_s)
@@ -151,7 +149,7 @@ module ActiveMerchant #:nodoc:
         {
           card_number_mask: card_number_mask,
           card_brand:       card_brand,
-          three_d_secure:   result == Epsilon::ResultCode::THREE_D_SECURE,
+          three_d_secure:   result(doc) == Epsilon::ResultCode::THREE_D_SECURE,
           acs_url:          acs_url,
           pa_req:           pa_req,
         }
