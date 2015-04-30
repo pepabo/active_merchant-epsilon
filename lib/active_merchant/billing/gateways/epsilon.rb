@@ -6,6 +6,14 @@ module ActiveMerchant #:nodoc:
     class EpsilonGateway < Gateway
       include EpsilonCommon
 
+      module ResponseXpath
+        RESULT           = '//Epsilon_result/result[@result]/@result'
+        CARD_NUMBER_MASK = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
+        CARD_BRAND       = '//Epsilon_result/result[@card_brand]/@card_brand'
+        ACS_URL          = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
+        PA_REQ           = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payment authentication request)
+      end
+
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
       def registered_purchase(amount, detail = {})
@@ -162,8 +170,20 @@ module ActiveMerchant #:nodoc:
         }
       end
 
-      def parse(body)
-        {}
+      def parse(doc)
+        result           = doc.xpath(ResponseXpath::RESULT).to_s
+        card_number_mask = uri_decode(doc.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
+        card_brand       = uri_decode(doc.xpath(ResponseXpath::CARD_BRAND).to_s)
+        acs_url          = uri_decode(doc.xpath(ResponseXpath::ACS_URL).to_s)
+        pa_req           = uri_decode(doc.xpath(ResponseXpath::PA_REQ).to_s)
+
+        {
+          card_number_mask: card_number_mask,
+          card_brand:       card_brand,
+          three_d_secure:   result == Epsilon::ResultCode::THREE_D_SECURE,
+          acs_url:          acs_url,
+          pa_req:           pa_req,
+        }
       end
 
       def path(action)
