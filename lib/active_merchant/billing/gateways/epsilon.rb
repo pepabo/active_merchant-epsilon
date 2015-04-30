@@ -26,33 +26,6 @@ module ActiveMerchant #:nodoc:
         find_user: 'get_user_info.cgi',
       }.freeze
 
-      module MissionCode
-        # クレジット1回、またはクレジット決済以外の場合
-        PURCHASE = 1
-
-        # | CODE | 登録月 | 解除月 | 同月内での登録解除 |
-        # | 2    | 全額   | 無料   | 1ヶ月分            |
-        # | 3    | 全額   | 全額   | 1ヶ月分            |
-        # | 4    | 全額   | 日割   | 1ヶ月分            |
-        # | 5    | 無料   | 無料   | 無料               |
-        # | 6    | 無料   | 全角   | 1ヶ月分            |
-        # | 7    | 無料   | 日割   | 日割               |
-        # | 8    | 日割   | 無料   | 日割               |
-        # | 9    | 日割   | 全額   | 1ヶ月分            |
-        # | 10   | 日割   | 日割   | 日割               |
-        RECURRING_2 = 2
-        RECURRING_3 = 3
-        RECURRING_4 = 4
-        RECURRING_5 = 5
-        RECURRING_6 = 6
-        RECURRING_7 = 7
-        RECURRING_8 = 8
-        RECURRING_9 = 9
-        RECURRING_10 = 10
-
-        RECURRINGS = (2..10).to_a.freeze
-      end
-
       module CreditType
         SINGLE      = 10
         INSTALLMENT = 61
@@ -65,7 +38,7 @@ module ActiveMerchant #:nodoc:
 
       def purchase(amount, payment_method, detail = {})
         detail[:process_code] = 1
-        detail[:mission_code] = MissionCode::PURCHASE
+        detail[:mission_code] = Epsilon::MissionCode::PURCHASE
 
         action = case payment_method
           when CreditCard
@@ -92,7 +65,7 @@ module ActiveMerchant #:nodoc:
           item_name: detail[:item_name],
           order_number: detail[:order_number],
           st_code: '10000-0000-0000',
-          mission_code: MissionCode::PURCHASE,
+          mission_code: Epsilon::MissionCode::PURCHASE,
           item_price: amount,
           process_code: 2,
           xml: 1
@@ -101,9 +74,9 @@ module ActiveMerchant #:nodoc:
 
       def recurring(amount, credit_card, detail = {})
         detail[:process_code] = 1
-        detail[:mission_code] ||= MissionCode::RECURRING_2
+        detail[:mission_code] ||= Epsilon::MissionCode::RECURRING_2
 
-        requires!(detail, [:mission_code, *MissionCode::RECURRINGS])
+        requires!(detail, [:mission_code, *Epsilon::MissionCode::RECURRINGS])
 
         params = billing_params(amount, credit_card, detail)
 
