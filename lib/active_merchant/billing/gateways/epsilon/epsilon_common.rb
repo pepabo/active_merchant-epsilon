@@ -11,6 +11,19 @@ module ActiveMerchant #:nodoc:
 
         base.cattr_accessor :contract_code, :proxy_address, :proxy_port
       end
+
+      def initialize(options = {})
+        super
+      end
+
+      def purchase(amount, payment_method, detail = {})
+        detail[:process_code] = 1
+        detail[:mission_code] = Epsilon::MissionCode::PURCHASE
+
+        params = billing_params(amount, payment_method, detail)
+
+        commit('purchase', params)
+      end
     end
   end
 end

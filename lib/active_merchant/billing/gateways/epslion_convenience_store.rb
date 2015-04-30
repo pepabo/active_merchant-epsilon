@@ -10,19 +10,6 @@ module ActiveMerchant #:nodoc:
         purchase: 'receive_order3.cgi',
       }.freeze
 
-      def initialize(options = {})
-        super
-      end
-
-      def purchase(amount, convenience_store, detail = {})
-        detail[:process_code] = 1
-        detail[:mission_code] = Epsilon::MissionCode::PURCHASE
-
-        params = billing_params(amount, convenience_store, detail)
-
-        commit('purchase', params)
-      end
-
       private
 
       # TODO: クレジットカードと共通部分を基底モジュールに切り出す

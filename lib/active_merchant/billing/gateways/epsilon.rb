@@ -17,19 +17,6 @@ module ActiveMerchant #:nodoc:
         find_user:            'get_user_info.cgi',
       }.freeze
 
-      def initialize(options = {})
-        super
-      end
-
-      def purchase(amount, payment_method, detail = {})
-        detail[:process_code] = 1
-        detail[:mission_code] = Epsilon::MissionCode::PURCHASE
-
-        params = billing_params(amount, payment_method, detail)
-
-        commit('purchase', params)
-      end
-
       def registered_purchase(amount, detail = {})
         commit(
           'registered_purchase',
