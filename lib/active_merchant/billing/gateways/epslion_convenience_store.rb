@@ -1,6 +1,3 @@
-require 'nokogiri'
-require 'active_support/core_ext/string'
-
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class EpsilonConvenienceStoreGateway < Gateway
