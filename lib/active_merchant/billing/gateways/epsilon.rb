@@ -110,41 +110,6 @@ module ActiveMerchant #:nodoc:
 
       private
 
-      def parse(body)
-        # because of following error
-        #   Nokogiri::XML::SyntaxError: Unsupported encoding x-sjis-cp932
-        xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'UTF-8'))
-
-        result = xml.xpath(Epsilon::ResponseXpath::RESULT).to_s
-        transaction_code = xml.xpath(Epsilon::ResponseXpath::TRANSACTION_CODE).to_s
-        error_code = xml.xpath(Epsilon::ResponseXpath::ERROR_CODE).to_s
-        error_detail = uri_decode(xml.xpath(Epsilon::ResponseXpath::ERROR_DETAIL).to_s)
-
-        receipt_number = xml.xpath(Epsilon::ResponseXpath::RECEIPT_NUMBER).to_s
-        receipt_date = uri_decode(xml.xpath(Epsilon::ResponseXpath::RECEIPT_DATE).to_s)
-        convenience_store_limit_date = uri_decode(xml.xpath(Epsilon::ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
-        card_number_mask = uri_decode(xml.xpath(Epsilon::ResponseXpath::CARD_NUMBER_MASK).to_s)
-        card_brand = uri_decode(xml.xpath(Epsilon::ResponseXpath::CARD_BRAND).to_s)
-        acs_url = uri_decode(xml.xpath(Epsilon::ResponseXpath::ACS_URL).to_s)
-        pa_req = uri_decode(xml.xpath(Epsilon::ResponseXpath::PA_REQ).to_s)
-
-        {
-          success: result == Epsilon::ResultCode::SUCCESS || result == Epsilon::ResultCode::THREE_D_SECURE,
-          message: "#{error_code}: #{error_detail}",
-          transaction_code: transaction_code,
-          error_code: error_code,
-          error_detail: error_detail,
-          receipt_number: receipt_number,
-          receipt_date: receipt_date,
-          convenience_store_limit_date: convenience_store_limit_date,
-          card_number_mask: card_number_mask,
-          card_brand: card_brand,
-          three_d_secure: result == Epsilon::ResultCode::THREE_D_SECURE,
-          acs_url: acs_url,
-          pa_req: pa_req,
-        }
-      end
-
       def billing_params(amount, payment_method, detail)
         params = billing_params_base(amount, payment_method, detail)
 
@@ -195,6 +160,10 @@ module ActiveMerchant #:nodoc:
           process_code: detail[:process_code],
           user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
         }
+      end
+
+      def parse(body)
+        {}
       end
 
       def path(action)
