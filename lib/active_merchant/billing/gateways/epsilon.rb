@@ -121,53 +121,24 @@ module ActiveMerchant #:nodoc:
       def billing_params(amount, payment_method, detail)
         params = billing_params_base(amount, payment_method, detail)
 
-        case payment_method
-        when CreditCard
+        params.merge!(
+          st_code:        '10000-0000-0000',
+          card_number:    payment_method.number,
+          expire_y:       payment_method.year,
+          expire_m:       payment_method.month,
+          card_st_code:   detail[:credit_type],
+          pay_time:       detail[:payment_time],
+          tds_check_code: detail[:three_d_secure_check_code],
+        )
+
+        if payment_method.class.requires_verification_value?
           params.merge!(
-            st_code:        '10000-0000-0000',
-            card_number:    payment_method.number,
-            expire_y:       payment_method.year,
-            expire_m:       payment_method.month,
-            card_st_code:   detail[:credit_type],
-            pay_time:       detail[:payment_time],
-            tds_check_code: detail[:three_d_secure_check_code],
+            security_code:  payment_method.verification_value,
+            security_check: 1, # use security code
           )
-
-          if payment_method.class.requires_verification_value?
-            params.merge!(
-              security_code:  payment_method.verification_value,
-              security_check: 1, # use security code
-            )
-          end
-
-          params
-
-        when ConvenienceStore
-          params.merge(
-            user_tel: payment_method.phone_number,
-            st_code: '00100-0000-0000',
-            xml: 1,
-            conveni_code: payment_method.code,
-          )
-        else
-          raise ActiveMerchant::Epsilon::InvalidPaymentMethodError
         end
-      end
 
-      def billing_params_base(amount, payment_method, detail)
-        {
-          contract_code: self.contract_code,
-          user_id: detail[:user_id],
-          user_name: detail[:user_name] || payment_method.name, # 後方互換性のために payment_method.name を残した
-          user_mail_add: detail[:user_email],
-          item_code: detail[:item_code],
-          item_name: detail[:item_name],
-          order_number: detail[:order_number],
-          mission_code: detail[:mission_code],
-          item_price: amount,
-          process_code: detail[:process_code],
-          user_agent: "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
-        }
+        params
       end
 
       def parse(doc)
