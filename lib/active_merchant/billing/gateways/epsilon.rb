@@ -21,8 +21,7 @@ module ActiveMerchant #:nodoc:
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
       def registered_purchase(amount, detail = {})
-        commit(
-          'registered_purchase',
+        params = {
           contract_code: self.contract_code,
           user_id:       detail[:user_id],
           user_name:     detail[:user_name],
@@ -34,8 +33,10 @@ module ActiveMerchant #:nodoc:
           mission_code:  Epsilon::MissionCode::PURCHASE,
           item_price:    amount,
           process_code:  2,
-          xml:           1
-        )
+          xml:           1,
+        }
+
+        commit('registered_purchase', params)
       end
 
       def recurring(amount, credit_card, detail = {})
@@ -50,8 +51,7 @@ module ActiveMerchant #:nodoc:
       end
 
       def registered_recurring(amount, detail = {})
-        commit(
-          'registered_recurring',
+        params = {
           contract_code: self.contract_code,
           user_id:       detail[:user_id],
           user_name:     detail[:user_name],
@@ -63,27 +63,31 @@ module ActiveMerchant #:nodoc:
           mission_code:  detail[:mission_code],
           item_price:    amount,
           process_code:  2,
-          xml:           1
-        )
+          xml:           1,
+        }
+
+        commit('registered_recurring', params)
       end
 
       def cancel_recurring(user_id:, item_code:)
-        commit(
-          'cancel_recurring',
+        params = {
           contract_code: self.contract_code,
           user_id:       user_id,
           item_code:     item_code,
           xml:           1,
-          process_code:  8
-        )
+          process_code:  8,
+        }
+
+        commit('cancel_recurring', params)
       end
 
       def find_user(user_id:)
-        commit(
-          'find_user',
+        params = {
           contract_code: self.contract_code,
-          user_id:       user_id
-        )
+          user_id:       user_id,
+        }
+
+        commit('find_user', params)
       end
 
       #
@@ -101,11 +105,12 @@ module ActiveMerchant #:nodoc:
       end
 
       def void(order_number)
-        commit(
-          'void',
+        params = {
           contract_code: self.contract_code,
-          order_number:  order_number
-        )
+          order_number:  order_number,
+        }
+
+        commit('void', params)
       end
 
       def verify(credit_card, options={})
