@@ -1,4 +1,4 @@
-module ActiveMerchant
+module ActiveMerchant #:nodoc:
   module Epsilon
     module ResponseXpath
       RESULT                       = '//Epsilon_result/result[@result]/@result'

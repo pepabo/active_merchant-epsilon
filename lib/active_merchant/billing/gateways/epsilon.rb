@@ -26,12 +26,6 @@ module ActiveMerchant #:nodoc:
         find_user: 'get_user_info.cgi',
       }.freeze
 
-      module CreditType
-        SINGLE      = 10
-        INSTALLMENT = 61
-        REVOLVING   = 80
-      end
-
       def initialize(options={})
         super
       end
