@@ -89,7 +89,7 @@ module SamplePaymentMethods
       item_code:    'ITEM001',
       item_name:    'Greate Product',
       order_number: "O#{now.sec}#{now.usec}",
-      credit_type:  ActiveMerchant::Epsilon::CreditType::INSTALLMENT,
+      credit_type:  ActiveMerchant::Billing::EpsilonGateway::CreditType::INSTALLMENT,
       payment_time: 3,
     }
   end
@@ -102,7 +102,7 @@ module SamplePaymentMethods
       item_code:    'ITEM001',
       item_name:    'Greate Product',
       order_number: "O#{now.sec}#{now.usec}",
-      credit_type:  ActiveMerchant::Epsilon::CreditType::REVOLVING,
+      credit_type:  ActiveMerchant::Billing::EpsilonGateway::CreditType::REVOLVING,
     }
   end
 

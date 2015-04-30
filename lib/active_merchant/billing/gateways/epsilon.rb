@@ -6,6 +6,12 @@ module ActiveMerchant #:nodoc:
     class EpsilonGateway < Gateway
       include EpsilonCommon
 
+      module CreditType
+        SINGLE      = 10
+        INSTALLMENT = 61
+        REVOLVING   = 80
+      end
+
       module ResponseXpath
         CARD_NUMBER_MASK = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
         CARD_BRAND       = '//Epsilon_result/result[@card_brand]/@card_brand'

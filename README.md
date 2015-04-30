@@ -145,7 +145,7 @@ purchase_detail = {
   item_code:    'ITEM001',
   item_name:    'Greate Product',
   order_number: 'UNIQUE ORDER NUMBER',
-  credit_type:  ActiveMerchant::Epsilon::CreditType::INSTALLMENT,
+  credit_type:  ActiveMerchant::Billing::EpsilonGateway::CreditType::INSTALLMENT,
   payment_time: 3, # 3, 5, 6, 10, 12, 15, 18, 20, 24
 }
 
@@ -164,7 +164,7 @@ purchase_detail = {
   item_code:    'ITEM001',
   item_name:    'Greate Product',
   order_number: 'UNIQUE ORDER NUMBER',
-  credit_type:  ActiveMerchant::Epsilon::CreditType::REVOLVING,
+  credit_type:  ActiveMerchant::Billing::EpsilonGateway::CreditType::REVOLVING,
 }
 
 # (snip)
