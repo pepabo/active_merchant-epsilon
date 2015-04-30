@@ -6,13 +6,7 @@ module ActiveMerchant #:nodoc:
     class EpsilonConvenienceStoreGateway < Gateway
       include EpsilonCommon
 
-      PATHS = {
-        purchase: 'receive_order3.cgi',
-      }.freeze
-
       private
-
-      # TODO: クレジットカードと共通部分を基底モジュールに切り出す
 
       def parse(body)
         # because of following error
@@ -48,34 +42,6 @@ module ActiveMerchant #:nodoc:
         }
       end
 
-      def uri_decode(string)
-        URI.decode(string).encode(Encoding::UTF_8, Encoding::CP932)
-      end
-
-      def commit(action, parameters)
-        url = (test? ? test_url : live_url)
-
-        path = PATHS[action.to_sym]
-
-        response = parse(ssl_post(url + path, post_data(parameters)))
-
-        Response.new(
-          success_from(response),
-          message_from(response),
-          response,
-          authorization: authorization_from(response),
-          test: test?
-        )
-      end
-
-      def success_from(response)
-        response[:success]
-      end
-
-      def message_from(response)
-        response[:message]
-      end
-
       def billing_params(amount, payment_method, detail)
         params = billing_params_base(amount, payment_method, detail)
 
@@ -103,12 +69,10 @@ module ActiveMerchant #:nodoc:
         }
       end
 
-      def authorization_from(response)
-        {}
-      end
-
-      def post_data(parameters = {})
-        parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
+      def path(action)
+        case action.to_sym
+        when :purchase then 'receive_order3.cgi'
+        end
       end
     end
   end

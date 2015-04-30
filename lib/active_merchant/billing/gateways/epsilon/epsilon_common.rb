@@ -24,6 +24,42 @@ module ActiveMerchant #:nodoc:
 
         commit('purchase', params)
       end
+
+      private
+
+      def authorization_from(response)
+        {}
+      end
+
+      def commit(action, params)
+        url = (test? ? test_url : live_url)
+
+        response = parse(ssl_post(url + path(action), post_data(params)))
+
+        Response.new(
+          success_from(response),
+          message_from(response),
+          response,
+          authorization: authorization_from(response),
+          test: test?
+        )
+      end
+
+      def message_from(response)
+        response[:message]
+      end
+
+      def post_data(parameters = {})
+        parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
+      end
+
+      def success_from(response)
+        response[:success]
+      end
+
+      def uri_decode(string)
+        URI.decode(string).encode(Encoding::UTF_8, Encoding::CP932)
+      end
     end
   end
 end

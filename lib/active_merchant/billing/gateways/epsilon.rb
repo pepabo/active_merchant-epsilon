@@ -8,15 +8,6 @@ module ActiveMerchant #:nodoc:
 
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
-      PATHS = {
-        purchase:             'direct_card_payment.cgi',
-        registered_recurring: 'direct_card_payment.cgi',
-        registered_purchase:  'direct_card_payment.cgi',
-        cancel_recurring:     'receive_order3.cgi',
-        void:                 'cancel_payment.cgi',
-        find_user:            'get_user_info.cgi',
-      }.freeze
-
       def registered_purchase(amount, detail = {})
         commit(
           'registered_purchase',
@@ -166,34 +157,6 @@ module ActiveMerchant #:nodoc:
         }
       end
 
-      def uri_decode(string)
-        URI.decode(string).encode(Encoding::UTF_8, Encoding::CP932)
-      end
-
-      def commit(action, parameters)
-        url = (test? ? test_url : live_url)
-
-        path = PATHS[action.to_sym]
-
-        response = parse(ssl_post(url + path, post_data(parameters)))
-
-        Response.new(
-          success_from(response),
-          message_from(response),
-          response,
-          authorization: authorization_from(response),
-          test: test?
-        )
-      end
-
-      def success_from(response)
-        response[:success]
-      end
-
-      def message_from(response)
-        response[:message]
-      end
-
       def billing_params(amount, payment_method, detail)
         params = billing_params_base(amount, payment_method, detail)
 
@@ -246,12 +209,15 @@ module ActiveMerchant #:nodoc:
         }
       end
 
-      def authorization_from(response)
-        {}
-      end
-
-      def post_data(parameters = {})
-        parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
+      def path(action)
+        case action.to_sym
+        when :purchase             then 'direct_card_payment.cgi'
+        when :registered_recurring then 'direct_card_payment.cgi'
+        when :registered_purchase  then 'direct_card_payment.cgi'
+        when :cancel_recurring     then 'receive_order3.cgi'
+        when :void                 then 'cancel_payment.cgi'
+        when :find_user            then 'get_user_info.cgi'
+        end
       end
     end
   end
