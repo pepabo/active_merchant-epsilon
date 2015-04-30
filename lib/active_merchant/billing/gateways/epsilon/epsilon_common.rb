@@ -43,10 +43,10 @@ module ActiveMerchant #:nodoc:
         {}
       end
 
-      def commit(action, params)
+      def commit(path, params)
         url = (test? ? test_url : live_url)
 
-        doc = doc(ssl_post(url + path(action), post_data(params)))
+        doc = doc(ssl_post(url + path, post_data(params)))
 
         response = parse_base(doc)
         response.merge!(parse(doc))

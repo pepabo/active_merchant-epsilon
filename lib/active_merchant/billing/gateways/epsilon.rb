@@ -18,6 +18,15 @@ module ActiveMerchant #:nodoc:
         PA_REQ           = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payment authentication request)
       end
 
+      PATHS = {
+        purchase:             'direct_card_payment.cgi',
+        registered_recurring: 'direct_card_payment.cgi',
+        registered_purchase:  'direct_card_payment.cgi',
+        cancel_recurring:     'receive_order3.cgi',
+        void:                 'cancel_payment.cgi',
+        find_user:            'get_user_info.cgi',
+      }.freeze
+
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
       def purchase(amount, credit_card, detail = {})
@@ -25,7 +34,7 @@ module ActiveMerchant #:nodoc:
 
         params = billing_params(amount, credit_card, detail)
 
-        commit('purchase', params)
+        commit(PATHS[:purchase], params)
       end
 
       def registered_purchase(amount, detail = {})
@@ -44,7 +53,7 @@ module ActiveMerchant #:nodoc:
           xml:           1,
         }
 
-        commit('registered_purchase', params)
+        commit(PATHS[:registered_purchase], params)
       end
 
       def recurring(amount, credit_card, detail = {})
@@ -54,7 +63,7 @@ module ActiveMerchant #:nodoc:
 
         params = billing_params(amount, credit_card, detail)
 
-        commit('purchase', params)
+        commit(PATHS[:purchase], params)
       end
 
       def registered_recurring(amount, detail = {})
@@ -73,7 +82,7 @@ module ActiveMerchant #:nodoc:
           xml:           1,
         }
 
-        commit('registered_recurring', params)
+        commit(PATHS[:registered_recurring], params)
       end
 
       def cancel_recurring(user_id:, item_code:)
@@ -85,7 +94,7 @@ module ActiveMerchant #:nodoc:
           process_code:  8,
         }
 
-        commit('cancel_recurring', params)
+        commit(PATHS[:cancel_recurring], params)
       end
 
       def find_user(user_id:)
@@ -94,7 +103,7 @@ module ActiveMerchant #:nodoc:
           user_id:       user_id,
         }
 
-        commit('find_user', params)
+        commit(PATHS[:find_user], params)
       end
 
       #
@@ -108,7 +117,7 @@ module ActiveMerchant #:nodoc:
           tds_pares:      three_d_secure_pa_res,
         }
 
-        commit('purchase', params)
+        commit(PATHS[:purchase], params)
       end
 
       def void(order_number)
@@ -117,7 +126,7 @@ module ActiveMerchant #:nodoc:
           order_number:  order_number,
         }
 
-        commit('void', params)
+        commit(PATHS[:void], params)
       end
 
       def verify(credit_card, options = {})
@@ -179,17 +188,6 @@ module ActiveMerchant #:nodoc:
           acs_url:          acs_url,
           pa_req:           pa_req,
         }
-      end
-
-      def path(action)
-        case action.to_sym
-        when :purchase             then 'direct_card_payment.cgi'
-        when :registered_recurring then 'direct_card_payment.cgi'
-        when :registered_purchase  then 'direct_card_payment.cgi'
-        when :cancel_recurring     then 'receive_order3.cgi'
-        when :void                 then 'cancel_payment.cgi'
-        when :find_user            then 'get_user_info.cgi'
-        end
       end
     end
   end

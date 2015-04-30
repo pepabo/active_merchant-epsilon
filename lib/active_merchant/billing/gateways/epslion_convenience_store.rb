@@ -28,7 +28,7 @@ module ActiveMerchant #:nodoc:
           user_name_kana: payment_method.name,
         }
 
-        commit('purchase', params)
+        commit('receive_order3.cgi', params)
       end
 
       private
@@ -43,12 +43,6 @@ module ActiveMerchant #:nodoc:
           receipt_date:                 receipt_date,
           convenience_store_limit_date: convenience_store_limit_date,
         }
-      end
-
-      def path(action)
-        case action.to_sym
-        when :purchase then 'receive_order3.cgi'
-        end
       end
     end
   end
