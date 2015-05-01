@@ -135,15 +135,15 @@ module ActiveMerchant #:nodoc:
       end
 
       def authorize(money, payment, options = {})
-        raise ActiveMerchant::Epsilon::InvalidActionError
+        raise NotImplementedError
       end
 
       def capture(money, authorization, options = {})
-        raise ActiveMerchant::Epsilon::InvalidActionError
+        raise NotImplementedError
       end
 
       def refund(money, authorization, options = {})
-        raise ActiveMerchant::Epsilon::InvalidActionError
+        raise NotImplementedError
       end
 
       private
