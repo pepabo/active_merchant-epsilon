@@ -2,6 +2,29 @@ require 'nokogiri'
 
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc
+
+    #
+    # This is the base gateway for concrete payment gateway for Epsilon
+    #
+    # === Create a new EpsilonGatway
+    #
+    # class EpsilonSampleGateway < EpsilonBaseGateway
+    #   def purchase(amount, payment_method, detail = {})
+    #     request_params = {
+    #       contract_code: self.contract_code,
+    #       user_id:       detail[:user_id],
+    #       item_code:     detail[:item_code],
+    #       order_number:  detail[:order_number],
+    #       item_price:    amount,
+    #     }
+    #
+    #     request_path = 'purchase'
+    #
+    #     commit(request_path, request_paramsparams)
+    #   end
+    # end
+    #
+
     class EpsilonBaseGateway < Gateway
 
       self.abstract_class = true
