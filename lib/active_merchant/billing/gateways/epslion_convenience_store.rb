@@ -1,6 +1,6 @@
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
-    class EpsilonConvenienceStoreGateway < Gateway
+    class EpsilonConvenienceStoreGateway < EpsilonBaseGateway
       include EpsilonCommon
 
       def purchase(amount, payment_method, detail = {})

@@ -2,7 +2,7 @@ require 'active_support/core_ext/string'
 
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
-    class EpsilonGateway < Gateway
+    class EpsilonGateway < EpsilonBaseGateway
       include EpsilonCommon
 
       module CreditType
