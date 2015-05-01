@@ -28,19 +28,6 @@ module ActiveMerchant #:nodoc:
         base.cattr_accessor :contract_code, :proxy_address, :proxy_port
       end
 
-
-      def authorize(money, payment, options = {})
-        raise ActiveMerchant::Epsilon::InvalidActionError
-      end
-
-      def capture(money, authorization, options = {})
-        raise ActiveMerchant::Epsilon::InvalidActionError
-      end
-
-      def refund(money, authorization, options = {})
-        raise ActiveMerchant::Epsilon::InvalidActionError
-      end
-
       private
 
       def authorization_from(response)

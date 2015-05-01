@@ -134,6 +134,18 @@ module ActiveMerchant #:nodoc:
         end
       end
 
+      def authorize(money, payment, options = {})
+        raise ActiveMerchant::Epsilon::InvalidActionError
+      end
+
+      def capture(money, authorization, options = {})
+        raise ActiveMerchant::Epsilon::InvalidActionError
+      end
+
+      def refund(money, authorization, options = {})
+        raise ActiveMerchant::Epsilon::InvalidActionError
+      end
+
       private
 
       def billing_params(amount, payment_method, detail)
