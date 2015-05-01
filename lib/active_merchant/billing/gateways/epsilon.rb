@@ -134,18 +134,6 @@ module ActiveMerchant #:nodoc:
         end
       end
 
-      def authorize(money, payment, options = {})
-        raise NotImplementedError
-      end
-
-      def capture(money, authorization, options = {})
-        raise NotImplementedError
-      end
-
-      def refund(money, authorization, options = {})
-        raise NotImplementedError
-      end
-
       private
 
       def billing_params(amount, payment_method, detail)
