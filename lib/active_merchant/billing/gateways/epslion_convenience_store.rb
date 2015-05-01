@@ -13,7 +13,7 @@ module ActiveMerchant #:nodoc:
           item_name:      detail[:item_name],
           order_number:   detail[:order_number],
           st_code:        '00100-0000-0000',
-          mission_code:   Epsilon::MissionCode::PURCHASE,
+          mission_code:   EpsilonMissionCode::PURCHASE,
           item_price:     amount,
           process_code:   1,
           xml:            1,

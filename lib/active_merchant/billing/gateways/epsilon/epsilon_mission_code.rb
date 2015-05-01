@@ -1,6 +1,6 @@
 module ActiveMerchant #:nodoc:
-  module Epsilon
-    module MissionCode
+  module Billing #:nodoc:
+    module EpsilonMissionCode
       # クレジット1回、またはクレジット決済以外の場合
       PURCHASE = 1
 

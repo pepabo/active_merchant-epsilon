@@ -23,7 +23,7 @@ module ActiveMerchant #:nodoc:
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
       def purchase(amount, credit_card, detail = {})
-        detail[:mission_code] = Epsilon::MissionCode::PURCHASE
+        detail[:mission_code] = EpsilonMissionCode::PURCHASE
 
         params = billing_params(amount, credit_card, detail)
 
@@ -40,7 +40,7 @@ module ActiveMerchant #:nodoc:
           item_name:     detail[:item_name],
           order_number:  detail[:order_number],
           st_code:       '10000-0000-0000',
-          mission_code:  Epsilon::MissionCode::PURCHASE,
+          mission_code:  EpsilonMissionCode::PURCHASE,
           item_price:    amount,
           process_code:  2,
           xml:           1,
@@ -50,9 +50,9 @@ module ActiveMerchant #:nodoc:
       end
 
       def recurring(amount, credit_card, detail = {})
-        detail[:mission_code] ||= Epsilon::MissionCode::RECURRING_2
+        detail[:mission_code] ||= EpsilonMissionCode::RECURRING_2
 
-        requires!(detail, [:mission_code, *Epsilon::MissionCode::RECURRINGS])
+        requires!(detail, [:mission_code, *EpsilonMissionCode::RECURRINGS])
 
         params = billing_params(amount, credit_card, detail)
 
