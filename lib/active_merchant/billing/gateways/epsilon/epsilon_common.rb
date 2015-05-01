@@ -17,6 +17,13 @@ module ActiveMerchant #:nodoc:
         CONVENIENCE_STORE_LIMIT_DATE = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
       end
 
+      module ResultCode
+        FAILURE        = '0'
+        SUCCESS        = '1'
+        THREE_D_SECURE = '5'
+        SYSTEM_ERROR   = '9'
+      end
+
       def self.included(base)
         base.test_url            = 'https://beta.epsilon.jp/cgi-bin/order/'
         base.live_url            = 'https://secure.epsilon.jp/cgi-bin/order/'
@@ -69,14 +76,14 @@ module ActiveMerchant #:nodoc:
         convenience_store_limit_date = uri_decode(xml.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
 
         {
-          success:                      [Epsilon::ResultCode::SUCCESS, Epsilon::ResultCode::THREE_D_SECURE].include?(result),
+          success:                      [ResultCode::SUCCESS, ResultCode::THREE_D_SECURE].include?(result),
           message:                      "#{error_code}: #{error_detail}",
           transaction_code:             transaction_code,
           error_code:                   error_code,
           error_detail:                 error_detail,
           card_number_mask:             card_number_mask,
           card_brand:                   card_brand,
-          three_d_secure:               result == Epsilon::ResultCode::THREE_D_SECURE,
+          three_d_secure:               result == ResultCode::THREE_D_SECURE,
           acs_url:                      acs_url,
           pa_req:                       pa_req,
           receipt_number:               receipt_number,
