@@ -36,7 +36,7 @@ module ActiveMerchant #:nodoc:
 
       def commit(path, params)
         url          = (test? ? test_url : live_url)
-        raw_response = ssl_post(url + path, post_data(params))
+        raw_response = ssl_post(File.join(url, path), post_data(params))
         response     = parse(raw_response)
 
         options = {
