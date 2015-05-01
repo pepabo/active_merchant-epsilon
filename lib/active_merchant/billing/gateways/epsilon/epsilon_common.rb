@@ -35,11 +35,9 @@ module ActiveMerchant #:nodoc:
       end
 
       def commit(path, params)
-        url = (test? ? test_url : live_url)
-
-        doc = doc(ssl_post(url + path, post_data(params)))
-
-        response = parse(doc)
+        url          = (test? ? test_url : live_url)
+        raw_response = ssl_post(url + path, post_data(params))
+        response     = parse(raw_response)
 
         options = {
           authorization: authorization_from(response),
@@ -49,37 +47,36 @@ module ActiveMerchant #:nodoc:
         Response.new(success_from(response), message_from(response), response, options)
       end
 
-      def doc(body)
-        # because of following error
-        #   Nokogiri::XML::SyntaxError: Unsupported encoding x-sjis-cp932
-        Nokogiri::XML(body.sub('x-sjis-cp932', 'UTF-8'))
-      end
-
       def message_from(response)
         response[:message]
       end
 
-      def parse(doc)
-        transaction_code             = doc.xpath(ResponseXpath::TRANSACTION_CODE).to_s
-        error_code                   = doc.xpath(ResponseXpath::ERROR_CODE).to_s
-        error_detail                 = uri_decode(doc.xpath(ResponseXpath::ERROR_DETAIL).to_s)
-        card_number_mask             = uri_decode(doc.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
-        card_brand                   = uri_decode(doc.xpath(ResponseXpath::CARD_BRAND).to_s)
-        acs_url                      = uri_decode(doc.xpath(ResponseXpath::ACS_URL).to_s)
-        pa_req                       = uri_decode(doc.xpath(ResponseXpath::PA_REQ).to_s)
-        receipt_number               = doc.xpath(ResponseXpath::RECEIPT_NUMBER).to_s
-        receipt_date                 = uri_decode(doc.xpath(ResponseXpath::RECEIPT_DATE).to_s)
-        convenience_store_limit_date = uri_decode(doc.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
+      def parse(body)
+        # because of following error
+        #   Nokogiri::XML::SyntaxError: Unsupported encoding x-sjis-cp932
+        xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'UTF-8'))
+
+        result                       = xml.xpath(ResponseXpath::RESULT).to_s
+        transaction_code             = xml.xpath(ResponseXpath::TRANSACTION_CODE).to_s
+        error_code                   = xml.xpath(ResponseXpath::ERROR_CODE).to_s
+        error_detail                 = uri_decode(xml.xpath(ResponseXpath::ERROR_DETAIL).to_s)
+        card_number_mask             = uri_decode(xml.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
+        card_brand                   = uri_decode(xml.xpath(ResponseXpath::CARD_BRAND).to_s)
+        acs_url                      = uri_decode(xml.xpath(ResponseXpath::ACS_URL).to_s)
+        pa_req                       = uri_decode(xml.xpath(ResponseXpath::PA_REQ).to_s)
+        receipt_number               = xml.xpath(ResponseXpath::RECEIPT_NUMBER).to_s
+        receipt_date                 = uri_decode(xml.xpath(ResponseXpath::RECEIPT_DATE).to_s)
+        convenience_store_limit_date = uri_decode(xml.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
 
         {
-          success:                      [Epsilon::ResultCode::SUCCESS, Epsilon::ResultCode::THREE_D_SECURE].include?(result(doc)),
+          success:                      [Epsilon::ResultCode::SUCCESS, Epsilon::ResultCode::THREE_D_SECURE].include?(result),
           message:                      "#{error_code}: #{error_detail}",
           transaction_code:             transaction_code,
           error_code:                   error_code,
           error_detail:                 error_detail,
           card_number_mask:             card_number_mask,
           card_brand:                   card_brand,
-          three_d_secure:               result(doc) == Epsilon::ResultCode::THREE_D_SECURE,
+          three_d_secure:               result == Epsilon::ResultCode::THREE_D_SECURE,
           acs_url:                      acs_url,
           pa_req:                       pa_req,
           receipt_number:               receipt_number,
@@ -90,10 +87,6 @@ module ActiveMerchant #:nodoc:
 
       def post_data(parameters = {})
         parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
-      end
-
-      def result(doc)
-        doc.xpath(ResponseXpath::RESULT).to_s
       end
 
       def success_from(response)
