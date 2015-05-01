@@ -173,6 +173,10 @@ purchase_detail = {
 ### Convenience Store Payment
 
 ```ruby
+ActiveMerchant::Billing::EpsilonConvenienceStoreGateway.contract_code = 'YOUR_CONTRACT_CODE'
+
+gateway = ActiveMerchant::Billing::EpsilonConvenienceStoreGateway.new
+
 convenience_store = ActiveMerchant::Billing::ConvenienceStore.new(
   code:           ActiveMerchant::Billing::ConvenienceStore::Code::LAWSON,
   full_name_kana: 'ヤマダ タロウ',
@@ -181,6 +185,7 @@ convenience_store = ActiveMerchant::Billing::ConvenienceStore.new(
 
 purchase_detail = {
   user_id:      'YOUR_APP_USER_IDENTIFIER',
+  user_name:    '山田 太郎',
   user_email:   'yamada-taro@example.com',
   item_code:    'ITEM001',
   item_name:    'Greate Product',
