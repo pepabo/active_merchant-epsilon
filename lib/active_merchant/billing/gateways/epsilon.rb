@@ -3,8 +3,6 @@ require 'active_support/core_ext/string'
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class EpsilonGateway < EpsilonBaseGateway
-      include EpsilonCommon
-
       module CreditType
         SINGLE      = 10
         INSTALLMENT = 61
