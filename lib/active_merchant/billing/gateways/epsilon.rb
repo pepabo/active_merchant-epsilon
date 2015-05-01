@@ -11,13 +11,6 @@ module ActiveMerchant #:nodoc:
         REVOLVING   = 80
       end
 
-      module ResponseXpath
-        CARD_NUMBER_MASK = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
-        CARD_BRAND       = '//Epsilon_result/result[@card_brand]/@card_brand'
-        ACS_URL          = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
-        PA_REQ           = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payment authentication request)
-      end
-
       PATHS = {
         purchase:             'direct_card_payment.cgi',
         registered_recurring: 'direct_card_payment.cgi',
@@ -173,21 +166,6 @@ module ActiveMerchant #:nodoc:
         end
 
         params
-      end
-
-      def parse(doc)
-        card_number_mask = uri_decode(doc.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
-        card_brand       = uri_decode(doc.xpath(ResponseXpath::CARD_BRAND).to_s)
-        acs_url          = uri_decode(doc.xpath(ResponseXpath::ACS_URL).to_s)
-        pa_req           = uri_decode(doc.xpath(ResponseXpath::PA_REQ).to_s)
-
-        {
-          card_number_mask: card_number_mask,
-          card_brand:       card_brand,
-          three_d_secure:   result(doc) == Epsilon::ResultCode::THREE_D_SECURE,
-          acs_url:          acs_url,
-          pa_req:           pa_req,
-        }
       end
     end
   end

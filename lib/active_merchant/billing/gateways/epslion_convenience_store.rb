@@ -3,12 +3,6 @@ module ActiveMerchant #:nodoc:
     class EpsilonConvenienceStoreGateway < Gateway
       include EpsilonCommon
 
-      module ResponseXpath
-        RECEIPT_NUMBER               = '//Epsilon_result/result[@receipt_no][1]/@receipt_no'
-        RECEIPT_DATE                 = '//Epsilon_result/result[@receipt_date][1]/@receipt_date'
-        CONVENIENCE_STORE_LIMIT_DATE = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
-      end
-
       def purchase(amount, payment_method, detail = {})
         params = {
           contract_code:  self.contract_code,
@@ -29,20 +23,6 @@ module ActiveMerchant #:nodoc:
         }
 
         commit('receive_order3.cgi', params)
-      end
-
-      private
-
-      def parse(doc)
-        receipt_number               = doc.xpath(ResponseXpath::RECEIPT_NUMBER).to_s
-        receipt_date                 = uri_decode(doc.xpath(ResponseXpath::RECEIPT_DATE).to_s)
-        convenience_store_limit_date = uri_decode(doc.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
-
-        {
-          receipt_number:               receipt_number,
-          receipt_date:                 receipt_date,
-          convenience_store_limit_date: convenience_store_limit_date,
-        }
       end
     end
   end

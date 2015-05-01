@@ -4,10 +4,17 @@ module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     module EpsilonCommon
       module ResponseXpath
-        RESULT           = '//Epsilon_result/result[@result]/@result'
-        TRANSACTION_CODE = '//Epsilon_result/result[@trans_code]/@trans_code'
-        ERROR_CODE       = '//Epsilon_result/result[@err_code]/@err_code'
-        ERROR_DETAIL     = '//Epsilon_result/result[@err_detail]/@err_detail'
+        RESULT                       = '//Epsilon_result/result[@result]/@result'
+        TRANSACTION_CODE             = '//Epsilon_result/result[@trans_code]/@trans_code'
+        ERROR_CODE                   = '//Epsilon_result/result[@err_code]/@err_code'
+        ERROR_DETAIL                 = '//Epsilon_result/result[@err_detail]/@err_detail'
+        CARD_NUMBER_MASK             = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
+        CARD_BRAND                   = '//Epsilon_result/result[@card_brand]/@card_brand'
+        ACS_URL                      = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
+        PA_REQ                       = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payment authentication request)
+        RECEIPT_NUMBER               = '//Epsilon_result/result[@receipt_no][1]/@receipt_no'
+        RECEIPT_DATE                 = '//Epsilon_result/result[@receipt_date][1]/@receipt_date'
+        CONVENIENCE_STORE_LIMIT_DATE = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
       end
 
       def self.included(base)
@@ -48,16 +55,14 @@ module ActiveMerchant #:nodoc:
 
         doc = doc(ssl_post(url + path, post_data(params)))
 
-        response = parse_base(doc)
-        response.merge!(parse(doc))
+        response = parse(doc)
 
-        Response.new(
-          success_from(response),
-          message_from(response),
-          response,
+        options = {
           authorization: authorization_from(response),
-          test: test?
-        )
+          test:          test?
+        }
+
+        Response.new(success_from(response), message_from(response), response, options)
       end
 
       def doc(body)
@@ -70,17 +75,32 @@ module ActiveMerchant #:nodoc:
         response[:message]
       end
 
-      def parse_base(doc)
-        transaction_code = doc.xpath(ResponseXpath::TRANSACTION_CODE).to_s
-        error_code       = doc.xpath(ResponseXpath::ERROR_CODE).to_s
-        error_detail     = uri_decode(doc.xpath(ResponseXpath::ERROR_DETAIL).to_s)
+      def parse(doc)
+        transaction_code             = doc.xpath(ResponseXpath::TRANSACTION_CODE).to_s
+        error_code                   = doc.xpath(ResponseXpath::ERROR_CODE).to_s
+        error_detail                 = uri_decode(doc.xpath(ResponseXpath::ERROR_DETAIL).to_s)
+        card_number_mask             = uri_decode(doc.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
+        card_brand                   = uri_decode(doc.xpath(ResponseXpath::CARD_BRAND).to_s)
+        acs_url                      = uri_decode(doc.xpath(ResponseXpath::ACS_URL).to_s)
+        pa_req                       = uri_decode(doc.xpath(ResponseXpath::PA_REQ).to_s)
+        receipt_number               = doc.xpath(ResponseXpath::RECEIPT_NUMBER).to_s
+        receipt_date                 = uri_decode(doc.xpath(ResponseXpath::RECEIPT_DATE).to_s)
+        convenience_store_limit_date = uri_decode(doc.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
 
         {
-          success:          [Epsilon::ResultCode::SUCCESS, Epsilon::ResultCode::THREE_D_SECURE].include?(result(doc)),
-          message:          "#{error_code}: #{error_detail}",
-          transaction_code: transaction_code,
-          error_code:       error_code,
-          error_detail:     error_detail,
+          success:                      [Epsilon::ResultCode::SUCCESS, Epsilon::ResultCode::THREE_D_SECURE].include?(result(doc)),
+          message:                      "#{error_code}: #{error_detail}",
+          transaction_code:             transaction_code,
+          error_code:                   error_code,
+          error_detail:                 error_detail,
+          card_number_mask:             card_number_mask,
+          card_brand:                   card_brand,
+          three_d_secure:               result(doc) == Epsilon::ResultCode::THREE_D_SECURE,
+          acs_url:                      acs_url,
+          pa_req:                       pa_req,
+          receipt_number:               receipt_number,
+          receipt_date:                 receipt_date,
+          convenience_store_limit_date: convenience_store_limit_date,
         }
       end
 
