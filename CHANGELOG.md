@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### 0.5.0
+
+* Separate ConvenienceStorePayment from EpsilonGateway and Create new gateway
+* Require user_name in detail for purchase method
+* Rename number_of_payments to payment_time
+* Remove ActiveMerchant::Epsilon::InvalidActionError
+* Remove ActiveMerchant::Epsilon::InvalidPaymentMethodError
+
 ### 0.4.0
 
 * Support credit card installment payment

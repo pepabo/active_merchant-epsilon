@@ -74,6 +74,7 @@ module SamplePaymentMethods
     now = Time.now
     {
       user_id:      "U#{Time.now.to_i}",
+      user_name:    'YAMADA Taro',
       user_email:   'yamada-taro@example.com',
       item_code:    'ITEM001',
       item_name:    'Greate Product',
@@ -85,6 +86,7 @@ module SamplePaymentMethods
     now = Time.now
     {
       user_id:      "U#{Time.now.to_i}",
+      user_name:    'YAMADA Taro',
       user_email:   'yamada-taro@example.com',
       item_code:    'ITEM001',
       item_name:    'Greate Product',
@@ -98,6 +100,7 @@ module SamplePaymentMethods
     now = Time.now
     {
       user_id:      "U#{Time.now.to_i}",
+      user_name:    'YAMADA Taro',
       user_email:   'yamada-taro@example.com',
       item_code:    'ITEM001',
       item_name:    'Greate Product',
