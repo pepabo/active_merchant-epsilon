@@ -14,6 +14,7 @@ module ActiveMerchant #:nodoc:
         registered_recurring: 'direct_card_payment.cgi',
         registered_purchase:  'direct_card_payment.cgi',
         cancel_recurring:     'receive_order3.cgi',
+        terminate_recurring:  'receive_order3.cgi',
         void:                 'cancel_payment.cgi',
         find_user:            'get_user_info.cgi',
       }.freeze
@@ -86,6 +87,17 @@ module ActiveMerchant #:nodoc:
         }
 
         commit(PATHS[:cancel_recurring], params)
+      end
+
+      def terminate_recurring(user_id:)
+        params = {
+          contract_code: self.contract_code,
+          user_id:       user_id,
+          xml:           1,
+          process_code:  9,
+        }
+
+        commit(PATHS[:terminate_recurring], params)
       end
 
       def find_user(user_id:)

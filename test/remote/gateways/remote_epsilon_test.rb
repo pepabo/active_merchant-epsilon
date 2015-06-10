@@ -141,6 +141,27 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
     end
   end
 
+  def test_terminate_recurring
+    VCR.use_cassette(:terminate_recurring_successful) do
+      detail = purchase_detail
+      response = gateway.recurring(10000, valid_credit_card, detail)
+      assert_equal true, response.success?
+      response = gateway.terminate_recurring(user_id: detail[:user_id])
+      assert_equal true, response.success?
+    end
+  end
+
+  def test_terminate_recurring_fail
+    VCR.use_cassette(:terminate_recurring_fail) do
+      detail = purchase_detail
+      response = gateway.recurring(10000, valid_credit_card, detail)
+      assert_equal true, response.success?
+      assert_raises(ActiveMerchant::ResponseError) do
+        gateway.terminate_recurring(user_id: detail[:user_id] + 'wrong')
+      end
+    end
+  end
+
   def test_void
     VCR.use_cassette(:void_successful) do
       detail = purchase_detail
