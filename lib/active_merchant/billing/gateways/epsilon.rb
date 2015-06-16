@@ -10,13 +10,14 @@ module ActiveMerchant #:nodoc:
       end
 
       PATHS = {
-        purchase:             'direct_card_payment.cgi',
-        registered_recurring: 'direct_card_payment.cgi',
-        registered_purchase:  'direct_card_payment.cgi',
-        cancel_recurring:     'receive_order3.cgi',
-        terminate_recurring:  'receive_order3.cgi',
-        void:                 'cancel_payment.cgi',
-        find_user:            'get_user_info.cgi',
+        purchase:                'direct_card_payment.cgi',
+        registered_recurring:    'direct_card_payment.cgi',
+        registered_purchase:     'direct_card_payment.cgi',
+        cancel_recurring:        'receive_order3.cgi',
+        terminate_recurring:     'receive_order3.cgi',
+        void:                    'cancel_payment.cgi',
+        find_user:               'get_user_info.cgi',
+        change_recurring_amount: 'change_amount_payment.cgi',
       }.freeze
 
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
@@ -107,6 +108,17 @@ module ActiveMerchant #:nodoc:
         }
 
         commit(PATHS[:find_user], params)
+      end
+
+      def change_recurring_amount(new_item_price:, user_id:, item_code:)
+        params = {
+          contract_code:  self.contract_code,
+          mission_code:   2,
+          user_id:        user_id,
+          item_code:      item_code,
+          new_item_price: new_item_price,
+        }
+        commit(PATHS[:change_recurring_amount], params)
       end
 
       #
