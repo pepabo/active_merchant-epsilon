@@ -1,4 +1,5 @@
 # ActiveMerchant::Epsilon
+[![Gem](https://img.shields.io/gem/v/active_merchant-epsilon.svg?style=flat-square)](https://rubygems.org/gems/active_merchant-epsilon)
 [![wercker status](https://app.wercker.com/status/43c6648e20f325c8c0a560c36e89781c/s/master "wercker status")](https://app.wercker.com/project/bykey/43c6648e20f325c8c0a560c36e89781c)
 
 Epsilon integration for ActiveMerchant.
