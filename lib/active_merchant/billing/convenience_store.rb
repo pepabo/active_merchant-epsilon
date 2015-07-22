@@ -48,7 +48,7 @@ module ActiveMerchant
       end
 
       def valid_code?(code)
-        [SEVEN_ELEVEN, FAMILY_MART, LAWSON, SEICO_MART].include?(code.to_i)
+        [Code::SEVEN_ELEVEN, Code::FAMILY_MART, Code::LAWSON, Code::SEICO_MART].include?(code.to_i)
       end
     end
   end
