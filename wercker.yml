@@ -9,10 +9,3 @@ build:
     - script:
         name: rake test:unit
         code: bundle exec rake test:remote
-
-  after-steps:
-    - 2get/ikachan-notify@0.0.2:
-        url: $IRC_URL
-        channel: "#ruby"
-        passed-message: "%02[CI]%0f $WERCKER_APPLICATION_NAME: $WERCKER_BUILD_URL build of $WERCKER_GIT_BRANCH %02%0301,03PASSED%0f"
-        failed-message: "%02[CI]%0f $WERCKER_APPLICATION_NAME: $WERCKER_BUILD_URL build of $WERCKER_GIT_BRANCH %02%0301,04FAILED%0f"
