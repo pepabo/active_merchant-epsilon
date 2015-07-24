@@ -238,7 +238,7 @@ gateway.verify(credit_card, user_id: 'user_id', user_email: 'user@example.com')
 
 If epsilon server returns status excepted 200, `#purchase` method raise `ActiveMerchant::ResponseError`.
 
-When your request parameters are wrong(e.g. contract_code), the method return failuer response.
+When your request parameters are wrong(e.g. contract_code), the method returns failure response.
 
 - `#success?` returns `false`
 - `#params` has error detail
