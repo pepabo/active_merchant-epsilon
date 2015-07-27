@@ -6,6 +6,9 @@ module ActiveMerchant
         FAMILY_MART  = 21
         LAWSON       = 31
         SEICO_MART   = 32
+        MINI_STOP    = 33
+        CIRCLE_K     = 35
+        SUNKUS       = 36
       end
 
       def initialize(code:, full_name_kana:, phone_number:)
@@ -48,7 +51,7 @@ module ActiveMerchant
       end
 
       def valid_code?(code)
-        [Code::SEVEN_ELEVEN, Code::FAMILY_MART, Code::LAWSON, Code::SEICO_MART].include?(code.to_i)
+        [Code::SEVEN_ELEVEN, Code::FAMILY_MART, Code::LAWSON, Code::SEICO_MART, Code::MINI_STOP, Code::CIRCLE_K, Code::SUNKUS].include?(code.to_i)
       end
     end
   end
