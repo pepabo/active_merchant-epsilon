@@ -1,6 +1,9 @@
 language: ruby
-
 rvm:
-  - 2.1.6
-  - 2.2.2
+- 2.1.6
+- 2.2.2
 script: bundle exec rake test:remote
+notifications:
+  slack:
+    rooms:
+      secure: yn/U9pRJ3nFHzux34sUiHUoLRassGFLH/c6Olvj1Guh1Sp1DLEsT8TgQozBECKgrH8o1mNKWtT1yKbVnO8HsIUExaa247kVbnib8pLQpOwVz0rmqiHfNbsLKK5u90AguznLsATuPijH8RdKrkFBufZKfnTeUzB7aDj5B2zSYUbjt3hKGzauzD5jPEXzXaaD63uEdacD6ds/SgSzzT8UFUDtA18754DTvcArIc3pU4WbDPaB9WykFxYw9TVqpDK9BmFtv1ir13hko8M1yen4hwSQiVLjiKnPH4Uuxpb5WkmysCXg72MRDyPGHgw3PuqchmJ+qKxQ+yuXKCo4TbDmuzbJsxiEKtnO9WVRsUAdURb1nbP+3ice3WiaNv+ld/Li/ybXaw2DFb7IkVgMlZGXg1AVhKjgZHx5q29kSK7YydQ7igFBZ8pdtu3EuUfZy+ZPx22KRuGXVcrm5tltnShmvmiHOzkBK8qz+LGN+Ey9mgFpS+jSo8lKIHro11bCpez/Xo2sDIu2cJ6v0sHWT79aCVYI0jWgexahf5lhwcIll9AMjOdxaz7FaJxHCfzYlc/QPySAcS46QxVVo1tmnx0aIAhckxGqoSgQr7+l70Zufot2MQICE/7GTQnuat/vds9Gwt4Y5wtjz+NLdpOY/GrEWNmjsarsiyJRDXIsxV+w/FCw=
