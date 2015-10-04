@@ -46,6 +46,7 @@ module ActiveMerchant
 
         errors << [:full_name_kana, "is required"] if name.blank?
         errors << [:phone_number, "is required"] if phone_number.blank?
+        errors << [:phone_number, "is not number"] if phone_number.present? && /\D+/.match(phone_number)
 
         errors
       end
