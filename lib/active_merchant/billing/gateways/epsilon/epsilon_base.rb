@@ -66,10 +66,11 @@ module ActiveMerchant #:nodoc:
         {}
       end
 
-      def commit(path, params)
-        url          = (test? ? test_url : live_url)
-        raw_response = ssl_post(File.join(url, path), post_data(params))
-        response     = parse(raw_response)
+      def commit(path, request_params)
+        parser = ResponseParser.new
+
+        url = (test? ? test_url : live_url)
+        response = parser.parse(ssl_post(File.join(url, path), post_data(request_params)))
 
         options = {
           authorization: authorization_from(response),
@@ -83,52 +84,12 @@ module ActiveMerchant #:nodoc:
         response[:message]
       end
 
-      def parse(body)
-        # because of following error
-        #   Nokogiri::XML::SyntaxError: Unsupported encoding x-sjis-cp932
-        xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'UTF-8'))
-
-        result                             = xml.xpath(ResponseXpath::RESULT).to_s
-        transaction_code                   = xml.xpath(ResponseXpath::TRANSACTION_CODE).to_s
-        error_code                         = xml.xpath(ResponseXpath::ERROR_CODE).to_s
-        error_detail                       = uri_decode(xml.xpath(ResponseXpath::ERROR_DETAIL).to_s)
-        card_number_mask                   = uri_decode(xml.xpath(ResponseXpath::CARD_NUMBER_MASK).to_s)
-        card_brand                         = uri_decode(xml.xpath(ResponseXpath::CARD_BRAND).to_s)
-        acs_url                            = uri_decode(xml.xpath(ResponseXpath::ACS_URL).to_s)
-        pa_req                             = uri_decode(xml.xpath(ResponseXpath::PA_REQ).to_s)
-        receipt_number                     = xml.xpath(ResponseXpath::RECEIPT_NUMBER).to_s
-        receipt_date                       = uri_decode(xml.xpath(ResponseXpath::RECEIPT_DATE).to_s)
-        convenience_store_limit_date       = uri_decode(xml.xpath(ResponseXpath::CONVENIENCE_STORE_LIMIT_DATE).to_s)
-        convenience_store_payment_slip_url = uri_decode(xml.xpath(ResponseXpath::CONVENIENCE_STORE_PAYMENT_SLIP_URL).to_s)
-
-        {
-          success:                            [ResultCode::SUCCESS, ResultCode::THREE_D_SECURE].include?(result),
-          message:                            "#{error_code}: #{error_detail}",
-          transaction_code:                   transaction_code,
-          error_code:                         error_code,
-          error_detail:                       error_detail,
-          card_number_mask:                   card_number_mask,
-          card_brand:                         card_brand,
-          three_d_secure:                     result == ResultCode::THREE_D_SECURE,
-          acs_url:                            acs_url,
-          pa_req:                             pa_req,
-          receipt_number:                     receipt_number,
-          receipt_date:                       receipt_date,
-          convenience_store_limit_date:       convenience_store_limit_date,
-          convenience_store_payment_slip_url: convenience_store_payment_slip_url
-        }
-      end
-
       def post_data(parameters = {})
         parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
       end
 
       def success_from(response)
         response[:success]
-      end
-
-      def uri_decode(string)
-        URI.decode(string).encode(Encoding::UTF_8, Encoding::CP932)
       end
     end
   end
