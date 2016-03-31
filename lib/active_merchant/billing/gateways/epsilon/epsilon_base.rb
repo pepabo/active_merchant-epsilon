@@ -29,28 +29,6 @@ module ActiveMerchant #:nodoc:
 
       self.abstract_class = true
 
-      module ResponseXpath
-        RESULT                             = '//Epsilon_result/result[@result]/@result'
-        TRANSACTION_CODE                   = '//Epsilon_result/result[@trans_code]/@trans_code'
-        ERROR_CODE                         = '//Epsilon_result/result[@err_code]/@err_code'
-        ERROR_DETAIL                       = '//Epsilon_result/result[@err_detail]/@err_detail'
-        CARD_NUMBER_MASK                   = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
-        CARD_BRAND                         = '//Epsilon_result/result[@card_brand]/@card_brand'
-        ACS_URL                            = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
-        PA_REQ                             = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payer authentication request)
-        RECEIPT_NUMBER                     = '//Epsilon_result/result[@receipt_no][1]/@receipt_no'
-        RECEIPT_DATE                       = '//Epsilon_result/result[@receipt_date][1]/@receipt_date'
-        CONVENIENCE_STORE_LIMIT_DATE       = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
-        CONVENIENCE_STORE_PAYMENT_SLIP_URL = '//Epsilon_result/result[@haraikomi_url][1]/@haraikomi_url'
-      end
-
-      module ResultCode
-        FAILURE        = '0'
-        SUCCESS        = '1'
-        THREE_D_SECURE = '5'
-        SYSTEM_ERROR   = '9'
-      end
-
       cattr_accessor :contract_code, :proxy_address, :proxy_port
 
       self.test_url            = 'https://beta.epsilon.jp/cgi-bin/order/'
@@ -61,10 +39,6 @@ module ActiveMerchant #:nodoc:
       self.display_name        = 'New Gateway'
 
       private
-
-      def authorization_from(response)
-        {}
-      end
 
       def commit(path, request_params)
         parser = ResponseParser.new
@@ -80,16 +54,20 @@ module ActiveMerchant #:nodoc:
         Response.new(success_from(response), message_from(response), response, options)
       end
 
-      def message_from(response)
-        response[:message]
-      end
-
       def post_data(parameters = {})
         parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
       end
 
+      def message_from(response)
+        response[:message]
+      end
+
       def success_from(response)
         response[:success]
+      end
+
+      def authorization_from(response)
+        {}
       end
     end
   end
