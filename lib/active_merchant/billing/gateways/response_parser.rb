@@ -4,28 +4,22 @@ module ActiveMerchant #:nodoc:
       def initialize
       end
 
-      def parse(body)
+      def parse(body, required_items)
         # because of following error
         #   Nokogiri::XML::SyntaxError: Unsupported encoding x-sjis-cp932
         @xml = Nokogiri::XML(body.sub('x-sjis-cp932', 'UTF-8'))
         @result = @xml.xpath(ResponseXpath::RESULT).to_s
 
-        {
+        response = {
           success:                            [ResultCode::SUCCESS, ResultCode::THREE_D_SECURE].include?(@result),
-          message:                            "#{error_code}: #{error_detail}",
-          transaction_code:                   transaction_code,
-          error_code:                         error_code,
-          error_detail:                       error_detail,
-          card_number_mask:                   card_number_mask,
-          card_brand:                         card_brand,
-          three_d_secure:                     three_d_secure,
-          acs_url:                            acs_url,
-          pa_req:                             pa_req,
-          receipt_number:                     receipt_number,
-          receipt_date:                       receipt_date,
-          convenience_store_limit_date:       convenience_store_limit_date,
-          convenience_store_payment_slip_url: convenience_store_payment_slip_url
+          message:                            "#{error_code}: #{error_detail}"
         }
+
+        required_items.each {|item_name|
+          response[item_name] = self.send(item_name)
+        }
+
+        response
       end
 
       private

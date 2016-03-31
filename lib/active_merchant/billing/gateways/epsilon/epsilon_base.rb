@@ -38,13 +38,26 @@ module ActiveMerchant #:nodoc:
       self.homepage_url        = 'http://www.example.net/'
       self.display_name        = 'New Gateway'
 
+      DEFAULT_RESPONSE_KEYS = [
+        :transaction_code,
+        :error_code,
+        :error_detail,
+        :card_number_mask,
+        :card_brand,
+        :three_d_secure,
+        :acs_url,
+        :pa_req,
+        :receipt_number,
+        :receipt_date
+      ].freeze
+
       private
 
-      def commit(path, request_params)
+      def commit(path, request_params, response_keys = DEFAULT_RESPONSE_KEYS)
         parser = ResponseParser.new
 
         url = (test? ? test_url : live_url)
-        response = parser.parse(ssl_post(File.join(url, path), post_data(request_params)))
+        response = parser.parse(ssl_post(File.join(url, path), post_data(request_params)), response_keys)
 
         options = {
           authorization: authorization_from(response),

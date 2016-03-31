@@ -1,6 +1,12 @@
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class EpsilonConvenienceStoreGateway < EpsilonBaseGateway
+
+      RESPONSE_KEYS = DEFAULT_RESPONSE_KEYS + [
+        :convenience_store_limit_date,
+        :convenience_store_payment_slip_url
+      ]
+
       def purchase(amount, payment_method, detail = {})
         params = {
           contract_code:  self.contract_code,
@@ -20,7 +26,7 @@ module ActiveMerchant #:nodoc:
           user_name_kana: payment_method.name,
         }
 
-        commit('receive_order3.cgi', params)
+        commit('receive_order3.cgi', params, RESPONSE_KEYS)
       end
     end
   end
