@@ -1,9 +1,6 @@
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class ResponseParser
-      def initialize
-      end
-
       def parse(body, required_items)
         # because of following error
         #   Nokogiri::XML::SyntaxError: Unsupported encoding x-sjis-cp932
@@ -11,13 +8,13 @@ module ActiveMerchant #:nodoc:
         @result = @xml.xpath(ResponseXpath::RESULT).to_s
 
         response = {
-          success:                            [ResultCode::SUCCESS, ResultCode::THREE_D_SECURE].include?(@result),
-          message:                            "#{error_code}: #{error_detail}"
+          success: [ResultCode::SUCCESS, ResultCode::THREE_D_SECURE].include?(@result),
+          message: "#{error_code}: #{error_detail}"
         }
 
-        required_items.each {|item_name|
+        required_items.each do |item_name|
           response[item_name] = self.send(item_name)
-        }
+        end
 
         response
       end
