@@ -4,7 +4,8 @@ module ActiveMerchant #:nodoc:
 
       RESPONSE_KEYS = DEFAULT_RESPONSE_KEYS + [
         :convenience_store_limit_date,
-        :convenience_store_payment_slip_url
+        :convenience_store_payment_slip_url,
+        :company_code,
       ]
 
       def purchase(amount, payment_method, detail = {})
