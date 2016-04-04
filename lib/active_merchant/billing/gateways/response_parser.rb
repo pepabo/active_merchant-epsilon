@@ -70,7 +70,7 @@ module ActiveMerchant #:nodoc:
       end
 
       def company_code
-        @xml.xpath(@xml.xpath(ResponseXpath::COMPANY_CODE).to_s)
+        @xml.xpath(ResponseXpath::COMPANY_CODE).to_s
       end
 
       def uri_decode(string)
