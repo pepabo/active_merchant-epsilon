@@ -40,7 +40,7 @@ http_interactions:
         />\r\n  <result contract_code=\"[CONTRACT_CODE]\" />\r\n  <result item_name=\"Greate%20Product\"
         />\r\n  <result payment_code=\"3\" />\r\n  <result user_mail_add=\"yamada-taro%40example.com\"
         />\r\n  <result item_code=\"ITEM001\" />\r\n  <result conveni_code=\"31\"
-        />\r\n  <result receipt_no=\"0005180\" />\r\n  <result kigyou_code=\"\" />\r\n
+        />\r\n  <result receipt_no=\"0005180\" />\r\n  <result kigyou_code=\"10020\" />\r\n
         \ <result haraikomi_url=\"http%3A%2F%2Fbeta.epsilon.jp%2Fsample%2Fecon_sample.pdf\"
         />\r\n  <result paid=\"0\" />\r\n  <result receipt_date=\"2015-01-16%2008%3A30%3A31\"
         />\r\n  <result conveni_limit=\"2015-01-26\" />\r\n  <result conveni_time=\"\"

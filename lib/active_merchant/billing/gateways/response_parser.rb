@@ -69,6 +69,10 @@ module ActiveMerchant #:nodoc:
         uri_decode(@xml.xpath(ResponseXpath::CONVENIENCE_STORE_PAYMENT_SLIP_URL).to_s)
       end
 
+      def company_code
+        @xml.xpath(@xml.xpath(ResponseXpath::COMPANY_CODE).to_s)
+      end
+
       def uri_decode(string)
         URI.decode(string).encode(Encoding::UTF_8, Encoding::CP932)
       end
@@ -86,6 +90,7 @@ module ActiveMerchant #:nodoc:
         RECEIPT_DATE                       = '//Epsilon_result/result[@receipt_date][1]/@receipt_date'
         CONVENIENCE_STORE_LIMIT_DATE       = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
         CONVENIENCE_STORE_PAYMENT_SLIP_URL = '//Epsilon_result/result[@haraikomi_url][1]/@haraikomi_url'
+        COMPANY_CODE                       = '//Epsilon_result/result[@kigyou_code][1]/@kigyou_code'
       end
 
       module ResultCode
