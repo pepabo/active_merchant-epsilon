@@ -68,7 +68,12 @@ module ActiveMerchant #:nodoc:
       end
 
       def post_data(parameters = {})
-        parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
+        parameters.map { |k, v| "#{k}=#{CGI.escape(encode_value(v.to_s))}" }.join('&')
+      end
+
+      def encode_value(value)
+        return value unless @options[:encoding]
+        value.encode(@options[:encoding], invalid: :replace, undef: :replace)
       end
 
       def message_from(response)
