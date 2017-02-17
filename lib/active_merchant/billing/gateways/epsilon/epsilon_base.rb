@@ -29,7 +29,7 @@ module ActiveMerchant #:nodoc:
 
       self.abstract_class = true
 
-      cattr_accessor :contract_code, :proxy_address, :proxy_port
+      cattr_accessor :contract_code, :proxy_address, :proxy_port, :encoding
 
       self.test_url            = 'https://beta.epsilon.jp/cgi-bin/order/'
       self.live_url            = 'https://secure.epsilon.jp/cgi-bin/order/'
@@ -72,8 +72,8 @@ module ActiveMerchant #:nodoc:
       end
 
       def encode_value(value)
-        return value unless @options[:encoding]
-        value.encode(@options[:encoding], invalid: :replace, undef: :replace)
+        return value unless self.encoding
+        value.encode(self.encoding, invalid: :replace, undef: :replace)
       end
 
       def message_from(response)

@@ -12,7 +12,8 @@ class EpsilonGatewayTest < MiniTest::Test
   end
 
   def test_purchase_post_data_encoding_eucjp
-    gateway = ActiveMerchant::Billing::EpsilonGateway.new(encoding: Encoding::EUC_JP)
+    ActiveMerchant::Billing::EpsilonBaseGateway.encoding = Encoding::EUC_JP
+    gateway = ActiveMerchant::Billing::EpsilonGateway.new
     fixture = YAML.load_file('test/fixtures/vcr_cassettes/purchase_successful.yml')
     response_body = fixture['http_interactions'][0]['response']['body']['string']
     detail = {
