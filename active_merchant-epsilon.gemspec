@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'tapp'
   spec.add_development_dependency 'webmock'
   spec.add_development_dependency 'vcr'
+  spec.add_development_dependency 'mocha'
 end
