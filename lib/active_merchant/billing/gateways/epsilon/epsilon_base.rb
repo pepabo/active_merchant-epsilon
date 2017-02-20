@@ -72,8 +72,8 @@ module ActiveMerchant #:nodoc:
       end
 
       def encode_value(value)
-        return value unless self.encoding
-        value.encode(self.encoding, invalid: :replace, undef: :replace)
+        return value unless encoding
+        value.encode(encoding, invalid: :replace, undef: :replace)
       end
 
       def message_from(response)
