@@ -29,7 +29,7 @@ module ActiveMerchant #:nodoc:
 
       self.abstract_class = true
 
-      cattr_accessor :contract_code, :proxy_address, :proxy_port
+      cattr_accessor :contract_code, :proxy_address, :proxy_port, :encoding
 
       self.test_url            = 'https://beta.epsilon.jp/cgi-bin/order/'
       self.live_url            = 'https://secure.epsilon.jp/cgi-bin/order/'
@@ -68,7 +68,12 @@ module ActiveMerchant #:nodoc:
       end
 
       def post_data(parameters = {})
-        parameters.map { |k, v| "#{k}=#{CGI.escape(v.to_s)}" }.join('&')
+        parameters.map { |k, v| "#{k}=#{CGI.escape(encode_value(v.to_s))}" }.join('&')
+      end
+
+      def encode_value(value)
+        return value unless encoding
+        value.encode(encoding, invalid: :replace, undef: :replace)
       end
 
       def message_from(response)

@@ -9,6 +9,7 @@ require 'tapp'
 require 'vcr'
 
 require 'webmock/minitest'
+require 'mocha/mini_test'
 
 Dotenv.load
 
