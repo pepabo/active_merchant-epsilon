@@ -64,6 +64,8 @@ purchase_detail = {
   item_code:    'ITEM001',
   item_name:    'Greate Product',
   order_number: 'UNIQUE ORDER NUMBER',
+  memo1:        'memo1',
+  memo2:        'memo2',
 }
 
 if credit_card.validate.empty?
@@ -102,6 +104,8 @@ purchase_detail = {
   item_name:                 'Greate Product',
   order_number:              'UNIQUE ORDER NUMBER',
   three_d_secure_check_code: 1,
+  memo1:                     'memo1',
+  memo2:                     'memo2',
 }
 
 if credit_card.validate.empty?
@@ -148,6 +152,8 @@ purchase_detail = {
   order_number: 'UNIQUE ORDER NUMBER',
   credit_type:  ActiveMerchant::Billing::EpsilonGateway::CreditType::INSTALLMENT,
   payment_time: 3, # 3, 5, 6, 10, 12, 15, 18, 20, 24
+  memo1:        'memo1',
+  memo2:        'memo2',
 }
 
 # (snip)
@@ -166,6 +172,8 @@ purchase_detail = {
   item_name:    'Greate Product',
   order_number: 'UNIQUE ORDER NUMBER',
   credit_type:  ActiveMerchant::Billing::EpsilonGateway::CreditType::REVOLVING,
+  memo1:        'memo1',
+  memo2:        'memo2',
 }
 
 # (snip)
@@ -191,6 +199,8 @@ purchase_detail = {
   item_code:    'ITEM001',
   item_name:    'Greate Product',
   order_number: 'UNIQUE ORDER NUMBER',
+  memo1:        'memo1',
+  memo2:        'memo2',
 }
 
 if credit_card.validate.empty?
