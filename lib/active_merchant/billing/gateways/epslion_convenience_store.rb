@@ -21,6 +21,8 @@ module ActiveMerchant #:nodoc:
           mission_code:   EpsilonMissionCode::PURCHASE,
           item_price:     amount,
           process_code:   1,
+          memo1:          detail[:memo1],
+          memo2:          detail[:memo2],
           xml:            1,
           conveni_code:   payment_method.code,
           user_tel:       payment_method.phone_number,
