@@ -11,6 +11,36 @@
 
 * [Add encoding setting](https://github.com/pepabo/active_merchant-epsilon/pull/82)
   * According to the Epsilon specification, the request parameters must be encode in EUC-JP or Shift_JIS. For the specification, this pull request add encoding setting.
+  
+### 0.5.7
+
+* [Fix response parser method by ku00](https://github.com/pepabo/active_merchant-epsilon/pull/81)
+
+### 0.5.6
+
+* [Add company_code to response parameters by ku00 #80](https://github.com/pepabo/active_merchant-epsilon/pull/80)
+
+### 0.5.5
+
+* [Should be able to specify response keys by Joe-noh #79](https://github.com/pepabo/active_merchant-epsilon/pull/79)
+
+### 0.5.4
+
+* [Add validation of accepting only number to phone_number column by woshidan #76](https://github.com/pepabo/active_merchant-epsilon/pull/76)
+
+### 0.5.3
+
+* [Add other convenience store codes by woshidan #75](https://github.com/pepabo/active_merchant-epsilon/pull/75)
+
+### 0.5.2
+
+* [モジュール名 Code をつけないと NameError になるので valid_code? の中の定数にモジュール名をつける by woshidan #71](https://github.com/pepabo/active_merchant-epsilon/pull/71)
+
+### 0.5.1
+
+* [Add change recurring amount method by kurotaky #66](https://github.com/pepabo/active_merchant-epsilon/pull/66)
+  * 月次課金の金額変更をできるようにしました
+  * 送信パラメータ、受信パラメータに関しては、GMO イプシロンAPI利用マニュアル Ver.1.2.9 - 取引の金額変更 API を参照して下さい
 
 ### 0.5.0
 
