@@ -2,10 +2,15 @@
 
 ### 0.5.9
 
-* 都度課金、定期課金、コンビニ決済で memo1, memo2 を送信できるようにした
+* 都度課金、定期課金、コンビニ決済で memo1, memo2 を送信できるようにした #83
   * [イプシロン開発者向け情報：都度課金](http://www.epsilon.jp/developer/each_time.html)
   * [イプシロン開発者向け情報：定期課金](http://www.epsilon.jp/developer/subscription.html)
   * [イプシロン開発者向け情報：コンビニ決済（決済～入金通知）](http://www.epsilon.jp/developer/conv.html)
+
+### 0.5.8
+
+* [Add encoding setting](https://github.com/pepabo/active_merchant-epsilon/pull/82)
+  * According to the Epsilon specification, the request parameters must be encode in EUC-JP or Shift_JIS. For the specification, this pull request add encoding setting.
 
 ### 0.5.0
 
