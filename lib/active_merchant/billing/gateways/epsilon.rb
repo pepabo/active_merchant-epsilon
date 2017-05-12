@@ -43,6 +43,8 @@ module ActiveMerchant #:nodoc:
           mission_code:  EpsilonMissionCode::PURCHASE,
           item_price:    amount,
           process_code:  2,
+          memo1:         detail[:memo1],
+          memo2:         detail[:memo2],
           xml:           1,
         }
 
@@ -72,6 +74,8 @@ module ActiveMerchant #:nodoc:
           mission_code:  detail[:mission_code],
           item_price:    amount,
           process_code:  2,
+          memo1:         detail[:memo1],
+          memo2:         detail[:memo2],
           xml:           1,
         }
 
@@ -171,6 +175,8 @@ module ActiveMerchant #:nodoc:
           mission_code:   detail[:mission_code],
           item_price:     amount,
           process_code:   1,
+          memo1:          detail[:memo1],
+          memo2:          detail[:memo2],
           card_number:    payment_method.number,
           expire_y:       payment_method.year,
           expire_m:       payment_method.month,
