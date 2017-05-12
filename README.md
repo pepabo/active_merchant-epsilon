@@ -200,7 +200,8 @@ purchase_detail = {
   item_name:    'Greate Product',
   order_number: 'UNIQUE ORDER NUMBER',
   memo1:        'memo1',
-  memo2:        'memo2',}
+  memo2:        'memo2',
+}
 
 if credit_card.validate.empty?
   # 10000 yen as convenience store paymet
