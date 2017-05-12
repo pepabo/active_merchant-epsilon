@@ -79,7 +79,9 @@ module SamplePaymentMethods
       user_email:   'yamada-taro@example.com',
       item_code:    'ITEM001',
       item_name:    'Greate Product',
-      order_number: "O#{now.sec}#{now.usec}"
+      order_number: "O#{now.sec}#{now.usec}",
+      memo1:        'memo1',
+      memo2:        'memo2',
     }
   end
 
@@ -94,6 +96,8 @@ module SamplePaymentMethods
       order_number: "O#{now.sec}#{now.usec}",
       credit_type:  ActiveMerchant::Billing::EpsilonGateway::CreditType::INSTALLMENT,
       payment_time: 3,
+      memo1:        'memo1',
+      memo2:        'memo2',
     }
   end
 
@@ -107,6 +111,8 @@ module SamplePaymentMethods
       item_name:    'Greate Product',
       order_number: "O#{now.sec}#{now.usec}",
       credit_type:  ActiveMerchant::Billing::EpsilonGateway::CreditType::REVOLVING,
+      memo1:        'memo1',
+      memo2:        'memo2',
     }
   end
 
@@ -118,7 +124,9 @@ module SamplePaymentMethods
       item_code:    'ITEM001',
       item_name:    'Greate Product',
       order_number: "O#{Time.now.to_i}",
-      mission_code: '6'
+      mission_code: '6',
+      memo1:        'memo1',
+      memo2:        'memo2',
     }
   end
 
