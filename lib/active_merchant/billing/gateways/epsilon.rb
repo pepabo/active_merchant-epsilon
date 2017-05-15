@@ -43,10 +43,11 @@ module ActiveMerchant #:nodoc:
           mission_code:  EpsilonMissionCode::PURCHASE,
           item_price:    amount,
           process_code:  2,
-          memo1:         detail[:memo1],
-          memo2:         detail[:memo2],
           xml:           1,
         }
+
+        params[:memo1] = detail[:memo1] unless detail[:memo1].nil?
+        params[:memo2] = detail[:memo2] unless detail[:memo2].nil?
 
         commit(PATHS[:registered_purchase], params)
       end
@@ -74,10 +75,11 @@ module ActiveMerchant #:nodoc:
           mission_code:  detail[:mission_code],
           item_price:    amount,
           process_code:  2,
-          memo1:         detail[:memo1],
-          memo2:         detail[:memo2],
           xml:           1,
         }
+
+        params[:memo1] = detail[:memo1] unless detail[:memo1].nil?
+        params[:memo2] = detail[:memo2] unless detail[:memo2].nil?
 
         commit(PATHS[:registered_recurring], params)
       end
@@ -175,8 +177,6 @@ module ActiveMerchant #:nodoc:
           mission_code:   detail[:mission_code],
           item_price:     amount,
           process_code:   1,
-          memo1:          detail[:memo1],
-          memo2:          detail[:memo2],
           card_number:    payment_method.number,
           expire_y:       payment_method.year,
           expire_m:       payment_method.month,
@@ -185,6 +185,9 @@ module ActiveMerchant #:nodoc:
           tds_check_code: detail[:three_d_secure_check_code],
           user_agent:     "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
         }
+
+        params[:memo1] = detail[:memo1] unless detail[:memo1].nil?
+        params[:memo2] = detail[:memo2] unless detail[:memo2].nil?
 
         if payment_method.class.requires_verification_value?
           params.merge!(
