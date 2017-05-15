@@ -46,8 +46,8 @@ module ActiveMerchant #:nodoc:
           xml:           1,
         }
 
-        params[:memo1] = detail[:memo1] unless detail[:memo1].nil?
-        params[:memo2] = detail[:memo2] unless detail[:memo2].nil?
+        params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
+        params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
 
         commit(PATHS[:registered_purchase], params)
       end
@@ -78,8 +78,8 @@ module ActiveMerchant #:nodoc:
           xml:           1,
         }
 
-        params[:memo1] = detail[:memo1] unless detail[:memo1].nil?
-        params[:memo2] = detail[:memo2] unless detail[:memo2].nil?
+        params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
+        params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
 
         commit(PATHS[:registered_recurring], params)
       end
@@ -186,8 +186,8 @@ module ActiveMerchant #:nodoc:
           user_agent:     "#{ActiveMerchant::Epsilon}-#{ActiveMerchant::Epsilon::VERSION}",
         }
 
-        params[:memo1] = detail[:memo1] unless detail[:memo1].nil?
-        params[:memo2] = detail[:memo2] unless detail[:memo2].nil?
+        params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
+        params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
 
         if payment_method.class.requires_verification_value?
           params.merge!(

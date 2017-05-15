@@ -27,8 +27,8 @@ module ActiveMerchant #:nodoc:
           user_name_kana: payment_method.name,
         }
 
-        params[:memo1] = detail[:memo1] unless detail[:memo1].nil?
-        params[:memo2] = detail[:memo2] unless detail[:memo2].nil?
+        params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
+        params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
 
         commit('receive_order3.cgi', params, RESPONSE_KEYS)
       end
