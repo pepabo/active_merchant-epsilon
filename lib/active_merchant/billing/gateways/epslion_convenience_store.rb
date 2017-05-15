@@ -21,13 +21,14 @@ module ActiveMerchant #:nodoc:
           mission_code:   EpsilonMissionCode::PURCHASE,
           item_price:     amount,
           process_code:   1,
-          memo1:          detail[:memo1],
-          memo2:          detail[:memo2],
           xml:            1,
           conveni_code:   payment_method.code,
           user_tel:       payment_method.phone_number,
           user_name_kana: payment_method.name,
         }
+
+        params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
+        params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
 
         commit('receive_order3.cgi', params, RESPONSE_KEYS)
       end
