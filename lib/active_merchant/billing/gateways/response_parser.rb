@@ -41,6 +41,10 @@ module ActiveMerchant #:nodoc:
         uri_decode(@xml.xpath(ResponseXpath::CARD_BRAND).to_s)
       end
 
+      def card_expire
+        uri_decode(@xml.xpath(ResponseXpath::CARD_EXPIRE).to_s)
+      end
+
       def three_d_secure
         @result == ResultCode::THREE_D_SECURE
       end
@@ -84,6 +88,7 @@ module ActiveMerchant #:nodoc:
         ERROR_DETAIL                       = '//Epsilon_result/result[@err_detail]/@err_detail'
         CARD_NUMBER_MASK                   = '//Epsilon_result/result[@card_number_mask]/@card_number_mask'
         CARD_BRAND                         = '//Epsilon_result/result[@card_brand]/@card_brand'
+        CARD_EXPIRE                        = '//Epsilon_result/result[@card_expire]/@card_expire'
         ACS_URL                            = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
         PA_REQ                             = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payer authentication request)
         RECEIPT_NUMBER                     = '//Epsilon_result/result[@receipt_no][1]/@receipt_no'
