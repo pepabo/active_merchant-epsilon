@@ -44,6 +44,7 @@ module ActiveMerchant #:nodoc:
         :error_detail,
         :card_number_mask,
         :card_brand,
+        :card_expire,
         :three_d_secure,
         :acs_url,
         :pa_req,
