@@ -43,6 +43,8 @@ module ActiveMerchant #:nodoc:
           mission_code:  EpsilonMissionCode::PURCHASE,
           item_price:    amount,
           process_code:  2,
+          card_st_code:  detail[:credit_type],
+          pay_time:      detail[:payment_time],
           xml:           1,
         }
 
