@@ -197,7 +197,7 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
     end
   end
 
-  def test_token_verify
+  def test_token_verify_successful
     VCR.use_cassette(:token_verify_successful) do
       response = gateway.verify(tokenized_credit_card, purchase_detail_with_token)
       assert_equal true, response.success?
