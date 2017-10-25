@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&user_id=U1508894451&user_name=YAMADA+Taro&user_mail_add=yamada-taro%40example.com&item_code=verifycreditcard&item_name=verify+credit+card&order_number=O51347845&st_code=10000-0000-0000&mission_code=1&item_price=1&process_code=1&card_number=&expire_y=&expire_m=&card_st_code=&pay_time=&tds_check_code=&user_agent=ActiveMerchant%3A%3AEpsilon-0.7.0&token=a5f6d3b833cebc775559bf6546d60983cff7b70cd74fd354164bcc0795a70783
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 25 Oct 2017 01:20:49 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result acsurl="" />
+          <result err_code="936" />
+          <result err_detail="%82%B7%82%C5%82%C9%8Eg%97p%8D%CF%82%DD%82%CC%83g%81%5B%83N%83%93%82%C5%82%B7%81B%8D%C4%93x%83g%81%5B%83N%83%93%82%CC%94%AD%8Ds%82%F0%82%A8%8A%E8%82%A2%82%B5%82%DC%82%B7%81B" />
+          <result pareq="" />
+          <result result="9" />
+          <result trans_code="" />
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Wed, 25 Oct 2017 01:20:51 GMT
+recorded_with: VCR 3.0.3
