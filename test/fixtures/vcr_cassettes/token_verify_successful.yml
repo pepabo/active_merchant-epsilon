@@ -1,0 +1,85 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&user_id=U1508835714&user_name=YAMADA+Taro&user_mail_add=yamada-taro%40example.com&item_code=verifycreditcard&item_name=verify+credit+card&order_number=O54285419&st_code=10000-0000-0000&mission_code=1&item_price=1&process_code=1&card_number=&expire_y=&expire_m=&card_st_code=&pay_time=&tds_check_code=&user_agent=ActiveMerchant%3A%3AEpsilon-0.7.0&token=a5f6d3b833cebc775559bf6546d60983cff7b70cd74fd354164bcc0795a70783
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 24 Oct 2017 09:01:54 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result acsurl="" />
+          <result err_code="" />
+          <result err_detail="" />
+          <result kari_flag="0" />
+          <result pareq="" />
+          <result result="1" />
+          <result trans_code="683576" />
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Tue, 24 Oct 2017 09:01:55 GMT
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/cancel_payment.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&order_number=O54285419
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 24 Oct 2017 09:01:55 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result err_code="" />
+          <result err_detail="" />
+          <result result="1" />
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Tue, 24 Oct 2017 09:01:56 GMT
+recorded_with: VCR 3.0.3

@@ -37,6 +37,17 @@ module SamplePaymentMethods
     )
   end
 
+  def tokenized_credit_card
+    ActiveMerchant::Billing::CreditCard.require_verification_value = false
+    ActiveMerchant::Billing::CreditCard.new(
+      first_name: 'TARO',
+      last_name:  'YAMADA',
+      number:     '',
+      month:      '',
+      year:       '',
+    )
+  end
+
   def valid_credit_card_with_verification_value
     ActiveMerchant::Billing::CreditCard.require_verification_value = true
     ActiveMerchant::Billing::CreditCard.new(
@@ -82,6 +93,19 @@ module SamplePaymentMethods
       order_number: "O#{now.sec}#{now.usec}",
       memo1:        'memo1',
       memo2:        'memo2',
+    }
+  end
+
+  def purchase_detail_with_token
+    now = Time.now
+    {
+      user_id:      "U#{Time.now.to_i}",
+      user_name:    'YAMADA Taro',
+      user_email:   'yamada-taro@example.com',
+      item_code:    'ITEM001',
+      item_name:    'Greate Product',
+      order_number: "O#{now.sec}#{now.usec}",
+      token:        'a5f6d3b833cebc775559bf6546d60983cff7b70cd74fd354164bcc0795a70783',
     }
   end
 

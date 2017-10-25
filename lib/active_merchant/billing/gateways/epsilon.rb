@@ -190,6 +190,7 @@ module ActiveMerchant #:nodoc:
 
         params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
+        params[:token] = detail[:token] if detail.has_key?(:token)
 
         if payment_method.class.requires_verification_value?
           params.merge!(
