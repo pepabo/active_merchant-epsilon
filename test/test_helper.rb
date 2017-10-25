@@ -105,7 +105,7 @@ module SamplePaymentMethods
       item_code:    'ITEM001',
       item_name:    'Greate Product',
       order_number: "O#{now.sec}#{now.usec}",
-      token:        'a5f6d3b833cebc775559bf6546d60983cff7b70cd74fd354164bcc0795a70783',
+      token:        '4ee16d6784077b5c3c67605db2a06d8b8ef7e8325deb5ceb9794451da1bb8c5f',
     }
   end
 
