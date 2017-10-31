@@ -2,7 +2,7 @@ require "bundler/gem_tasks"
 require 'rake/testtask'
 
 desc 'Run the unit test suite'
-task :defualt => 'test:unit'
+task :default => 'test:unit'
 
 namespace :test do
   Rake::TestTask.new(:unit) do |t|
