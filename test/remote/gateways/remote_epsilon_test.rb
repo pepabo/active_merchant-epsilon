@@ -261,4 +261,12 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       assert_equal false, response.success?
     end
   end
+
+  def test_settlement_successful
+    VCR.use_cassette(:settlement_successful) do
+      detail = settelment_detail
+      response = gateway.settlement(200, detail)
+      assert_equal true, response.success?
+    end
+  end
 end
