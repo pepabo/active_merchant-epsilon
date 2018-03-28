@@ -243,6 +243,26 @@ gateway.void('order_number')
 gateway.verify(credit_card, user_id: 'user_id', user_email: 'user@example.com')
 ```
 
+### GmoID Settlement 
+
+```ruby
+amount = 10000
+
+settlement_detail = {
+  user_id:      'YOUR_APP_USER_IDENTIFIER',
+  user_email:   'yamada-taro@example.com',
+  user_name:    'YAMADA TARO',
+  item_code:    'ITEM001',
+  item_name:    'Golden Product',
+  order_number: 'UNIQUE ORDER NUMBER',
+  gmo_id:       'SETTLEMENT TARGET GMO ID',
+  gmo_card_id:  'CARD SEQUENCE OF SETTLEMENT TARGET GMO ID',
+}
+
+gateway.settlement(amount, settlement_detail)
+```
+
+
 ### Error handling
 
 If epsilon server returns status excepted 200, `#purchase` method raise `ActiveMerchant::ResponseError`.
