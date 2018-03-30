@@ -25,6 +25,15 @@ module ActiveMerchant #:nodoc:
 
         commit(PATHS[:purchase], params)
       end
+
+      def void(order_number)
+        params = {
+          contract_code: self.contract_code,
+          order_number:  order_number,
+        }
+
+        commit(PATHS[:void], params)
+      end
     end
   end
 end

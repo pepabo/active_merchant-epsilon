@@ -22,4 +22,28 @@ class RemoteEpsilonGmoIdGatewayTest < MiniTest::Test
       assert_equal false, response.success?
     end
   end
+
+  def test_gmo_id_void_successful
+    VCR.use_cassette(:gmo_id_void_successful) do
+      # purchase
+      detail = valid_gmo_id_purchase_detail
+      response = gateway.purchase(200, detail)
+      assert_equal true, response.success?
+      # void
+      response = gateway.void(detail[:order_number])
+      assert_equal true, response.success?
+    end
+  end
+
+  def test_gmo_id_void_faiure
+    VCR.use_cassette(:gmo_id_void_faiure) do
+      # purchase
+      detail = valid_gmo_id_purchase_detail
+      response = gateway.purchase(200, detail)
+      assert_equal true, response.success?
+      # void
+      response = gateway.void('1234567890')
+      assert_equal false, response.success?
+    end
+  end
 end
