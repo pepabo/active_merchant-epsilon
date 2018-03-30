@@ -243,25 +243,34 @@ gateway.void('order_number')
 gateway.verify(credit_card, user_id: 'user_id', user_email: 'user@example.com')
 ```
 
-### GmoID Settlement 
+### GMO ID Settlement
 
 ```ruby
+ActiveMerchant::Billing::EpsilonGmoIdGateway.contract_code = 'YOUR_CONTRACT_CODE'
+
+gateway = ActiveMerchant::Billing::EpsilonGmoIdGateway.new
+
 amount = 10000
 
-settlement_detail = {
+purchase_detail = {
   user_id:      'YOUR_APP_USER_IDENTIFIER',
   user_email:   'yamada-taro@example.com',
   user_name:    'YAMADA TARO',
   item_code:    'ITEM001',
   item_name:    'Golden Product',
   order_number: 'UNIQUE ORDER NUMBER',
-  gmo_id:       'SETTLEMENT TARGET GMO ID',
-  gmo_card_id:  'CARD SEQUENCE OF SETTLEMENT TARGET GMO ID',
+  gmo_id:       'GMO ID THAT PURCHASED',
+  gmo_card_id:  'CARD SEQUENCE OF GMO ID THAT PURCHASED',
 }
 
-gateway.settlement(amount, settlement_detail)
+gateway.purchase(amount, purchase_detail)
 ```
 
+### GMO ID Settlement Void Transaction
+
+```ruby
+gateway.void('order_number')
+```
 
 ### Error handling
 
