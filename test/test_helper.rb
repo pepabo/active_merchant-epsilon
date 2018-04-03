@@ -24,7 +24,7 @@ VCR.configure do |c|
   c.hook_into :webmock
   c.filter_sensitive_data('[CONTRACT_CODE]') { ENV['CONTRACT_CODE'] }
   c.filter_sensitive_data('[GMO_ID]') { ENV['GMO_ID'] }
-  c.filter_sensitive_data('gmo_card_id=[GMO_CARD_ID]') { "gmo_card_id=#{ENV['GMO_CARD_ID']}" } # GMO CARD ID will probably be a one-digit number.
+  c.filter_sensitive_data('gmo_card_id=[GMO_CARD_ID]') { "gmo_card_id=#{ENV['GMO_CARD_ID']}" } # GMO CARD ID is not unique.
 end
 
 module SamplePaymentMethods
