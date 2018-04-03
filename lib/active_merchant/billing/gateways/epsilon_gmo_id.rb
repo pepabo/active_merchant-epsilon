@@ -18,7 +18,7 @@ module ActiveMerchant #:nodoc:
           st_code: '10000-0000-00000-00000-00000-00000-00000',
           mission_code: EpsilonMissionCode::PURCHASE,
           item_price: amount,
-          process_code: 2,
+          process_code: EpsilonProcessCode::REGISTERED,
           gmo_id: detail[:gmo_id],
           gmo_card_id: detail[:gmo_card_id],
         }
