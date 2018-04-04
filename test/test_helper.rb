@@ -23,6 +23,8 @@ VCR.configure do |c|
   c.cassette_library_dir = 'test/fixtures/vcr_cassettes'
   c.hook_into :webmock
   c.filter_sensitive_data('[CONTRACT_CODE]') { ENV['CONTRACT_CODE'] }
+  c.filter_sensitive_data('[GMO_ID]') { ENV['GMO_ID'] }
+  c.filter_sensitive_data('gmo_card_id=[GMO_CARD_ID]') { "gmo_card_id=#{ENV['GMO_CARD_ID']}" } # GMO CARD ID is not unique.
 end
 
 module SamplePaymentMethods
@@ -176,6 +178,32 @@ module SamplePaymentMethods
       full_name_kana: 'ヤマダ タロウ',
       phone_number:   '0312345678901'
     )
+  end
+
+  def valid_gmo_id_purchase_detail
+    {
+      user_id:      "U#{Time.now.to_i}",
+      user_email:   'yamada-taro@example.com',
+      user_name:    'YAMADA TARO',
+      item_code:    'ITEM001',
+      item_name:    'Golden Product',
+      order_number: "O#{Time.now.to_i}",
+      gmo_id:       ENV['GMO_ID'],
+      gmo_card_id:  ENV['GMO_CARD_ID'],
+    }
+  end
+
+  def invalid_gmo_id_purchase_detail
+    {
+      user_id:      "U#{Time.now.to_i}",
+      user_email:   'yamada-taro@example.com',
+      user_name:    'YAMADA TARO',
+      item_code:    'ITEM001',
+      item_name:    'Golden Product',
+      order_number: "O#{Time.now.to_i}",
+      gmo_id:       ENV['GMO_ID'],
+      gmo_card_id:  'invail id',
+    }
   end
 
   def fixture_xml(filename, parse: true)
