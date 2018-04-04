@@ -259,8 +259,8 @@ purchase_detail = {
   item_code:    'ITEM001',
   item_name:    'Golden Product',
   order_number: 'UNIQUE ORDER NUMBER',
-  gmo_id:       'GMO ID THAT PURCHASED',
-  gmo_card_id:  'CARD SEQUENCE OF GMO ID THAT PURCHASED',
+  gmo_id:       'Your member id of GMO ID',
+  gmo_card_id:  'Your sequential card number of GMO ID',
 }
 
 gateway.purchase(amount, purchase_detail)
