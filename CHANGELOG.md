@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.8.0
+* GMO IDに登録されているクレジットカードで決済できるようにしました。
+  * [GMO ID決済の機能を追加した by ryuchan00](https://github.com/pepabo/active_merchant-epsilon/pull/93) 
+
 ### 0.5.9
 
 * 都度課金、定期課金、コンビニ決済で memo1, memo2 を送信できるようにした #83
