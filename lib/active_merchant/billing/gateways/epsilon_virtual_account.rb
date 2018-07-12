@@ -1,6 +1,18 @@
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class EpsilonVirtualAccountGateway < EpsilonBaseGateway
+      RESPONSE_KEYS = [
+        :transaction_code,
+        :error_code,
+        :error_detail,
+        :account_number,
+        :account_name,
+        :bank_code,
+        :bank_name,
+        :branch_code,
+        :branch_name
+      ]
+
       def purchase(amount, detail = {})
         params = {
           contract_code: self.contract_code,
@@ -21,7 +33,7 @@ module ActiveMerchant #:nodoc:
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
         params[:user_name_kana] = detail[:user_name_kana] if detail.has_key?(:user_name_kana)
 
-        commit('direct_virtual_account.cgi', params)
+        commit('direct_virtual_account.cgi', params, RESPONSE_KEYS)
       end
     end
   end

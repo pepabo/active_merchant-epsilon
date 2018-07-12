@@ -77,6 +77,30 @@ module ActiveMerchant #:nodoc:
         @xml.xpath(ResponseXpath::COMPANY_CODE).to_s
       end
 
+      def account_number
+        @xml.xpath(ResponseXpath::ACCOUNT_NUMBER).to_s
+      end
+
+      def account_name
+        uri_decode(@xml.xpath(ResponseXpath::ACCOUNT_NAME).to_s)
+      end
+
+      def bank_code
+        @xml.xpath(ResponseXpath::BANK_CODE).to_s
+      end
+
+      def bank_name
+        uri_decode(@xml.xpath(ResponseXpath::BANK_NAME).to_s)
+      end
+
+      def branch_code
+        @xml.xpath(ResponseXpath::BRANCH_CODE).to_s
+      end
+
+      def branch_name
+        uri_decode(@xml.xpath(ResponseXpath::BRANCH_NAME).to_s)
+      end
+
       def uri_decode(string)
         URI.decode(string).encode(Encoding::UTF_8, Encoding::CP932)
       end
@@ -96,6 +120,12 @@ module ActiveMerchant #:nodoc:
         CONVENIENCE_STORE_LIMIT_DATE       = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
         CONVENIENCE_STORE_PAYMENT_SLIP_URL = '//Epsilon_result/result[@haraikomi_url][1]/@haraikomi_url'
         COMPANY_CODE                       = '//Epsilon_result/result[@kigyou_code][1]/@kigyou_code'
+        ACCOUNT_NUMBER                     = '//Epsilon_result/result[@account_no][1]/@account_no'
+        ACCOUNT_NAME                       = '//Epsilon_result/result[@account_name][1]/@account_name'
+        BANK_CODE                          = '//Epsilon_result/result[@bank_code][1]/@bank_code'
+        BANK_NAME                          = '//Epsilon_result/result[@bank_name][1]/@bank_name'
+        BRANCH_CODE                        = '//Epsilon_result/result[@branch_code][1]/@branch_code'
+        BRANCH_NAME                        = '//Epsilon_result/result[@branch_name][1]/@branch_name'
       end
 
       module ResultCode

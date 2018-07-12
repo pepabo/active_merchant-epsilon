@@ -12,6 +12,15 @@ class RemoteEpsilonVirtualAccountGatewayTest < MiniTest::Test
       response = gateway.purchase(10000, purchase_detail)
 
       assert_equal true, response.success?
+
+      assert_match /\A\d+\z/, response.params['transaction_code']
+
+      assert_match /\A\d{7}\z/, response.params['account_number']
+      assert_match /\A\S+\z/, response.params['account_name']
+      assert_match /\A\d{4}\z/, response.params['bank_code']
+      assert_match /\A\S+\z/, response.params['bank_name']
+      assert_match /\A\d{3}\z/, response.params['branch_code']
+      assert_match /\A\S+\z/, response.params['branch_name']
     end
   end
 
