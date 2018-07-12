@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/direct_virtual_account.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&user_id=&user_name=YAMADA+Taro&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O21396579&st_code=00000-0000-00000-00000-00100-00000-00000&mission_code=1&item_price=10000&process_code=1&user_agent=ActiveMerchant%3A%3AEpsilon-0.8.1&memo1=memo1&memo2=memo2
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jul 2018 03:13:25 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result err_code="601" />
+          <result err_detail="%83%86%81%5B%83U%81%5BID%82%CC%8C%60%8E%AE%82%AA%88%D9%8F%ED%82%C5%82%B7" />
+          <result result="9" />
+          <result trans_code="" />
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Thu, 12 Jul 2018 03:13:22 GMT
+recorded_with: VCR 4.0.0
