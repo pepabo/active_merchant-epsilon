@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/getsales2.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&order_number=1234567890
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 17 Jul 2018 01:17:41 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=UTF8
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0"  ?>
+        <Epsilon_result>
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Tue, 17 Jul 2018 01:17:38 GMT
+recorded_with: VCR 4.0.0

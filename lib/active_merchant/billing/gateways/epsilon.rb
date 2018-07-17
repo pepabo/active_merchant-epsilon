@@ -18,6 +18,7 @@ module ActiveMerchant #:nodoc:
         void:                    'cancel_payment.cgi',
         find_user:               'get_user_info.cgi',
         change_recurring_amount: 'change_amount_payment.cgi',
+        find_order:              'getsales2.cgi',
       }.freeze
 
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
@@ -162,6 +163,15 @@ module ActiveMerchant #:nodoc:
           r.process { purchase(1, credit_card, o) }
           r.process(:ignore_result) { void(o[:order_number]) }
         end
+      end
+
+      def find_order(order_number)
+        params = {
+          contract_code: self.contract_code,
+          order_number:  order_number,
+        }
+
+        commit(PATHS[:find_order], params)
       end
 
       private

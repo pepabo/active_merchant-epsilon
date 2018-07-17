@@ -261,4 +261,23 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       assert_equal false, response.success?
     end
   end
+
+  def test_find_order_success
+    VCR.use_cassette(:find_order_success) do
+      detail = purchase_detail
+      purchase_response = gateway.purchase(100, valid_credit_card, detail)
+      assert_equal true, purchase_response.success?
+
+      response = gateway.find_order(detail[:order_number])
+      binding.pry
+      assert_equal true, response.success?
+    end
+  end
+
+  def test_find_order_failure
+    VCR.use_cassette(:find_order_failure) do
+      response = gateway.find_order('1234567890')
+      assert_equal false, response.success?
+    end
+  end
 end
