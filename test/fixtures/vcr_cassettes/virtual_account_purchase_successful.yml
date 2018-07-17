@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/direct_virtual_account.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&user_id=U1531362414&user_name=YAMADA+Taro&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O54813896&st_code=00000-0000-00000-00000-00100-00000-00000&mission_code=1&item_price=10000&process_code=1&user_agent=ActiveMerchant%3A%3AEpsilon-0.8.1&memo1=memo1&memo2=memo2
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 12 Jul 2018 02:26:59 GMT
+      Server:
+      - Apache
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result account_name="GMO-EP%C3%BD%C4" />
+          <result account_no="1016014" />
+          <result bank_code="0310" />
+          <result bank_name="%BC%DE-%B4%D1%B5-%B1%B5%BF%DE%D7%C8%C2%C4" />
+          <result branch_code="502" />
+          <result branch_name="%B1%BC%DE%BB%B2" />
+          <result err_code="" />
+          <result err_detail="" />
+          <result result="1" />
+          <result trans_code="737630" />
+        </Epsilon_result>
+    http_version: 
+  recorded_at: Thu, 12 Jul 2018 02:26:56 GMT
+recorded_with: VCR 4.0.0

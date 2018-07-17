@@ -272,6 +272,36 @@ gateway.purchase(amount, purchase_detail)
 gateway.void('order_number')
 ```
 
+### Virtual Account Payment
+
+```ruby
+ActiveMerchant::Billing::EpsilonVirtualAccountGateway.contract_code = 'YOUR_CONTRACT_CODE'
+
+gateway = ActiveMerchant::Billing::EpsilonVirtualAccountGateway.new
+
+amount = 10000
+
+purchase_detail = {
+  user_id:        'YOUR_APP_USER_IDENTIFIER',
+  user_name:      '山田 太郎',
+  user_email:     'yamada-taro@example.com',
+  item_code:      'ITEM001',
+  item_name:      'Greate Product',
+  order_number:   'UNIQUE ORDER NUMBER',
+  user_name_kana: 'ﾔﾏﾀﾞﾀﾛｳ'
+}
+
+response = gateway.purchase(amount, purchase_detail)
+
+if response.success?
+  puts "Successfully charged #{amount} yen as virtual account payment"
+  puts "Account number is #{response.params['account_number']}"
+  puts "Bank name is #{response.params['account_name']}"
+else
+  raise StandardError, response.message
+end
+```
+
 ### Error handling
 
 If epsilon server returns status excepted 200, `#purchase` method raise `ActiveMerchant::ResponseError`.
