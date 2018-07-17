@@ -1,8 +1,13 @@
 # CHANGELOG
 
+### 0.9.0
+
+* [Support virtual account payment](https://github.com/pepabo/active_merchant-epsilon/pull/97)
+* [Support to find order](https://github.com/pepabo/active_merchant-epsilon/pull/96)
+
 ### 0.8.0
 * GMO IDに登録されているクレジットカードで決済できるようにしました。
-  * [GMO ID決済の機能を追加した by ryuchan00](https://github.com/pepabo/active_merchant-epsilon/pull/93) 
+  * [GMO ID決済の機能を追加した by ryuchan00](https://github.com/pepabo/active_merchant-epsilon/pull/93)
 
 ### 0.5.9
 
@@ -15,7 +20,7 @@
 
 * [Add encoding setting](https://github.com/pepabo/active_merchant-epsilon/pull/82)
   * According to the Epsilon specification, the request parameters must be encode in EUC-JP or Shift_JIS. For the specification, this pull request add encoding setting.
-  
+
 ### 0.5.7
 
 * [Fix response parser method by ku00](https://github.com/pepabo/active_merchant-epsilon/pull/81)
