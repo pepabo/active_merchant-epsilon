@@ -279,6 +279,8 @@ ActiveMerchant::Billing::EpsilonVirtualAccountGateway.contract_code = 'YOUR_CONT
 
 gateway = ActiveMerchant::Billing::EpsilonVirtualAccountGateway.new
 
+amount = 10000
+
 purchase_detail = {
   user_id:        'YOUR_APP_USER_IDENTIFIER',
   user_name:      '山田 太郎',
@@ -289,7 +291,6 @@ purchase_detail = {
   user_name_kana: 'ﾔﾏﾀﾞﾀﾛｳ'
 }
 
-# 10000 yen as virtual account payment
 response = gateway.purchase(amount, purchase_detail)
 
 if response.success?
