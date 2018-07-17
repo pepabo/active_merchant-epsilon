@@ -8,7 +8,7 @@ module ActiveMerchant #:nodoc:
         @result = @xml.xpath(ResponseXpath::RESULT).to_s
 
         response = {
-          success: [ResultCode::SUCCESS, ResultCode::THREE_D_SECURE].include?(@result),
+          success: [ResultCode::SUCCESS, ResultCode::THREE_D_SECURE].include?(@result) || !state.empty?,
           message: "#{error_code}: #{error_detail}"
         }
 
@@ -77,6 +77,18 @@ module ActiveMerchant #:nodoc:
         @xml.xpath(ResponseXpath::COMPANY_CODE).to_s
       end
 
+      def state
+        @xml.xpath(ResponseXpath::STATE).to_s
+      end
+
+      def payment_code
+        @xml.xpath(ResponseXpath::PAYMENT_CODE).to_s
+      end
+
+      def item_price
+        @xml.xpath(ResponseXpath::ITEM_PRICE).to_s
+      end
+
       def uri_decode(string)
         URI.decode(string).encode(Encoding::UTF_8, Encoding::CP932)
       end
@@ -96,6 +108,9 @@ module ActiveMerchant #:nodoc:
         CONVENIENCE_STORE_LIMIT_DATE       = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
         CONVENIENCE_STORE_PAYMENT_SLIP_URL = '//Epsilon_result/result[@haraikomi_url][1]/@haraikomi_url'
         COMPANY_CODE                       = '//Epsilon_result/result[@kigyou_code][1]/@kigyou_code'
+        STATE                              = '//Epsilon_result/result[@state]/@state'
+        ITEM_PRICE                         = '//Epsilon_result/result[@item_price]/@item_price'
+        PAYMENT_CODE                       = '//Epsilon_result/result[@payment_code]/@payment_code'
       end
 
       module ResultCode
