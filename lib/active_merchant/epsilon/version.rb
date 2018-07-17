@@ -1,5 +1,5 @@
 module ActiveMerchant
   module Epsilon
-    VERSION = "0.8.1"
+    VERSION = "0.9.0"
   end
 end
