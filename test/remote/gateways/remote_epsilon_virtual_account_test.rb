@@ -13,14 +13,14 @@ class RemoteEpsilonVirtualAccountGatewayTest < MiniTest::Test
 
       assert_equal true, response.success?
 
-      assert_match /\A\d+\z/, response.params['transaction_code']
+      assert_equal true, !response.params['transaction_code'].empty?
 
-      assert_match /\A\d{7}\z/, response.params['account_number']
-      assert_match /\A\S+\z/, response.params['account_name']
-      assert_match /\A\d{4}\z/, response.params['bank_code']
-      assert_match /\A\S+\z/, response.params['bank_name']
-      assert_match /\A\d{3}\z/, response.params['branch_code']
-      assert_match /\A\S+\z/, response.params['branch_name']
+      assert_equal true, !response.params['account_number'].empty?
+      assert_equal true, !response.params['account_name'].empty?
+      assert_equal true, !response.params['bank_code'].empty?
+      assert_equal true, !response.params['bank_name'].empty?
+      assert_equal true, !response.params['branch_code'].empty?
+      assert_equal true, !response.params['branch_name'].empty?
     end
   end
 
