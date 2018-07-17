@@ -171,7 +171,16 @@ module ActiveMerchant #:nodoc:
           order_number:  order_number,
         }
 
-        commit(PATHS[:find_order], params)
+        response_keys = [
+          :transaction_code,
+          :error_code,
+          :error_detail,
+          :state,
+          :payment_code,
+          :item_price,
+        ]
+
+        commit(PATHS[:find_order], params, response_keys)
       end
 
       private

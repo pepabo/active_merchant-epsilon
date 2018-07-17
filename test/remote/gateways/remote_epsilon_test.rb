@@ -269,8 +269,11 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       assert_equal true, purchase_response.success?
 
       response = gateway.find_order(detail[:order_number])
-      binding.pry
       assert_equal true, response.success?
+
+      assert_match /\A\d{1,2}\z/, response.params['state']
+      assert_match /\A\d{1,2}\z/, response.params['payment_code']
+      assert_match /\A\d+\z/, response.params['item_price']
     end
   end
 
