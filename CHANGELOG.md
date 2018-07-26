@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.9.1
+
+* [Add amount to response parameters when find order](https://github.com/pepabo/active_merchant-epsilon/pull/99)
+
 ### 0.9.0
 
 * [Support virtual account payment](https://github.com/pepabo/active_merchant-epsilon/pull/97)
