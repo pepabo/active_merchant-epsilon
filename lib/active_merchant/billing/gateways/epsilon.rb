@@ -176,6 +176,7 @@ module ActiveMerchant #:nodoc:
           :state,
           :payment_code,
           :item_price,
+          :amount,
         ]
 
         commit(PATHS[:find_order], params, response_keys)
