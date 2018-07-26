@@ -113,6 +113,10 @@ module ActiveMerchant #:nodoc:
         @xml.xpath(ResponseXpath::ITEM_PRICE).to_s
       end
 
+      def amount
+        @xml.xpath(ResponseXpath::AMOUNT).to_s
+      end
+
       def uri_decode(string)
         URI.decode(string).encode(Encoding::UTF_8, Encoding::CP932)
       end
@@ -141,6 +145,7 @@ module ActiveMerchant #:nodoc:
         STATE                              = '//Epsilon_result/result[@state]/@state'
         ITEM_PRICE                         = '//Epsilon_result/result[@item_price]/@item_price'
         PAYMENT_CODE                       = '//Epsilon_result/result[@payment_code]/@payment_code'
+        AMOUNT                             = '//Epsilon_result/result[@amount]/@amount'
       end
 
       module ResultCode
