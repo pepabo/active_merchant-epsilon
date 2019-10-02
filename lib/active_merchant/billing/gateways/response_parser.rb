@@ -1,3 +1,5 @@
+require 'cgi'
+
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class ResponseParser
@@ -118,7 +120,7 @@ module ActiveMerchant #:nodoc:
       end
 
       def uri_decode(string)
-        URI.decode(string).encode(Encoding::UTF_8, Encoding::CP932)
+        CGI.unescape(string).encode(Encoding::UTF_8, Encoding::CP932)
       end
 
       module ResponseXpath
