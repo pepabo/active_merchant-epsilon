@@ -12,6 +12,7 @@ class RemoteEpsilonGmoLaterGatewayTest < MiniTest::Test
       response = gateway.purchase(10000, gmo_later_purchase_detail)
 
       assert_equal true, response.success?
+      assert_equal true, !response.params['redirect'].empty?
     end
   end
 

@@ -119,6 +119,10 @@ module ActiveMerchant #:nodoc:
         @xml.xpath(ResponseXpath::AMOUNT).to_s
       end
 
+      def redirect
+        uri_decode(@xml.xpath(ResponseXpath::REDIRECT).to_s)
+      end
+
       def uri_decode(string)
         CGI.unescape(string).encode(Encoding::UTF_8, Encoding::CP932)
       end
@@ -148,6 +152,7 @@ module ActiveMerchant #:nodoc:
         ITEM_PRICE                         = '//Epsilon_result/result[@item_price]/@item_price'
         PAYMENT_CODE                       = '//Epsilon_result/result[@payment_code]/@payment_code'
         AMOUNT                             = '//Epsilon_result/result[@amount]/@amount'
+        REDIRECT                           = '//Epsilon_result/result[@redirect]/@redirect'
       end
 
       module ResultCode

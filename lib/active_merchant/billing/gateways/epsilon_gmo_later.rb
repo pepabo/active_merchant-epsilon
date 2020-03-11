@@ -31,7 +31,7 @@ module ActiveMerchant #:nodoc:
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
         params[:user_tel] = detail[:user_tel] if detail.has_key?(:user_tel)
 
-        commit('receive_order3.cgi', params)
+        commit('receive_order3.cgi', params, [:redirect])
       end
     end
   end
