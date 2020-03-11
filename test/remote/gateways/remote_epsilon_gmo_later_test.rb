@@ -17,5 +17,13 @@ class RemoteEpsilonGmoLaterGatewayTest < MiniTest::Test
   end
 
   def test_gmo_later_purchase_fail
+    invalid_purchase_detail = gmo_later_purchase_detail
+    invalid_purchase_detail[:user_id] = ''
+
+    VCR.use_cassette(:gmo_later_purchase_fail) do
+      response = gateway.purchase(10000, invalid_purchase_detail)
+
+      assert_equal false, response.success?
+    end
   end
 end
