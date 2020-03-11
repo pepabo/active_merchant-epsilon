@@ -124,7 +124,13 @@ module ActiveMerchant #:nodoc:
       end
 
       def uri_decode(string)
-        CGI.unescape(string).encode(Encoding::UTF_8, Encoding::CP932)
+        decoded_string = CGI.unescape(string)
+
+        unless decoded_string.encoding == Encoding::UTF_8
+          decoded_string = decoded_string.encode(Encoding::UTF_8, Encoding::CP932)
+        end
+
+        decoded_string
       end
 
       module ResponseXpath
