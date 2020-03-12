@@ -3,7 +3,6 @@ rvm:
 - 2.3.8
 - 2.4.5
 - 2.5.3
-- ruby-head
 
 script: bundle exec rake test:remote
 script: bundle exec rake test:unit
