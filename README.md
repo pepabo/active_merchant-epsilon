@@ -302,7 +302,7 @@ else
 end
 ```
 
-### GMO Later Payment
+### GMO Payment After Delivery
 
 ```ruby
 ActiveMerchant::Billing::EpsilonGmoLaterGateway.contract_code = 'YOUR_CONTRACT_CODE'
