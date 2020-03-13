@@ -302,6 +302,45 @@ else
 end
 ```
 
+### GMO Payment After Delivery
+
+```ruby
+ActiveMerchant::Billing::EpsilonGmoAfterGateway.contract_code = 'YOUR_CONTRACT_CODE'
+
+gateway = ActiveMerchant::Billing::EpsilonGmoAfterGateway.new
+
+amount = 10000
+
+purchase_detail = {
+  user_id:           'YOUR_APP_USER_IDENTIFIER',
+  user_name:         '山田 太郎',
+  user_email:        'yamada-taro@example.com',
+  user_tel:          '0312345678',
+  item_code:         'ITEM001',
+  item_name:         'Greate Product',
+  order_number:      'UNIQUE ORDER NUMBER',
+  consignee_postal:  '1500002',
+  consignee_name:    '山田 太郎',
+  consignee_address: '東京都渋谷区1-1-1',
+  consignee_tel:     '0312345678',
+  orderer_postal:    '1500002',
+  orderer_name:      '山田 太郎',
+  orderer_address:   '東京都渋谷区1-1-1',
+  orderer_tel:       '0312345678',
+  memo1:             'memo1',
+  memo2:             'memo2',
+}
+
+response = gateway.purchase(amount, purchase_detail)
+
+if response.success?
+  puts "Successfully send order data"
+  puts "Redirect url is #{response.params['redirect']}"
+else
+  raise StandardError, response.message
+end
+```
+
 ### Error handling
 
 If epsilon server returns status excepted 200, `#purchase` method raise `ActiveMerchant::ResponseError`.
