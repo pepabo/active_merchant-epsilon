@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.9.2
+
+* [Support GMO Payment After Delivery](https://github.com/pepabo/active_merchant-epsilon/pull/106)
+
 ### 0.9.1
 
 * [Add amount to response parameters when find order](https://github.com/pepabo/active_merchant-epsilon/pull/99)
