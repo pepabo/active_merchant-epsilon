@@ -206,7 +206,7 @@ module SamplePaymentMethods
     }
   end
 
-  def gmo_later_purchase_detail
+  def gmo_after_purchase_detail
     now = Time.now
     {
       user_id:      "U#{Time.now.to_i}",

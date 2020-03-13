@@ -305,9 +305,9 @@ end
 ### GMO Payment After Delivery
 
 ```ruby
-ActiveMerchant::Billing::EpsilonGmoLaterGateway.contract_code = 'YOUR_CONTRACT_CODE'
+ActiveMerchant::Billing::EpsilonGmoAfterGateway.contract_code = 'YOUR_CONTRACT_CODE'
 
-gateway = ActiveMerchant::Billing::EpsilonGmoLaterGateway.new
+gateway = ActiveMerchant::Billing::EpsilonGmoAfterGateway.new
 
 amount = 10000
 

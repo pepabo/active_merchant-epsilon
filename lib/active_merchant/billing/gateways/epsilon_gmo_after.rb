@@ -1,6 +1,6 @@
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
-    class EpsilonGmoLaterGateway < EpsilonBaseGateway
+    class EpsilonGmoAfterGateway < EpsilonBaseGateway
       def purchase(amount, detail = {})
         params = {
           contract_code: self.contract_code,
