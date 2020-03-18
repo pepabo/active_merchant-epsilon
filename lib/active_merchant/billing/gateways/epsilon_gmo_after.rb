@@ -24,7 +24,6 @@ module ActiveMerchant #:nodoc:
           orderer_name: detail[:orderer_name],
           orderer_address: detail[:orderer_address],
           orderer_tel: detail[:orderer_tel],
-          version: 2, # 推奨文字コードがUTF8の方を指定
         }
 
         params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
