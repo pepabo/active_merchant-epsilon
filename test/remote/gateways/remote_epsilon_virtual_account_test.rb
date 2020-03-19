@@ -31,6 +31,7 @@ class RemoteEpsilonVirtualAccountGatewayTest < MiniTest::Test
     VCR.use_cassette(:virtual_account_purchase_fail) do
       response = gateway.purchase(10000, invalid_purchase_detail)
       assert_equal false, response.success?
+      assert_equal true, response.params["error_detail"].valid_encoding?
     end
   end
 end
