@@ -24,6 +24,7 @@ class RemoteEpsilonConvenienceStoreGatewayTest < MiniTest::Test
     VCR.use_cassette(:convenience_store_purchase_fail) do
       response = gateway.purchase(10000, invalid_convenience_store, purchase_detail)
       assert_equal false, response.success?
+      assert_equal true, response.params["error_detail"].valid_encoding?
     end
   end
 end

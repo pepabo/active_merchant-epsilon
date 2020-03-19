@@ -1,6 +1,11 @@
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class EpsilonGmoAfterGateway < EpsilonBaseGateway
+
+      RESPONSE_KEYS = DEFAULT_RESPONSE_KEYS + [
+        :redirect,
+      ]
+
       def purchase(amount, detail = {})
         params = {
           contract_code: self.contract_code,
@@ -24,14 +29,13 @@ module ActiveMerchant #:nodoc:
           orderer_name: detail[:orderer_name],
           orderer_address: detail[:orderer_address],
           orderer_tel: detail[:orderer_tel],
-          version: 2, # 推奨文字コードがUTF8の方を指定
         }
 
         params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
         params[:user_tel] = detail[:user_tel] if detail.has_key?(:user_tel)
 
-        commit('receive_order3.cgi', params, [:redirect])
+        commit('receive_order3.cgi', params, RESPONSE_KEYS)
       end
     end
   end

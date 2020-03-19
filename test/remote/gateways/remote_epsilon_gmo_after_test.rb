@@ -24,6 +24,7 @@ class RemoteEpsilonGmoAfterGatewayTest < MiniTest::Test
       response = gateway.purchase(10000, invalid_purchase_detail)
 
       assert_equal false, response.success?
+      assert_equal true, response.params["error_detail"].valid_encoding?
     end
   end
 end

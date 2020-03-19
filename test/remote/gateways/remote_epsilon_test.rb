@@ -76,6 +76,7 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
     VCR.use_cassette(:purchase_fail) do
       response = gateway.purchase(10000, invalid_credit_card, purchase_detail)
       assert_equal false, response.success?
+      assert_equal true, response.params["error_detail"].valid_encoding?
     end
   end
 
@@ -138,6 +139,7 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       )
 
       assert_equal false, response.success?
+      assert_equal true, response.params["error_detail"].valid_encoding?
     end
   end
 
@@ -239,6 +241,7 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
       invalid_purchase_detail[:user_id] = ''
       response = gateway.registered_purchase(10000, invalid_purchase_detail)
       assert_equal false, response.success?
+      assert_equal true, response.params["error_detail"].valid_encoding?
     end
   end
 

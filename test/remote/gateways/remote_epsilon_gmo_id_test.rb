@@ -20,6 +20,7 @@ class RemoteEpsilonGmoIdGatewayTest < MiniTest::Test
       detail = invalid_gmo_id_purchase_detail
       response = gateway.purchase(200, detail)
       assert_equal false, response.success?
+      assert_equal true, response.params["error_detail"].valid_encoding?
     end
   end
 
