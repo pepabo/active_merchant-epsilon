@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.9.3
+
+* [Fix API version for GMO Payment After Delivery](https://github.com/pepabo/active_merchant-epsilon/pull/108)
+
 ### 0.9.2
 
 * [Support GMO Payment After Delivery](https://github.com/pepabo/active_merchant-epsilon/pull/106)
