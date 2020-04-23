@@ -302,12 +302,12 @@ else
 end
 ```
 
-### GMO Payment After Delivery
+### GMO Link Payment Delivery
 
 ```ruby
-ActiveMerchant::Billing::EpsilonGmoAfterGateway.contract_code = 'YOUR_CONTRACT_CODE'
+ActiveMerchant::Billing::EpsilonLinkPaymentGateway.contract_code = 'YOUR_CONTRACT_CODE'
 
-gateway = ActiveMerchant::Billing::EpsilonGmoAfterGateway.new
+gateway = ActiveMerchant::Billing::EpsilonLinkPaymentGateway.new
 
 amount = 10000
 
@@ -319,6 +319,7 @@ purchase_detail = {
   item_code:         'ITEM001',
   item_name:         'Greate Product',
   order_number:      'UNIQUE ORDER NUMBER',
+  st_code:           'SETTLEMENT_CODE',
   consignee_postal:  '1500002',
   consignee_name:    '山田 太郎',
   consignee_address: '東京都渋谷区1-1-1',
