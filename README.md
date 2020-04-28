@@ -302,7 +302,10 @@ else
 end
 ```
 
-### GMO Link Payment Delivery
+### Epsilon Link Payment
+
+EpsilosLinkPaymentGateway is available in all link payments.
+For example, GMO Payment After Delivery.
 
 ```ruby
 ActiveMerchant::Billing::EpsilonLinkPaymentGateway.contract_code = 'YOUR_CONTRACT_CODE'
