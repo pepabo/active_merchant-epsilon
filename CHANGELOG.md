@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.9.4
+
+* [Support Epsilon Link Payment instead of GMO Payment After Delivery](https://github.com/pepabo/active_merchant-epsilon/pull/110)
+
 ### 0.9.3
 
 * [Fix API version for GMO Payment After Delivery](https://github.com/pepabo/active_merchant-epsilon/pull/108)
