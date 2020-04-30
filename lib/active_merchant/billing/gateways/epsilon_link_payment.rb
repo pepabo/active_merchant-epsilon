@@ -1,6 +1,6 @@
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
-    class EpsilonGmoAfterGateway < EpsilonBaseGateway
+    class EpsilonLinkPaymentGateway < EpsilonBaseGateway
 
       RESPONSE_KEYS = DEFAULT_RESPONSE_KEYS + [
         :redirect,
@@ -15,7 +15,7 @@ module ActiveMerchant #:nodoc:
           item_code:     detail[:item_code],
           item_name:     detail[:item_name],
           order_number:  detail[:order_number],
-          st_code:       '00000-0000-00000-00010-00000-00000-00000',
+          st_code:       detail[:st_code],
           mission_code:  EpsilonMissionCode::PURCHASE,
           item_price:    amount,
           process_code:  EpsilonProcessCode::FIRST,

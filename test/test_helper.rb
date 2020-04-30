@@ -216,6 +216,7 @@ module SamplePaymentMethods
       item_code:    'ITEM001',
       item_name:    'Greate Product',
       order_number: "O#{now.sec}#{now.usec}",
+      st_code:      '00000-0000-00000-00010-00000-00000-00000',
       memo1:        'memo1',
       memo2:        'memo2',
       consignee_postal: '1000001',
