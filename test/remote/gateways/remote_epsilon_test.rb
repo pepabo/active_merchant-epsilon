@@ -72,6 +72,24 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
     end
   end
 
+  def test_purchase_with_capture_true_successful
+    VCR.use_cassette(:purchase_with_capture_true_successful) do
+      response = gateway.purchase(1000, valid_credit_card, purchase_detail.merge(capture: true))
+
+      assert_equal true, response.success?
+      assert_equal true, response.params['captured']
+    end
+  end
+
+  def test_purchase_with_capture_false_successful
+    VCR.use_cassette(:purchase_with_capture_false_successful) do
+      response = gateway.purchase(1000, valid_credit_card, purchase_detail.merge(capture: false))
+
+      assert_equal true, response.success?
+      assert_equal false, response.params['captured']
+    end
+  end
+
   def test_purchase_fail
     VCR.use_cassette(:purchase_fail) do
       response = gateway.purchase(10000, invalid_credit_card, purchase_detail)

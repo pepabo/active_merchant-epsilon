@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&user_id=U1591960357&user_name=YAMADA+Taro&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O37368550&st_code=10000-0000-0000&mission_code=1&item_price=1000&process_code=1&card_number=4242424242424242&expire_y=2021&expire_m=10&card_st_code=&pay_time=&tds_check_code=&user_agent=ActiveMerchant%3A%3AEpsilon-0.9.4&memo1=memo1&memo2=memo2&kari_flag=2
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Connection:
+      - close
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jun 2020 11:12:37 GMT
+      Server:
+      - Apache
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result acsurl="" />
+          <result err_code="" />
+          <result err_detail="" />
+          <result kari_flag="0" />
+          <result pareq="" />
+          <result result="1" />
+          <result trans_code="1362124" />
+        </Epsilon_result>
+  recorded_at: Fri, 12 Jun 2020 11:12:39 GMT
+recorded_with: VCR 6.0.0
