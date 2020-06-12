@@ -19,6 +19,7 @@ module ActiveMerchant #:nodoc:
         find_user:               'get_user_info.cgi',
         change_recurring_amount: 'change_amount_payment.cgi',
         find_order:              'getsales2.cgi',
+        capture:                 'sales_payment.cgi',
       }.freeze
 
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
@@ -182,6 +183,15 @@ module ActiveMerchant #:nodoc:
         ]
 
         commit(PATHS[:find_order], params, response_keys)
+      end
+
+      def capture(order_number)
+        params = {
+          contract_code: self.contract_code,
+          order_number:  order_number,
+        }
+
+        commit(PATHS[:capture], params)
       end
 
       private
