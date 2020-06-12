@@ -51,6 +51,7 @@ module ActiveMerchant #:nodoc:
 
         params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
+        params[:kari_flag] = detail[:capture] ? 2 : 1 if detail.has_key?(:capture)
 
         commit(PATHS[:registered_purchase], params)
       end
@@ -83,6 +84,7 @@ module ActiveMerchant #:nodoc:
 
         params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
+        params[:kari_flag] = detail[:capture] ? 2 : 1 if detail.has_key?(:capture)
 
         commit(PATHS[:registered_recurring], params)
       end
@@ -208,6 +210,7 @@ module ActiveMerchant #:nodoc:
 
         params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
+        params[:kari_flag] = detail[:capture] ? 2 : 1 if detail.has_key?(:capture)
 
         if detail.has_key?(:token)
           params[:token] = detail[:token]
