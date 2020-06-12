@@ -49,7 +49,8 @@ module ActiveMerchant #:nodoc:
         :acs_url,
         :pa_req,
         :receipt_number,
-        :receipt_date
+        :receipt_date,
+        :captured,
       ].freeze
 
       private
