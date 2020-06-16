@@ -123,6 +123,10 @@ module ActiveMerchant #:nodoc:
         uri_decode(@xml.xpath(ResponseXpath::REDIRECT).to_s)
       end
 
+      def captured
+        @xml.xpath(ResponseXpath::CAPTURED).to_s != '1'
+      end
+
       def uri_decode(string)
         CGI.unescape(string).encode(Encoding::UTF_8, Encoding::CP932)
       end
@@ -153,6 +157,7 @@ module ActiveMerchant #:nodoc:
         PAYMENT_CODE                       = '//Epsilon_result/result[@payment_code]/@payment_code'
         AMOUNT                             = '//Epsilon_result/result[@amount]/@amount'
         REDIRECT                           = '//Epsilon_result/result[@redirect]/@redirect'
+        CAPTURED                           = '//Epsilon_result/result[@kari_flag]/@kari_flag'
       end
 
       module ResultCode

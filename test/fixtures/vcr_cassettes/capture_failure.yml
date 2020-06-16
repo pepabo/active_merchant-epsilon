@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/sales_payment.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&order_number=1234567890
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Connection:
+      - close
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 12 Jun 2020 11:00:12 GMT
+      Server:
+      - Apache
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result err_code="810" />
+          <result err_detail="%91%CE%8F%DB%8E%E6%88%F8%82%CD%82%A0%82%E8%82%DC%82%B9%82%F1" />
+          <result result="9" />
+        </Epsilon_result>
+  recorded_at: Fri, 12 Jun 2020 11:00:14 GMT
+recorded_with: VCR 6.0.0

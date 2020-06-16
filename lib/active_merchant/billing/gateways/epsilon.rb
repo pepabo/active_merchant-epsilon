@@ -19,6 +19,7 @@ module ActiveMerchant #:nodoc:
         find_user:               'get_user_info.cgi',
         change_recurring_amount: 'change_amount_payment.cgi',
         find_order:              'getsales2.cgi',
+        capture:                 'sales_payment.cgi',
       }.freeze
 
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
@@ -51,6 +52,7 @@ module ActiveMerchant #:nodoc:
 
         params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
+        params[:kari_flag] = detail[:capture] ? 2 : 1 if detail.has_key?(:capture)
 
         commit(PATHS[:registered_purchase], params)
       end
@@ -83,6 +85,7 @@ module ActiveMerchant #:nodoc:
 
         params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
+        params[:kari_flag] = detail[:capture] ? 2 : 1 if detail.has_key?(:capture)
 
         commit(PATHS[:registered_recurring], params)
       end
@@ -182,6 +185,15 @@ module ActiveMerchant #:nodoc:
         commit(PATHS[:find_order], params, response_keys)
       end
 
+      def capture(order_number)
+        params = {
+          contract_code: self.contract_code,
+          order_number:  order_number,
+        }
+
+        commit(PATHS[:capture], params)
+      end
+
       private
 
       def billing_params(amount, payment_method, detail)
@@ -208,6 +220,7 @@ module ActiveMerchant #:nodoc:
 
         params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
+        params[:kari_flag] = detail[:capture] ? 2 : 1 if detail.has_key?(:capture)
 
         if detail.has_key?(:token)
           params[:token] = detail[:token]
