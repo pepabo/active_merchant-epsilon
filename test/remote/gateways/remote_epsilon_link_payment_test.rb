@@ -28,7 +28,7 @@ class RemoteEpsilonLinkPaymentTest < MiniTest::Test
     VCR.use_cassette(:epsilon_link_type_cancel_purchase_successfull) do
       # あらかじめ課金済ステータスの受注がイプシロン側にないと取り消しができないため、課金済の受注をイプシロン側で作成しておいた。
       # ここでは cancel_purchase の引数として作成済の受注のorder_numberを渡している。
-      # VCRを作成し直す場合は変更しないとエラーとなる。
+      # VCRのキャッシュを作成し直す場合は変更しないとエラーとなる。
       response = gateway.cancel_purchase('55608451')
 
       assert_equal true, response.success?
