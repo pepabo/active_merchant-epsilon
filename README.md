@@ -345,6 +345,11 @@ else
 end
 ```
 
+### Epsilon Link Payment Void Transaction
+```ruby
+gateway.void('order_number')
+```
+
 ### Error handling
 
 If epsilon server returns status excepted 200, `#purchase` method raise `ActiveMerchant::ResponseError`.
