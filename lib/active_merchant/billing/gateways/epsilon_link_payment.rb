@@ -37,6 +37,15 @@ module ActiveMerchant #:nodoc:
 
         commit('receive_order3.cgi', params, RESPONSE_KEYS)
       end
+
+      def void(order_number)
+        params = {
+          contract_code: self.contract_code,
+          order_number: order_number
+        }
+
+        commit('cancel_payment.cgi', params)
+      end
     end
   end
 end

@@ -1,0 +1,45 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/cancel_payment.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=&order_number=invalid_order_number
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Connection:
+      - close
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 20 Jul 2020 02:48:28 GMT
+      Server:
+      - Apache
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result err_code="607" />
+          <result err_detail="%8C_%96%F1%83R%81%5B%83h%8C%60%8E%AE%83G%83%89%81%5B" />
+          <result result="9" />
+        </Epsilon_result>
+  recorded_at: Mon, 20 Jul 2020 02:48:29 GMT
+recorded_with: VCR 6.0.0

@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&user_id=U1594794779&user_name=%E5%B1%B1%E7%94%B0+%E5%A4%AA%E9%83%8E&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O59578602&st_code=invalid_id&mission_code=1&item_price=10000&process_code=1&xml=1&delivery_code=99&consignee_postal=1000001&consignee_name=%E3%82%A4%E3%83%97%E3%82%B7%E3%83%AD%E3%83%B3%E3%82%BF%E3%83%AD%E3%82%A6&consignee_address=%E6%9D%B1%E4%BA%AC%E9%83%BD%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B01%E7%95%AA1%E5%8F%B7&consignee_tel=0312345678&orderer_postal=1000001&orderer_name=YAMADA+Taro&orderer_address=%E6%9D%B1%E4%BA%AC%E9%83%BD%E5%8D%83%E4%BB%A3%E7%94%B0%E5%8C%BA%E5%8D%83%E4%BB%A3%E7%94%B01%E7%95%AA1%E5%8F%B7&orderer_tel=0312345678&memo1=memo1&memo2=memo2
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Connection:
+      - close
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 15 Jul 2020 06:32:59 GMT
+      Server:
+      - Apache
+      Connection:
+      - close
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/xml
+    body:
+      encoding: UTF-8
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n  <Epsilon_result>\r\n
+        \   <result result=\"0\" />\r\n    <result err_code=\"601\" />\r\n    <result
+        err_detail=\"%8C%88%8D%CF%83R%81%5B%83h%82%CC%8Ew%92%E8%82%AA%88%D9%8F%ED%82%C5%82%B7\"
+        />\r\n    <result memo1=\"memo1\" />\r\n    <result memo2=\"memo2\" />\r\n
+        \ </Epsilon_result>\r\n"
+  recorded_at: Wed, 15 Jul 2020 06:33:00 GMT
+recorded_with: VCR 6.0.0

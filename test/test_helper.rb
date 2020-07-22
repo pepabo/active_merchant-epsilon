@@ -230,6 +230,52 @@ module SamplePaymentMethods
     }
   end
 
+  def valid_epsilon_link_type_purchase_detail
+    now = Time.now
+    {
+      user_id:       "U#{Time.now.to_i}",
+      user_name:     '山田 太郎',
+      user_email: 'yamada-taro@example.com',
+      item_code:     'ITEM001',
+      item_name:    'Greate Product',
+      order_number:  "O#{now.sec}#{now.usec}",
+      st_code:       '00000-0000-01000-00000-00000-00000-00000',
+      memo1:         'memo1',
+      memo2:         'memo2',
+      consignee_postal: '1000001',
+      consignee_name: 'イプシロンタロウ',
+      consignee_address: '東京都千代田区千代田1番1号',
+      consignee_tel: '0312345678',
+      orderer_postal: '1000001',
+      orderer_name: 'YAMADA Taro',
+      orderer_address: '東京都千代田区千代田1番1号',
+      orderer_tel: '0312345678',
+    }
+  end
+
+  def invalid_epsilon_link_type_purchase_detail
+    now = Time.now
+    {
+      user_id:       "U#{Time.now.to_i}",
+      user_name:     '山田 太郎',
+      user_email: 'yamada-taro@example.com',
+      item_code:     'ITEM001',
+      item_name:    'Greate Product',
+      order_number:  "O#{now.sec}#{now.usec}",
+      st_code:       'invalid_id',
+      memo1:         'memo1',
+      memo2:         'memo2',
+      consignee_postal: '1000001',
+      consignee_name: 'イプシロンタロウ',
+      consignee_address: '東京都千代田区千代田1番1号',
+      consignee_tel: '0312345678',
+      orderer_postal: '1000001',
+      orderer_name: 'YAMADA Taro',
+      orderer_address: '東京都千代田区千代田1番1号',
+      orderer_tel: '0312345678',
+    }
+  end
+
   def fixture_xml(filename, parse: true)
     xml = File.read("test/fixtures/#{filename}")
     parse ? Nokogiri.parse(xml.sub('x-sjis-cp932', 'CP932')) : xml
