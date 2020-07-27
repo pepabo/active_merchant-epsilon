@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.11.0
+
+- [Add void mehotd for Epsilon Link Payment](https://github.com/pepabo/active_merchant-epsilon/pull/114)
+
 ### 0.10.0
 
 * [Capture authorized payments](https://github.com/pepabo/active_merchant-epsilon/pull/112)
