@@ -253,6 +253,21 @@ module SamplePaymentMethods
     }
   end
 
+  def valid_epsilon_link_type_not_sending_delivery_information_purchase_detail
+    now = Time.now
+    {
+      user_id:       "U#{Time.now.to_i}",
+      user_name:     '山田 太郎',
+      user_email: 'yamada-taro@example.com',
+      item_code:     'ITEM001',
+      item_name:    'Greate Product',
+      order_number:  "O#{now.sec}#{now.usec}",
+      st_code:       '00000-0000-01000-00000-00000-00000-00000',
+      memo1:         'memo1',
+      memo2:         'memo2',
+    }
+  end
+
   def invalid_epsilon_link_type_purchase_detail
     now = Time.now
     {
