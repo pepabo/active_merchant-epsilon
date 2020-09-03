@@ -6,7 +6,7 @@ module ActiveMerchant #:nodoc:
         :redirect,
       ]
 
-      def purchase(amount, detail = {}, unnecessary_delivery_information = false)
+      def purchase(amount, detail = {}, delivery_info_required = true)
         params = {
           contract_code: self.contract_code,
           user_id:       detail[:user_id],
@@ -23,7 +23,7 @@ module ActiveMerchant #:nodoc:
         }
 
         # 注文情報の詳細が必要な場合のみ、セットする
-        unless unnecessary_delivery_information
+        if delivery_info_required
           params[:delivery_code] = 99 # 配送区分。99で固定
           params[:consignee_postal] = detail[:consignee_postal]
           params[:consignee_name] = detail[:consignee_name]

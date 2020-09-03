@@ -307,8 +307,8 @@ end
 EpsilosLinkPaymentGateway is available in all link payments.
 For example, GMO Payment After Delivery.
 
-If you don't need send paramaters of delivery information details(e.g. consignee_postal, consignee_name, orderer_postal, and orderer_name), you set `unnecessary_delivery_information` to `true`.
-When you don't set `unnecessary_delivery_information`, you must set purchase_detail to delivery information details.
+If you don't need send paramaters of delivery information details(e.g. consignee_postal, consignee_name, orderer_postal, and orderer_name), you set `delivery_info_required` to `false`.
+When you don't set `delivery_info_required`, you must set purchase_detail to delivery information details.
 
 ```ruby
 ActiveMerchant::Billing::EpsilonLinkPaymentGateway.contract_code = 'YOUR_CONTRACT_CODE'
@@ -338,9 +338,9 @@ purchase_detail = {
   memo2:             'memo2',
 }
 
-unnecessary_delivery_information = false
+delivery_info_required = true
 
-response = gateway.purchase(amount, purchase_detail, unnecessary_delivery_information)
+response = gateway.purchase(amount, purchase_detail, delivery_info_required)
 
 if response.success?
   puts "Successfully send order data"
