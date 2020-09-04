@@ -5,7 +5,7 @@ http_interactions:
     uri: https://beta.epsilon.jp/cgi-bin/order/receive_order3.cgi
     body:
       encoding: UTF-8
-      string: contract_code=[CONTRACT_CODE]&user_id=U1599107797&user_name=%E5%B1%B1%E7%94%B0+%E5%A4%AA%E9%83%8E&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O37199001&st_code=00000-0000-01000-00000-00000-00000-00000&mission_code=1&item_price=10000&process_code=1&xml=1&memo1=memo1&memo2=memo2
+      string: contract_code=[CONTRACT_CODE]&user_id=U1599198756&user_name=%E5%B1%B1%E7%94%B0+%E5%A4%AA%E9%83%8E&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O36528472&st_code=00000-0000-01000-00000-00000-00000-00000&mission_code=1&item_price=10000&process_code=1&xml=1&memo1=memo1&memo2=memo2
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -23,7 +23,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 03 Sep 2020 04:36:37 GMT
+      - Fri, 04 Sep 2020 05:52:36 GMT
       Server:
       - Apache
       Connection:
@@ -38,7 +38,7 @@ http_interactions:
         <?xml version="1.0" encoding="UTF-8" ?>
          <Epsilon_result>
           <result result="1" />
-          <result redirect="https%3A%2F%2Fbeta.epsilon.jp%2Fcgi-bin%2Forder%2Fmethod_select3.cgi%3Ftrans_code%3D%252B%252BuJ4Pry4XM60" />
+          <result redirect="https%3A%2F%2Fbeta.epsilon.jp%2Fcgi-bin%2Forder%2Fmethod_select3.cgi%3Ftrans_code%3DRewAwZ7Jm3Y91" />
           </Epsilon_result>
-  recorded_at: Thu, 03 Sep 2020 04:36:38 GMT
+  recorded_at: Fri, 04 Sep 2020 05:52:37 GMT
 recorded_with: VCR 6.0.0
