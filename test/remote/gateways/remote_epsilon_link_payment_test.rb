@@ -6,9 +6,18 @@ class RemoteEpsilonLinkPaymentTest < MiniTest::Test
     @gateway ||= ActiveMerchant::Billing::EpsilonLinkPaymentGateway.new
   end
 
-  def test_epsilon_link_type_purchase_successfull
-    VCR.use_cassette(:epsilon_link_type_purchase_successfull) do
+  def test_epsilon_link_type_purchase_successful
+    VCR.use_cassette(:epsilon_link_type_purchase_successful) do
       response = gateway.purchase(10000, valid_epsilon_link_type_purchase_detail)
+
+      assert_equal true, response.success?
+      assert_equal true, !response.params['redirect'].empty?
+    end
+  end
+
+  def test_epsilon_link_type_not_sending_delivery_information_purchase_successful
+    VCR.use_cassette(:epsilon_link_type_not_sending_delivery_information_purchase_successful) do
+      response = gateway.purchase(10000, valid_epsilon_link_type_not_sending_delivery_information_purchase_detail, false)
 
       assert_equal true, response.success?
       assert_equal true, !response.params['redirect'].empty?

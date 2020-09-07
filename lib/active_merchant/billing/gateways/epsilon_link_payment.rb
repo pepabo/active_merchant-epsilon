@@ -6,7 +6,7 @@ module ActiveMerchant #:nodoc:
         :redirect,
       ]
 
-      def purchase(amount, detail = {})
+      def purchase(amount, detail = {}, delivery_info_required = true)
         params = {
           contract_code: self.contract_code,
           user_id:       detail[:user_id],
@@ -20,16 +20,20 @@ module ActiveMerchant #:nodoc:
           item_price:    amount,
           process_code:  EpsilonProcessCode::FIRST,
           xml: 1, # 応答形式。1: xml形式を固定
-          delivery_code: 99, # 配送区分。99で固定
-          consignee_postal: detail[:consignee_postal],
-          consignee_name: detail[:consignee_name],
-          consignee_address: detail[:consignee_address],
-          consignee_tel: detail[:consignee_tel],
-          orderer_postal: detail[:orderer_postal],
-          orderer_name: detail[:orderer_name],
-          orderer_address: detail[:orderer_address],
-          orderer_tel: detail[:orderer_tel],
         }
+
+        # 注文情報の詳細が必要な場合のみ、セットする
+        if delivery_info_required
+          params[:delivery_code] = 99 # 配送区分。99で固定
+          params[:consignee_postal] = detail[:consignee_postal]
+          params[:consignee_name] = detail[:consignee_name]
+          params[:consignee_address] = detail[:consignee_address]
+          params[:consignee_tel] = detail[:consignee_tel]
+          params[:orderer_postal] = detail[:orderer_postal]
+          params[:orderer_name] = detail[:orderer_name]
+          params[:orderer_address] = detail[:orderer_address]
+          params[:orderer_tel] = detail[:orderer_tel]
+        end
 
         params[:memo1] = detail[:memo1] if detail.has_key?(:memo1)
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
