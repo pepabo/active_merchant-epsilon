@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.12.0
+
+- [Add Parameter `delivery_info_required` to purchase method for Epsilon Link Payment](https://github.com/pepabo/active_merchant-epsilon/pull/116)
+
 ### 0.11.0
 
 - [Add void mehotd for Epsilon Link Payment](https://github.com/pepabo/active_merchant-epsilon/pull/114)
