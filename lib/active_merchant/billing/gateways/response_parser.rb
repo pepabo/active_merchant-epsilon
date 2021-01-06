@@ -107,6 +107,10 @@ module ActiveMerchant #:nodoc:
         @xml.xpath(ResponseXpath::STATE).to_s
       end
 
+      def last_update
+        @xml.xpath(ResponseXpath::LAST_UPDATE).to_s
+      end
+
       def payment_code
         @xml.xpath(ResponseXpath::PAYMENT_CODE).to_s
       end
@@ -153,6 +157,7 @@ module ActiveMerchant #:nodoc:
         BRANCH_CODE                        = '//Epsilon_result/result[@branch_code][1]/@branch_code'
         BRANCH_NAME                        = '//Epsilon_result/result[@branch_name][1]/@branch_name'
         STATE                              = '//Epsilon_result/result[@state]/@state'
+        LAST_UPDATE                        = '//Epsilon_result/result[@last_update]/@last_update'
         ITEM_PRICE                         = '//Epsilon_result/result[@item_price]/@item_price'
         PAYMENT_CODE                       = '//Epsilon_result/result[@payment_code]/@payment_code'
         AMOUNT                             = '//Epsilon_result/result[@amount]/@amount'
