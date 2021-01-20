@@ -177,6 +177,7 @@ module ActiveMerchant #:nodoc:
         response_keys = [
           :transaction_code,
           :state,
+          :last_update,
           :payment_code,
           :item_price,
           :amount,
