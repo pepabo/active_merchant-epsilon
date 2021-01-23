@@ -62,7 +62,7 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
 
       assert_equal true, response.success?
       assert_equal true, response.params['three_d_secure']
-      assert_match /\Ahttps?/, response.params['acs_url']
+      assert_match(/\Ahttps?/, response.params['acs_url'])
       refute_empty response.params['pa_req']
     end
 
