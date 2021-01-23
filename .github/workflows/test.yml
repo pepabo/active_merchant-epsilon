@@ -2,7 +2,7 @@ name: test
 on: push
 
 jobs:
-  unit_test:
+  test-all:
     runs-on: ubuntu-latest
 
     strategy:
@@ -18,4 +18,4 @@ jobs:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true
 
-    - run: bundle exec rake test:unit
+    - run: bundle exec rake test:unit test:remote
