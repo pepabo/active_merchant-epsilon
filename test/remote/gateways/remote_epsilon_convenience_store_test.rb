@@ -12,11 +12,11 @@ class RemoteEpsilonConvenienceStoreGatewayTest < MiniTest::Test
       response = gateway.purchase(10000, valid_convenience_store, purchase_detail)
 
       assert_equal true, response.success?
-      assert_match /\d{7}/, response.params['receipt_number']
-      assert_match /\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}/, response.params['receipt_date']
-      assert_match /\d{4}\-\d{2}\-\d{2}/, response.params['convenience_store_limit_date']
-      assert_match %r!\Ahttp://.+!, response.params['convenience_store_payment_slip_url']
-      assert_match /\d{5}/, response.params['company_code']
+      assert_match(/\d{7}/, response.params['receipt_number'])
+      assert_match(/\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}/, response.params['receipt_date'])
+      assert_match(/\d{4}\-\d{2}\-\d{2}/, response.params['convenience_store_limit_date'])
+      assert_match(%r!\Ahttp://.+!, response.params['convenience_store_payment_slip_url'])
+      assert_match(/\d{5}/, response.params['company_code'])
     end
   end
 
