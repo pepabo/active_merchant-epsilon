@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.13.0
+
+- [Add `last-update` to OrderResponse](https://github.com/pepabo/active_merchant-epsilon/pull/118)
+
 ### 0.12.0
 
 - [Add Parameter `delivery_info_required` to purchase method for Epsilon Link Payment](https://github.com/pepabo/active_merchant-epsilon/pull/116)
