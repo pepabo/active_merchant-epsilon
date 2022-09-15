@@ -22,6 +22,20 @@ module ActiveMerchant #:nodoc:
         capture:                 'sales_payment.cgi',
       }.freeze
 
+      RISK_BASE_AUTH_PARAMS_KEYS = %i[
+        tds_flag billAddrCity billAddrCountry billAddrLine1 billAddrLine2 billAddrLine3
+        billAddrPostCode billAddrState shipAddrCity shipAddrCountry shipAddrLine1 shipAddrLine2
+        shipAddrLine3 shipAddrPostCode shipAddrState chAccAgeInd chAccChange
+        chAccChangeIndchAccDate chAccPwdChange chAccPwChangeInd nbPurchaseAccount paymentAccAge
+        paymentAccInd provisionAttemptsDay shipAddressUsage shipAddressUsageInd shipNameIndicator
+        suspiciousAccActivity txnActivityDay txnActivityYear threeDSReqAuthData threeDSReqAuthMethod
+        threeDSReqAuthTimestamp addrMatch cardholderName homePhone mobilePhone
+        workPhone challengeInd deliveryEmailAddress deliveryTimeframe giftCardAmount
+        giftCardCount preOrderDate preOrderPurchaseInd reorderItemsInd shipIndicator
+      ].freeze
+
+      THREE_D_SECURE_2_INDICATORS = [21, 22].freeze
+
       self.supported_cardtypes = [:visa, :master, :american_express, :discover]
 
       def purchase(amount, credit_card, detail = {})
@@ -29,7 +43,11 @@ module ActiveMerchant #:nodoc:
 
         params = billing_params(amount, credit_card, detail)
 
-        commit(PATHS[:purchase], params)
+        if three_d_secure_2?(detail)
+          params.merge!(detail.slice(*RISK_BASE_AUTH_PARAMS_KEYS).compact)
+        end
+
+        commit(PATHS[:registered_purchase], params)
       end
 
       def registered_purchase(amount, detail = {})
@@ -238,6 +256,10 @@ module ActiveMerchant #:nodoc:
         end
 
         params
+      end
+
+      def three_d_secure_2?(detail)
+        THREE_D_SECURE_2_INDICATORS.include?(detail[:tds_flag])
       end
     end
   end

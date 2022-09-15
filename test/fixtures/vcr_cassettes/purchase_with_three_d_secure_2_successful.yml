@@ -1,0 +1,51 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&user_id=U1663229130&user_name=YAMADA+Taro&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O30189731&st_code=10000-0000-0000&mission_code=1&item_price=1000&process_code=1&card_st_code=&pay_time=&tds_check_code=1&user_agent=ActiveMerchant%3A%3AEpsilon-0.13.0&token=03d4a2ce2f747c9223a4ead24888d0293ad26c06273e296f9faa0675f99a1ff7&security_code=&security_check=1&tds_flag=21
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Connection:
+      - close
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 15 Sep 2022 08:05:30 GMT
+      Server:
+      - Apache
+      Vary:
+      - Accept-Encoding
+      Content-Length:
+      - '231'
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=CP932
+    body:
+      encoding: ASCII-8BIT
+      string: |-
+        <?xml version="1.0" encoding="x-sjis-cp932"?>
+        <Epsilon_result>
+          <result acsurl="" />
+          <result err_code="" />
+          <result err_detail="" />
+          <result pareq="TZ0SPvVKOob64%252BlXeutNUg79" />
+          <result result="6" />
+          <result tds2_url="https%3A%2F%2Fsecure.epsilon.jp%2Fcgi-bin%2Forder%2Ftds2.cgi" />
+          <result trans_code="257072796" />
+        </Epsilon_result>
+  recorded_at: Thu, 15 Sep 2022 08:05:31 GMT
+recorded_with: VCR 6.1.0
