@@ -72,6 +72,10 @@ module ActiveMerchant #:nodoc:
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
         params[:kari_flag] = detail[:capture] ? 2 : 1 if detail.has_key?(:capture)
 
+        if three_d_secure_2?(detail)
+          params.merge!(detail.slice(*RISK_BASE_AUTH_PARAMS_KEYS).compact)
+        end
+
         commit(PATHS[:registered_purchase], params)
       end
 

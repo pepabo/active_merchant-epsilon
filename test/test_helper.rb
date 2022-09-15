@@ -171,6 +171,18 @@ module SamplePaymentMethods
     }
   end
 
+  def purchase_detail_for_registered_and_three_d_secure_2
+    {
+      user_id:      'U1416470209',
+      user_email:   'yamada-taro@example.com',
+      user_name:    'YAMADA TARO',
+      item_code:    'ITEM001',
+      item_name:    'Greate Product',
+      order_number: "O#{Time.now.to_i}",
+      tds_flag:      21,
+    }
+  end
+
   def valid_three_d_secure_pa_res
     now = Time.now
     {
