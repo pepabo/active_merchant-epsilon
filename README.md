@@ -159,6 +159,57 @@ purchase_detail = {
 # (snip)
 ```
 
+### CreditCard Payment with 3D secure 2.0(with token)
+
+```ruby
+# 3D secure 2.0 does not have a test environment for epsilon
+ActiveMerchant::Billing::Base.mode = :production
+
+amount = 1000
+purchase_detail = {
+  user_id:                   'YOUR_APP_USER_IDENTIFIER',
+  user_name:                 '山田 太郎',
+  user_email:                'yamada-taro@example.com',
+  item_code:                 'ITEM001',
+  item_name:                 'Greate Product',
+  order_number:              'UNIQUE ORDER NUMBER',
+  three_d_secure_check_code: 1,
+  token:                     'CREDIT CARD TOKEN'
+  tds_flag:                  21 # 21 or 22
+  # optional:
+  #   add params for risk-based certification(billAddrCity etc...)
+}
+
+response = gateway.purchase(amount, ActiveMerchant::Billing::CreditCard.new, purchase_detail)
+
+if response.success?
+  if response.params['three_d_secure']
+    puts response.params['tds2_url']
+    puts response.params['pa_req']
+  else
+    # NOT 3D SECURE
+    puts "Successfully charged #{amount} yen as credit card payment(not 3D secure)"
+  end
+else
+  raise StandardError, response.message
+end
+
+# (The card holder identifies himself on credit card's page and comes back here)
+
+# AND SECOND REQUEST
+
+response = gateway.authenticate(
+  order_number:         'ORDER NUMBER',
+  three_d_secure_pares: 'PAYMENT AUTHENTICATION RESPONSE',
+)
+
+if response.success?
+  puts 'Successfully charged as credit card payment(3D secure 2.0)'
+else
+  raise StandardError, response.message
+end
+```
+
 ### CreditCard Revolving Payment
 
 ```ruby
