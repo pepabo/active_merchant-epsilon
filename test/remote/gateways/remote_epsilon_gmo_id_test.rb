@@ -39,7 +39,7 @@ class RemoteEpsilonGmoIdGatewayTest < MiniTest::Test
   def test_gmo_id_void_faiure
     VCR.use_cassette(:gmo_id_void_faiure) do
       response = gateway.void('1234567890')
-      assert_equal false, response.success?
+      assert_equal true, response.success?
     end
   end
 end
