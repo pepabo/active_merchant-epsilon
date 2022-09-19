@@ -47,7 +47,7 @@ module ActiveMerchant #:nodoc:
           params.merge!(detail.slice(*RISK_BASE_AUTH_PARAMS_KEYS).compact)
         end
 
-        commit(PATHS[:registered_purchase], params)
+        commit(PATHS[:purchase], params)
       end
 
       def registered_purchase(amount, detail = {})
