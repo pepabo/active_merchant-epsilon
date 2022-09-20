@@ -1,6 +1,9 @@
 name: test
-on: push
-
+on:
+  push:
+    branches:
+      - master
+  pull_request:
 jobs:
   test-all:
     runs-on: ubuntu-latest
