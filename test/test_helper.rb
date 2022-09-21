@@ -173,7 +173,7 @@ module SamplePaymentMethods
 
   def purchase_detail_for_registered_and_three_d_secure_2
     {
-      user_id:      'U1416470209',
+      user_id:      '124014051',
       user_email:   'yamada-taro@example.com',
       user_name:    'YAMADA TARO',
       item_code:    'ITEM001',

@@ -5,7 +5,7 @@ http_interactions:
     uri: https://secure.epsilon.jp/cgi-bin/order/direct_card_payment.cgi
     body:
       encoding: UTF-8
-      string: contract_code=[CONTRACT_CODE]&user_id=U1663229130&user_name=YAMADA+Taro&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O30189731&st_code=10000-0000-0000&mission_code=1&item_price=1000&process_code=1&card_st_code=&pay_time=&tds_check_code=1&user_agent=ActiveMerchant%3A%3AEpsilon-0.13.0&token=03d4a2ce2f747c9223a4ead24888d0293ad26c06273e296f9faa0675f99a1ff7&security_code=&security_check=1&tds_flag=21
+      string: contract_code=[CONTRACT_CODE]&user_id=124014051&user_name=YAMADA+TARO&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O1663728963&st_code=10000-0000-0000&mission_code=1&item_price=1000&process_code=2&card_st_code=&pay_time=&xml=1&tds_flag=21
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -23,13 +23,13 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 Sep 2022 08:05:30 GMT
+      - Wed, 21 Sep 2022 02:56:03 GMT
       Server:
       - Apache
       Vary:
       - Accept-Encoding
       Content-Length:
-      - '231'
+      - '234'
       Connection:
       - close
       Content-Type:
@@ -42,10 +42,10 @@ http_interactions:
           <result acsurl="" />
           <result err_code="" />
           <result err_detail="" />
-          <result pareq="TZ0SPvVKOob64%252BlXeutNUg79" />
+          <result pareq="sOuxTX%252BZHCDBJKRdKkN2Iw53" />
           <result result="6" />
           <result tds2_url="https%3A%2F%2Fsecure.epsilon.jp%2Fcgi-bin%2Forder%2Ftds2.cgi" />
-          <result trans_code="257072796" />
+          <result trans_code="257810878" />
         </Epsilon_result>
-  recorded_at: Thu, 15 Sep 2022 08:05:31 GMT
+  recorded_at: Wed, 21 Sep 2022 02:56:04 GMT
 recorded_with: VCR 6.1.0

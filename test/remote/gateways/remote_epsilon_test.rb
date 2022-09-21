@@ -287,9 +287,6 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
   def test_registered_purchase_with_three_d_secure_2_successful
     # 3DS2.0はテスト環境がないので mode を :production にする
     ActiveMerchant::Billing::Base.stub(:mode, :production) do
-      # TODO: イプシロンのAPI改修が終わったらVCRカセットを取り直す
-      #   登録済み課金 + 3DS2.0の場合イプシロンのAPI側でエラーになり正常なレスポンスが返ってこない（2022/09/15時点）ので
-      #   接続先APIと期待するレスポンスが同じ purchase のVCRカセットを使用する
       VCR.use_cassette(:purchase_with_three_d_secure_2_successful) do
         response = gateway.registered_purchase(1000, purchase_detail_for_registered_and_three_d_secure_2)
 
