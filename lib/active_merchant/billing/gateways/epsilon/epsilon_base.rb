@@ -48,6 +48,7 @@ module ActiveMerchant #:nodoc:
         :three_d_secure,
         :acs_url,
         :pa_req,
+        :tds2_url,
         :receipt_number,
         :receipt_date,
         :captured,

@@ -156,6 +156,33 @@ module SamplePaymentMethods
     }
   end
 
+  def purchase_detail_for_three_d_secure_2
+    now = Time.now
+    {
+      user_id:                   "U#{now.to_i}",
+      user_name:                 'YAMADA Taro',
+      user_email:                'yamada-taro@example.com',
+      item_code:                 'ITEM001',
+      item_name:                 'Greate Product',
+      order_number:              "O#{now.sec}#{now.usec}",
+      token:                     '03d4a2ce2f747c9223a4ead24888d0293ad26c06273e296f9faa0675f99a1ff7',
+      three_d_secure_check_code: 1,
+      tds_flag:                  21,
+    }
+  end
+
+  def purchase_detail_for_registered_and_three_d_secure_2
+    {
+      user_id:      '124014051',
+      user_email:   'yamada-taro@example.com',
+      user_name:    'YAMADA TARO',
+      item_code:    'ITEM001',
+      item_name:    'Greate Product',
+      order_number: "O#{Time.now.to_i}",
+      tds_flag:      21,
+    }
+  end
+
   def valid_three_d_secure_pa_res
     now = Time.now
     {

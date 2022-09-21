@@ -10,7 +10,7 @@ module ActiveMerchant #:nodoc:
         @result = @xml.xpath(ResponseXpath::RESULT).to_s
 
         response = {
-          success: [ResultCode::SUCCESS, ResultCode::THREE_D_SECURE].include?(@result) || !state.empty?,
+          success: [ResultCode::SUCCESS, ResultCode::THREE_D_SECURE_1, ResultCode::THREE_D_SECURE_2].include?(@result) || !state.empty?,
           message: "#{error_code}: #{error_detail}"
         }
 
@@ -48,7 +48,7 @@ module ActiveMerchant #:nodoc:
       end
 
       def three_d_secure
-        @result == ResultCode::THREE_D_SECURE
+        [ResultCode::THREE_D_SECURE_1, ResultCode::THREE_D_SECURE_2].include?(@result)
       end
 
       def acs_url
@@ -57,6 +57,10 @@ module ActiveMerchant #:nodoc:
 
       def pa_req
         uri_decode(@xml.xpath(ResponseXpath::PA_REQ).to_s)
+      end
+
+      def tds2_url
+        uri_decode(@xml.xpath(ResponseXpath::TDS2_URL).to_s)
       end
 
       def receipt_number
@@ -145,6 +149,7 @@ module ActiveMerchant #:nodoc:
         CARD_EXPIRE                        = '//Epsilon_result/result[@card_expire]/@card_expire'
         ACS_URL                            = '//Epsilon_result/result[@acsurl]/@acsurl' # ACS (Access Control Server)
         PA_REQ                             = '//Epsilon_result/result[@pareq]/@pareq' # PAReq (payer authentication request)
+        TDS2_URL                           = '//Epsilon_result/result[@tds2_url]/@tds2_url'
         RECEIPT_NUMBER                     = '//Epsilon_result/result[@receipt_no][1]/@receipt_no'
         RECEIPT_DATE                       = '//Epsilon_result/result[@receipt_date][1]/@receipt_date'
         CONVENIENCE_STORE_LIMIT_DATE       = '//Epsilon_result/result[@conveni_limit][1]/@conveni_limit'
@@ -166,10 +171,11 @@ module ActiveMerchant #:nodoc:
       end
 
       module ResultCode
-        FAILURE        = '0'
-        SUCCESS        = '1'
-        THREE_D_SECURE = '5'
-        SYSTEM_ERROR   = '9'
+        FAILURE          = '0'
+        SUCCESS          = '1'
+        THREE_D_SECURE_1 = '5'
+        THREE_D_SECURE_2 = '6'
+        SYSTEM_ERROR     = '9'
       end
     end
   end

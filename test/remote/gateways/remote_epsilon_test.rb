@@ -75,6 +75,34 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
     end
   end
 
+  def test_purchase_with_three_d_secure_2_successful
+    # 3DS2.0はテスト環境がないので mode を :production にする
+    ActiveMerchant::Billing::Base.stub(:mode, :production) do
+      VCR.use_cassette(:purchase_with_three_d_secure_2_successful) do
+        response = gateway.purchase(
+          1000,
+          ActiveMerchant::Billing::CreditCard.new,
+          purchase_detail_for_three_d_secure_2
+        )
+
+        assert_equal true, response.success?
+        assert_equal true, response.params['three_d_secure']
+        assert_equal true, response.params['tds2_url'].present?
+        assert_equal true, response.params['pa_req'].present?
+        assert_empty response.params['acs_url']
+      end
+
+      VCR.use_cassette(:authenticate_with_three_d_secure_2_successful) do
+        response = gateway.authenticate(
+          order_number: purchase_detail_for_three_d_secure_2[:order_number],
+          three_d_secure_pa_res: 'dummy pa_res'
+        )
+
+        assert_equal true, response.success?
+      end
+    end
+  end
+
   def test_purchase_with_capture_true_successful
     VCR.use_cassette(:purchase_with_capture_true_successful) do
       response = gateway.purchase(1000, valid_credit_card, purchase_detail.merge(capture: true))
@@ -253,6 +281,30 @@ class RemoteEpsilonGatewayTest < MiniTest::Test
     VCR.use_cassette(:registered_purchase_successful) do
       response = gateway.registered_purchase(10000, purchase_detail_for_registered)
       assert_equal true, response.success?
+    end
+  end
+
+  def test_registered_purchase_with_three_d_secure_2_successful
+    # 3DS2.0はテスト環境がないので mode を :production にする
+    ActiveMerchant::Billing::Base.stub(:mode, :production) do
+      VCR.use_cassette(:purchase_with_three_d_secure_2_successful) do
+        response = gateway.registered_purchase(1000, purchase_detail_for_registered_and_three_d_secure_2)
+
+        assert_equal true, response.success?
+        assert_equal true, response.params['three_d_secure']
+        assert_equal true, response.params['tds2_url'].present?
+        assert_equal true, response.params['pa_req'].present?
+        assert_empty response.params['acs_url']
+      end
+
+      VCR.use_cassette(:authenticate_with_three_d_secure_2_successful) do
+        response = gateway.authenticate(
+          order_number: purchase_detail_for_three_d_secure_2[:order_number],
+          three_d_secure_pa_res: 'dummy pa_res'
+        )
+
+        assert_equal true, response.success?
+      end
     end
   end
 
