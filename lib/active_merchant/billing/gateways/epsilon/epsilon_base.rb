@@ -29,7 +29,7 @@ module ActiveMerchant #:nodoc:
 
       self.abstract_class = true
 
-      cattr_accessor :contract_code, :proxy_address, :proxy_port, :encoding
+      cattr_accessor :contract_code, :proxy_address, :proxy_port, :proxy_user, :proxy_password, :encoding
 
       self.test_url            = 'https://beta.epsilon.jp/cgi-bin/order/'
       self.live_url            = 'https://secure.epsilon.jp/cgi-bin/order/'
