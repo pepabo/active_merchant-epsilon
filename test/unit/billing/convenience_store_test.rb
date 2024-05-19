@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class EpsilonConvenienceStoreTest < MiniTest::Test
+class EpsilonConvenienceStoreTest < Minitest::Test
   def test_blank_parameter_generate_error
     convenience_store = ActiveMerchant::Billing::ConvenienceStore.new(code: "",
                                                                       full_name_kana: "",

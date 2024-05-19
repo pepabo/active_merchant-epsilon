@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class EpsilonGatewayTest < MiniTest::Test
+class EpsilonGatewayTest < Minitest::Test
   include SamplePaymentMethods
 
   def test_set_proxy_address_and_port

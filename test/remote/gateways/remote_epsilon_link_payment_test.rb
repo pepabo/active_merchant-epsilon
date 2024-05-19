@@ -1,5 +1,5 @@
 require 'test_helper'
-class RemoteEpsilonLinkPaymentTest < MiniTest::Test
+class RemoteEpsilonLinkPaymentTest < Minitest::Test
   include SamplePaymentMethods
 
   def gateway
