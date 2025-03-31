@@ -127,8 +127,8 @@ end
 # AND SECOND REQUEST
 
 response = gateway.authenticate(
-  order_number:         'ORDER NUMBER',
-  three_d_secure_pares: 'PAYMENT AUTHENTICATION RESPONSE',
+  order_number:          'ORDER NUMBER',
+  three_d_secure_pa_res: 'PAYMENT AUTHENTICATION RESPONSE',
 )
 
 if response.success?
@@ -199,8 +199,8 @@ end
 # AND SECOND REQUEST
 
 response = gateway.authenticate(
-  order_number:         'ORDER NUMBER',
-  three_d_secure_pares: 'PAYMENT AUTHENTICATION RESPONSE',
+  order_number:          'ORDER NUMBER',
+  three_d_secure_pa_res: 'PAYMENT AUTHENTICATION RESPONSE',
 )
 
 if response.success?
