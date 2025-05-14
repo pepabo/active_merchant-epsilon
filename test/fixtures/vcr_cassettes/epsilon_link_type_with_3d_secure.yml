@@ -1,0 +1,48 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://secure.epsilon.jp/cgi-bin/order/receive_order3.cgi
+    body:
+      encoding: UTF-8
+      string: contract_code=[CONTRACT_CODE]&user_id=U1747274309&user_name=%E5%B1%B1%E7%94%B0+%E5%A4%AA%E9%83%8E&user_mail_add=yamada-taro%40example.com&item_code=ITEM001&item_name=Greate+Product&order_number=O29285401&st_code=10000-0000-00000-00000-00000-00000-00000&mission_code=1&item_price=10000&process_code=1&xml=1&memo1=memo1&memo2=memo2&tds_flag=21
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Connection:
+      - close
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Thu, 15 May 2025 01:58:29 GMT
+      Content-Type:
+      - text/xml
+      Content-Length:
+      - '228'
+      Connection:
+      - close
+      Vary:
+      - Accept-Encoding
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        <?xml version="1.0" encoding="UTF-8" ?>
+         <Epsilon_result>
+          <result result="1" />
+          <result redirect="https%3A%2F%2Fsecure.epsilon.jp%2Fcgi-bin%2Forder%2Fcard3.cgi%3Ftrans_code%3DeyHc6JoHNEiEce2mlXuiCg25" />
+          </Epsilon_result>
+  recorded_at: Thu, 15 May 2025 01:58:29 GMT
+recorded_with: VCR 6.3.1

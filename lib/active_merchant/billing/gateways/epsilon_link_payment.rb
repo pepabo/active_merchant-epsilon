@@ -39,6 +39,10 @@ module ActiveMerchant #:nodoc:
         params[:memo2] = detail[:memo2] if detail.has_key?(:memo2)
         params[:user_tel] = detail[:user_tel] if detail.has_key?(:user_tel)
 
+        if three_d_secure_2?(detail)
+          params.merge!(detail.slice(*EpsilonRiskBaseAuthParams::KEYS).compact)
+        end
+
         commit('receive_order3.cgi', params, RESPONSE_KEYS)
       end
 
@@ -49,6 +53,12 @@ module ActiveMerchant #:nodoc:
         }
 
         commit('cancel_payment.cgi', params)
+      end
+
+      private
+
+      def three_d_secure_2?(detail)
+        EpsilonRiskBaseAuthParams.three_d_secure_2?(detail[:tds_flag])
       end
     end
   end

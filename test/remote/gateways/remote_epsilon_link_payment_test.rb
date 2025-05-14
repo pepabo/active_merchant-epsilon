@@ -33,6 +33,16 @@ class RemoteEpsilonLinkPaymentTest < Minitest::Test
     end
   end
 
+  def test_epsilon_link_type_with_3d_secure
+    ActiveMerchant::Billing::Base.stub(:mode, :production) do
+      VCR.use_cassette(:epsilon_link_type_with_3d_secure) do
+        response = gateway.purchase(10000, valid_epsilon_link_type_purchase_detail_for_3d_secure, false)
+
+        pp response
+      end
+    end
+  end
+
   def test_epsilon_link_type_void_successfull
     VCR.use_cassette(:epsilon_link_type_void_successfull) do
       # あらかじめ課金済ステータスの受注がイプシロン側にないと取り消しができないため、課金済の受注をイプシロン側で作成しておいた。
