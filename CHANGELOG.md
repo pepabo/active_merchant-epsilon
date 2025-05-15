@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.15.0
+
+- [Support 3D Secure parameters for link type payments](https://github.com/pepabo/active_merchant-epsilon/pull/131)
+
 ### 0.14.0
 
 - [Support 3D Secure 2.0 for credit card payments](https://github.com/pepabo/active_merchant-epsilon/pull/121)
