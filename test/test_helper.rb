@@ -295,6 +295,22 @@ module SamplePaymentMethods
     }
   end
 
+  def valid_epsilon_link_type_purchase_detail_for_3d_secure
+    now = Time.now
+    {
+      user_id:      "U#{Time.now.to_i}",
+      user_name:    '山田 太郎',
+      user_email:   'yamada-taro@example.com',
+      item_code:    'ITEM001',
+      item_name:    'Greate Product',
+      order_number: "O#{now.sec}#{now.usec}",
+      st_code:      '10000-0000-00000-00000-00000-00000-00000',
+      memo1:        'memo1',
+      memo2:        'memo2',
+      tds_flag:     21
+    }
+  end
+
   def invalid_epsilon_link_type_purchase_detail
     now = Time.now
     {
