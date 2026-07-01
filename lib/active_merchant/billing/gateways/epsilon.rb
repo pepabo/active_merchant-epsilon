@@ -189,6 +189,7 @@ module ActiveMerchant #:nodoc:
           :payment_code,
           :item_price,
           :amount,
+          :sales_limit_exceeded_flag,
         ]
 
         commit(PATHS[:find_order], params, response_keys)

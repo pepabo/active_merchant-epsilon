@@ -100,6 +100,7 @@ http_interactions:
           <result add_info="" />
           <result user_id="U1531791686" />
           <result memo2="memo2" />
+          <result sales_limit_exceeded_flag="0" />
         </Epsilon_result>
     http_version: 
   recorded_at: Tue, 17 Jul 2018 01:41:28 GMT

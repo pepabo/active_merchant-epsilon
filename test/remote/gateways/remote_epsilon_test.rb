@@ -351,6 +351,7 @@ class RemoteEpsilonGatewayTest < Minitest::Test
       assert_equal true, !response.params['last_update'].empty?
       assert_equal true, !response.params['payment_code'].empty?
       assert_equal true, !response.params['item_price'].empty?
+      assert_equal true, !response.params['sales_limit_exceeded_flag'].empty?
     end
   end
 

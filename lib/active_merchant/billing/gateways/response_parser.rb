@@ -135,6 +135,10 @@ module ActiveMerchant #:nodoc:
         @xml.xpath(ResponseXpath::CAPTURED).to_s != '1'
       end
 
+      def sales_limit_exceeded_flag
+        @xml.xpath(ResponseXpath::SALES_LIMIT_EXCEEDED_FLAG).to_s
+      end
+
       def uri_decode(string)
         CGI.unescape(string).encode(Encoding::UTF_8, Encoding::CP932)
       end
@@ -168,6 +172,7 @@ module ActiveMerchant #:nodoc:
         AMOUNT                             = '//Epsilon_result/result[@amount]/@amount'
         REDIRECT                           = '//Epsilon_result/result[@redirect]/@redirect'
         CAPTURED                           = '//Epsilon_result/result[@kari_flag]/@kari_flag'
+        SALES_LIMIT_EXCEEDED_FLAG          = '//Epsilon_result/result[@sales_limit_exceeded_flag]/@sales_limit_exceeded_flag'
       end
 
       module ResultCode
