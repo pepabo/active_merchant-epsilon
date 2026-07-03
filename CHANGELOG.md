@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.16.0
+
+- [Add `sales_limit_exceeded_flag` to `find_order` response](https://github.com/pepabo/active_merchant-epsilon/pull/133)
+
 ### 0.15.0
 
 - [Support 3D Secure parameters for link type payments](https://github.com/pepabo/active_merchant-epsilon/pull/131)
