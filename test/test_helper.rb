@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'minitest/mock'
 
 require 'active_merchant'
 require 'active_merchant/epsilon'
